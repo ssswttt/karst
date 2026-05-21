@@ -1,0 +1,2403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>喀斯特地貌全解析 | 地理科普</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+        }
+
+        body {
+            background-image: url("picture/4.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: scroll;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* 新增：进入弹窗样式 - 全屏遮罩，居中弹窗 */
+        .enter-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 30, 50, 0.8); /* 深灰蓝遮罩，贴合主题 */
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(2px); /* 背景轻微模糊，提升高级感 */
+        }
+        .modal-content {
+            width: 90%;
+            max-width: 500px;
+            background: linear-gradient(135deg, rgba(64,169,255,0.2), rgba(24,144,255,0.2)), url("picture/6.jpg") no-repeat center;
+            background-size: 120% 120%;
+            border-radius: 24px; /* 大圆角，更轻量化 */
+            padding: 40px 25px;
+            text-align: center;
+            color: white;
+            /* 双层光影，立体悬浮 */
+            box-shadow: 0 8px 30px rgba(24, 144, 255, 0.2), 0 2px 8px rgba(0,0,0,0.1);
+            /* 弹窗入场动画 */
+            animation: modalIn 0.5s ease forwards;
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        /* 弹窗入场动画关键帧 */
+        @keyframes modalIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        /* 新增：主题小标样式 */
+        .modal-tag {
+            font-size: 14px;
+            font-style: italic;
+            color: #e6f7ff;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        .modal-title {
+            font-size: 34px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 文字阴影，提升辨识度 */
+        }
+        .modal-desc {
+            font-size: 17px;
+            line-height: 1.8;
+            margin-bottom: 35px;
+            opacity: 0.95;
+            color: #f0f8ff;
+        }
+        .enter-btn {
+            padding: 13px 45px;
+            border: none;
+            border-radius: 32px; /* 大圆角，微立体 */
+            background: linear-gradient(180deg, #fff, #f5faff);
+            color: #5da7ed;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            /* 按钮微立体光影 */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.8);
+        }
+        /* 按钮hover效果 */
+        .enter-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.8);
+            color: #096dd9;
+        }
+
+        /* 弹窗消失动画类 */
+        .modal-out {
+            animation: modalOut 0.3s ease forwards;
+        }
+        @keyframes modalOut {
+            to {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+        }
+
+        /* 新增：主视频容器 - 首页突出展示，适配响应式 */
+        .video-container {
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            padding: 0 16px;
+        }
+        .video-wrapper {
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display: flex;
+            gap: 30px;
+        }
+        .video-timeline {
+            flex: 0 0 260px;
+        }
+        .timeline-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1677ff;
+            margin-bottom: 20px;
+        }
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .timeline-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: #ccc;
+            margin-right: 12px;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        .timeline-dot.active {
+            background-color: #1677ff;
+            box-shadow: 0 0 0 4px rgba(22, 119, 255, 0.3);
+            animation: pulse 2s infinite;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(22, 119, 255, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 8px rgba(22, 119, 255, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(22, 119, 255, 0);
+            }
+        }
+        .timeline-time {
+            font-size: 16px;
+            color: #666;
+            margin-right: 12px;
+            min-width: 60px;
+        }
+        .timeline-label {
+            font-size: 16px;
+            color: #333;
+        }
+        .timeline-item:hover .timeline-dot {
+            background-color: #1677ff;
+        }
+        .video-content {
+            flex: 1;
+        }
+        .main-video {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+        }
+        
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .video-wrapper {
+                flex-direction: column;
+            }
+            .video-timeline {
+                flex: none;
+                width: 100%;
+            }
+        }
+
+        /* 顶部头图区 */
+        .header {
+            position: relative;
+            width: 100%;
+            height: 500px; /* 固定高度 */
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+        }
+        .header-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+            filter: brightness(0.8);
+            /* 确保图片完全充满容器 */
+            min-width: 100%;
+            min-height: 100%;
+            max-width: 200%; /* 允许图片超出容器 */
+            transform: translate(0, 0);
+        }
+        .header-text {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.2); /* 降低透明度至0.2 */
+            padding: 10px 60px;
+            border-radius: 15px;
+            text-shadow: 
+                0 2px 4px rgba(0,0,0,0.5),
+                0 0 15px rgba(255,255,255,0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15); /* 减轻阴影 */
+            white-space: nowrap;
+            max-width: 90%;
+        }
+        .header-title {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 0;
+            font-family: "STKaiti", "KaiTi", "STFangsong", "FangSong", serif;
+            letter-spacing: 2px;
+            line-height: 1.2;
+            color: #ffffff; /* 改为白色文字，符合网页风格 */
+            text-shadow: 
+                0 2px 8px rgba(0,0,0,0.6), /* 增强黑色阴影，确保可读性 */
+                0 0 20px rgba(255,255,255,0.5); /* 白色发光效果，增强美感 */
+        }
+        .header-subtitle {
+            font-size: 18px;
+            opacity: 0.95;
+            color: #ffffff;
+            font-family: 'Noto Serif SC', serif;
+            margin-top: 10px;
+        }
+
+        /* 导入语区域 */
+        .intro-section {
+            padding: 40px 20px;
+            background-color: transparent;
+            margin-bottom: 20px;
+        }
+        .intro-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            padding: 30px;
+        }
+        .intro-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #1677ff;
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .intro-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: #1677ff;
+            border-radius: 2px;
+        }
+        .intro-content {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #666;
+            text-align: center;
+        }
+        .intro-content p {
+            margin-bottom: 15px;
+        }
+
+        /* 分视频交互入口区 */
+        .sub-videos-section {
+            padding: 30px 20px;
+            background-color: transparent;
+            margin-bottom: 20px;
+        }
+        .sub-videos-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            padding: 30px;
+        }
+        .sub-videos-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            color: #1677ff;
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .sub-videos-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #1677ff;
+            border-radius: 2px;
+        }
+        .sub-videos-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+            max-width: 950px;
+            margin-left: auto;
+            margin-right: auto;
+            justify-items: stretch;
+        }
+        /* 倒梯形排列：第一行2个卡片，第二行3个卡片 */
+        .sub-video-card:nth-child(1) {
+            grid-column: 2 / 4;
+        }
+        .sub-video-card:nth-child(2) {
+            grid-column: 4 / 6;
+        }
+        .sub-video-card:nth-child(3) {
+            grid-column: 1 / 3;
+        }
+        .sub-video-card:nth-child(4) {
+            grid-column: 3 / 5;
+        }
+        .sub-video-card:nth-child(5) {
+            grid-column: 5 / 7;
+        }
+        .sub-video-card {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .sub-video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .sub-video-thumbnail {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+        }
+        .sub-video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .sub-video-card:hover .sub-video-thumbnail img {
+            transform: scale(1.05);
+        }
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #1677ff;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .sub-video-card:hover .play-icon {
+            background-color: rgba(22, 119, 255, 0.9);
+            color: white;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        .sub-video-info {
+            padding: 15px;
+        }
+        .sub-video-info .sub-video-title {
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+            text-align: left;
+            padding-bottom: 5px;
+        }
+        .sub-video-info .sub-video-title::after {
+            display: none;
+        }
+        .sub-video-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* 底部互动区 */
+        .footer {
+            background-color: transparent;
+            padding: 20px 16px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .tags {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        /* 标签样式 */
+        .tag {
+            padding: 6px 12px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 16px;
+            font-size: 13px;
+            color: #666;
+        }
+        .btns {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        /* 按钮样式 */
+        .btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #666;
+        }
+        .like-btn {
+            background-color: #f0f2f5;
+            color: #666;
+        }
+        .like-btn:hover {
+            background-color: #ff4d4f;
+            color: white;
+        }
+        .collect-btn {
+            background-color: #f0f2f5;
+            color: #666;
+        }
+        .collect-btn:hover {
+            background-color: #1677ff;
+            color: white;
+        }
+
+        /* 核心问题地图模块 */
+        .core-questions-section {
+            padding: 40px 20px;
+            background-color: transparent;
+            margin-bottom: 30px;
+        }
+        .core-questions-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            padding: 30px;
+        }
+        .core-questions-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #1677ff;
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .core-questions-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: #1677ff;
+            border-radius: 2px;
+        }
+        .questions-flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .center-node {
+            background-color: #1677ff;
+            color: white;
+            padding: 20px 40px;
+            border-radius: 50px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(22, 119, 255, 0.3);
+        }
+        .center-node h3 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .flow-line {
+            width: 80%;
+            height: 2px;
+            background-color: #1677ff;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .flow-line::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background-color: #1677ff;
+            border-radius: 50%;
+        }
+        .sub-nodes {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .sub-node {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            min-width: 200px;
+            flex: 1;
+            max-width: 280px;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+        .sub-node .node-thumbnail {
+            position: relative;
+            width: 100%;
+            height: 150px;
+            overflow: hidden;
+        }
+        .sub-node .node-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .sub-node:hover .node-thumbnail img {
+            transform: scale(1.05);
+        }
+        .sub-node .node-play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 45px;
+            height: 45px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #1677ff;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .sub-node:hover .node-play-icon {
+            background-color: rgba(22, 119, 255, 0.9);
+            color: white;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        .sub-node .node-content {
+            padding: 15px;
+            flex: 1;
+        }
+        .sub-node:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            border: 2px solid #1677ff;
+        }
+        .node-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .node-desc {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 5px;
+        }
+        
+        /* 高亮播放按钮 */
+        .play-icon.highlight {
+            background-color: #1677ff !important;
+            color: white !important;
+            transform: translate(-50%, -50%) scale(1.2) !important;
+        }
+        
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .header {
+                height: 200px;
+            }
+            .header-title {
+                font-size: 24px;
+            }
+            .card {
+                padding: 16px;
+            }
+            .modal-title {
+                font-size: 26px;
+            }
+            .sub-nodes {
+                flex-direction: column;
+                align-items: center;
+            }
+            .sub-node {
+                max-width: 100%;
+                width: 100%;
+            }
+        }
+
+        /* 悬浮聊天按钮 */
+        .chat-float-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #1677ff, #40a9ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(22, 119, 255, 0.4);
+            border: none;
+            z-index: 999;
+        }
+
+        .chat-float-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(22, 119, 255, 0.5);
+        }
+
+        /* 聊天框 */
+        .chat-container {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 550px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #1677ff, #40a9ff);
+            color: white;
+            padding: 15px 20px;
+            font-weight: bold;
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .chat-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            line-height: 1;
+        }
+        
+        .chat-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 18px;
+            line-height: 1.6;
+            white-space: normal;
+            word-wrap: break-word;
+        }
+        
+        .message.ai {
+            background-color: #f0f2f5;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .message.user {
+            background-color: #1677ff;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.error {
+            background: #fff2f0;
+            color: #ff4d4f;
+        }
+
+        .chat-input-container {
+            padding: 15px;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow: visible;
+        }
+
+        .chat-image-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px; /* 增加间距，给删除按钮留出空间 */
+            min-height: 0;
+            padding: 10px 5px;
+            position: relative;
+        }
+
+        .preview-image-wrapper {
+            position: relative;
+            width: 65px;
+            height: 65px;
+            border-radius: 8px;
+            border: 2px solid #1677ff;
+            padding: 2px;
+            background: white;
+            box-sizing: content-box; /* 确保padding不会影响尺寸计算 */
+        }
+
+        .preview-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .preview-remove-btn {
+            position: absolute;
+            top: -13px;
+            right: -13px;
+            width: 20px;
+            height: 20px;
+            background: #ff4d4f;
+            color: white;
+            border-radius: 50%;
+            border: none; /* 移除白色边框 */
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            z-index: 100;
+            flex-shrink: 0;
+        }
+
+        .chat-input-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #d9d9d9;
+            border-radius: 20px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .chat-input:focus {
+            border-color: #1677ff;
+        }
+
+        .chat-send-btn {
+            background: linear-gradient(135deg, #1677ff 0%, #4096ff 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            width: 65px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .chat-send-btn:hover {
+            background: linear-gradient(135deg, #0958d9 0%, #3388ff 100%);
+            transform: translateY(-2px);
+        }
+
+        /* 图片上传按钮 */
+        .chat-upload-btn {
+            background: #f5f5f5;
+            border: 2px solid #ddd;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            line-height: 1;
+            box-sizing: border-box;
+        }
+
+        .chat-upload-btn:hover {
+            background: #f0f0f0;
+            color: #1677ff;
+            border-color: #1677ff;
+            transform: scale(1.1);
+        }
+
+        /* 聊天图片 */
+        .chat-image {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 8px;
+            margin-top: 5px;
+            object-fit: cover;
+        }
+
+        /* 图片上传input隐藏 */
+        .image-upload-input {
+            display: none;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 480px) {
+            .chat-container {
+                width: 300px;
+                height: 400px;
+                bottom: 90px;
+                right: 20px;
+            }
+            
+            .chat-float-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+        }
+        
+        /* 剧本杀卡片样式 - 现代剧本风格 */
+        .scenarios-row {
+            display: flex;
+            justify-content: space-around;
+            gap: 30px;
+            margin-bottom: 30px;
+            padding: 20px;
+        }
+        
+        .scenario-card {
+            background: transparent;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 
+                0 8px 25px rgba(0,0,0,0.15),
+                0 0 0 1px rgba(255,255,255,0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 25%;
+            position: relative;
+            height: 320px; /* 等比缩小高度 */
+            perspective: 1000px;
+        }
+        
+        .scenario-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px; /* 等比缩小书脊宽度 */
+            height: 100%;
+            background: linear-gradient(to right, #1677ff, #40a9ff, #1677ff); /* 使用蓝色渐变，与背景更协调 */
+            border-right: 3px solid rgba(22, 119, 255, 0.3);
+            z-index: 2;
+            box-shadow: 
+                inset -4px 0 10px rgba(0,0,0,0.3),
+                2px 0 5px rgba(0,0,0,0.2); /* 增强阴影，增加厚度感 */
+        }
+        
+        .scenario-card::after {
+            content: '';
+            position: absolute;
+            left: 20px; /* 书脊宽度 */
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                rgba(255,255,255,0.3) 0%,
+                rgba(255,255,255,0.1) 50%,
+                rgba(255,255,255,0.3) 100%);
+            z-index: 2;
+        }
+        
+        .scenario-cover {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: calc(100% - 20px); /* 减去书脊宽度 */
+            height: 100%;
+            overflow: hidden;
+            background: #ffffff;
+            z-index: 1;
+        }
+        
+        .scenario-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            position: relative;
+            z-index: 0;
+        }
+        
+        .scenario-card:hover {
+            transform: translateY(-8px) rotate(2deg);
+            box-shadow: 
+                0 12px 30px rgba(0,0,0,0.2),
+                0 0 0 1px rgba(255,255,255,0.8),
+                0 0 20px rgba(22, 119, 255, 0.3);
+        }
+        
+        .scenario-card:hover .scenario-cover img {
+            transform: scale(1.05);
+        }
+        
+        .scenario-script-shape {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* 个性化学习模块样式 */
+        .personalized-learning {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            
+        }
+        
+                /* 隐藏类 */
+        .hidden {
+            display: none !important;
+        }
+        
+        /* 返回按钮样式 */
+        .back-btn {
+            padding: 10px 20px;
+            background: #f0f2f5;
+            color: #666;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+        .back-btn:hover {
+            background: #d9d9d9;
+            color: #333;
+        }
+
+        /* 出题方式选择按钮 */
+        .source-selection {
+            margin-bottom: 20px;
+        }
+        .source-selection h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1677ff;
+            margin-bottom: 15px;
+        }
+        .source-btn {
+            padding: 10px 20px;
+            border: 2px solid #1677ff;
+            border-radius: 25px;
+            background: white;
+            color: #1677ff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .source-btn:hover {
+            background: #1677ff;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .source-btn.active {
+            background: #1677ff;
+            color: white;
+        }
+
+        .difficulty-selection {
+            margin-bottom: 30px;
+        }
+        
+        .difficulty-selection h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1677ff;
+            margin-bottom: 15px;
+        }
+        
+        .difficulty-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .difficulty-btn {
+            padding: 10px 20px;
+            border: 2px solid #1677ff;
+            border-radius: 25px;
+            background: white;
+            color: #1677ff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .difficulty-btn:hover {
+            background: #1677ff;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .difficulty-btn.active {
+            background: #1677ff;
+            color: white;
+        }
+        
+        .learning-content {
+            text-align: center;
+        }
+        
+        #start-learning p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        #begin-learning, #submit-answer, #new-question {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #1677ff 0%, #4096ff 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(22, 119, 255, 0.3);
+        }
+        
+        #begin-learning:hover, #submit-answer:hover, #new-question:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(22, 119, 255, 0.4);
+        }
+        
+        #question-container {
+            text-align: left;
+        }
+        
+        #question-container h3, #report-container h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1677ff;
+            margin-bottom: 20px;
+        }
+        
+        #question-display {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        
+        .answer-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .answer-option {
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .answer-option:hover {
+            border-color: #1677ff;
+            background: #f0f7ff;
+        }
+        
+        .answer-option.selected {
+            border-color: #1677ff;
+            background: #e6f7ff;
+        }
+        
+        #report-content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        
+        /* 响应式适配：在较小屏幕上调整布局 */
+        @media (max-width: 1024px) {
+            .scenarios-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            
+            .scenario-card {
+                width: 100%;
+                max-width: 250px;
+                margin-bottom: 20px;
+                height: 320px;
+            }
+            
+            .difficulty-buttons {
+                justify-content: center;
+            }
+        }
+    
+
+        /* ========== 个性化学习测评新样式 ========== */
+        .start-icon { font-size: 64px; margin-bottom: 15px; }
+        .start-title { font-size: 22px; font-weight: bold; color: #1677ff; margin-bottom: 10px; }
+        .start-desc { font-size: 15px; color: #666; line-height: 1.8; max-width: 500px; margin: 0 auto 25px; }
+        .start-features { display: flex; justify-content: center; gap: 20px; margin-bottom: 30px; flex-wrap: wrap; }
+        .feature-item { display: flex; align-items: center; gap: 8px; padding: 10px 18px; background: #f0f7ff; border-radius: 20px; font-size: 14px; color: #1677ff; }
+        .feature-icon { font-size: 18px; }
+        .primary-btn { padding: 14px 45px; background: linear-gradient(135deg, #1677ff 0%, #4096ff 100%); color: white; border: none; border-radius: 28px; font-size: 17px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(22, 119, 255, 0.3); }
+        .primary-btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(22, 119, 255, 0.4); }
+        .primary-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        .exam-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #e8e8e8; flex-wrap: wrap; gap: 10px; }
+        .exam-header h3 { font-size: 20px; color: #1677ff; margin: 0; }
+        .exam-progress { display: flex; align-items: center; gap: 12px; }
+        .progress-bar { width: 150px; height: 8px; background: #e8e8e8; border-radius: 4px; overflow: hidden; }
+        #progress-fill { height: 100%; background: linear-gradient(90deg, #1677ff, #40a9ff); border-radius: 4px; transition: width 0.3s ease; width: 0%; }
+        .question-item { background: #fafafa; border-radius: 12px; padding: 20px; margin-bottom: 15px; border: 2px solid transparent; transition: all 0.3s ease; }
+        .question-item:hover { border-color: #1677ff; box-shadow: 0 2px 12px rgba(22,119,255,0.1); }
+        .question-item.answered { border-color: #a8b8e4; background: #eef1f9; }
+        .question-item.wrong { border-color: #ff4d4f; background: #fff2f0; }
+        .question-number { display: inline-block; background: #1677ff; color: white; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-size: 14px; font-weight: bold; margin-right: 10px; }
+        .question-text { font-size: 16px; color: #333; line-height: 1.7; margin-bottom: 15px; font-weight: 500; }
+        .question-options { display: flex; flex-direction: column; gap: 10px; }
+        .question-option { padding: 12px 16px; border: 2px solid #e0e0e0; border-radius: 10px; cursor: pointer; transition: all 0.25s ease; font-size: 15px; display: flex; align-items: center; gap: 10px; }
+        .question-option:hover { border-color: #1677ff; background: #f0f7ff; }
+        .question-option.selected { border-color: #1677ff; background: #e6f7ff; color: #1677ff; font-weight: 600; }
+        .question-option.correct { border-color: #52c41a; background: #f6ffed; color: #52c41a; }
+        .question-option.incorrect { border-color: #ff4d4f; background: #fff2f0; color: #ff4d4f; }
+        .option-label { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: #f0f0f0; font-weight: bold; font-size: 14px; flex-shrink: 0; }
+        .question-option.selected .option-label { background: #1677ff; color: white; }
+        .question-option.correct .option-label { background: #52c41a; color: white; }
+        .question-option.incorrect .option-label { background: #ff4d4f; color: white; }
+        .exam-actions { display: flex; gap: 15px; justify-content: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e8e8e8; }
+        .report-header { text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid #e8e8e8; }
+        .report-header h3 { font-size: 24px; color: #1677ff; margin-bottom: 8px; }
+        .report-subtitle { color: #888; font-size: 14px; }
+        .score-overview { display: flex; align-items: center; justify-content: center; gap: 40px; margin-bottom: 35px; padding: 25px; background: linear-gradient(135deg, #f0f7ff, #e6f7ff); border-radius: 16px; flex-wrap: wrap; }
+        .score-circle { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, #1677ff, #40a9ff); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; box-shadow: 0 4px 20px rgba(22,119,255,0.3); }
+        .score-circle span { font-size: 42px; font-weight: bold; line-height: 1; }
+        .score-circle small { font-size: 14px; opacity: 0.9; }
+        .score-detail { text-align: left; }
+        .score-detail p { margin: 6px 0; font-size: 15px; color: #555; }
+        .level-badge { display: inline-block; padding: 4px 14px; border-radius: 12px; font-size: 13px; font-weight: bold; margin-top: 5px; }
+        .level-excellent { background: #f6ffed; color: #52c41a; }
+        .level-good { background: #e6f7ff; color: #1677ff; }
+        .level-average { background: #fffbe6; color: #faad14; }
+        .level-poor { background: #fff2f0; color: #ff4d4f; }
+        .radar-section, .ai-analysis-section, .weakness-section, .suggestions-section, .wrong-questions-section {margin-bottom: 12px; padding: 10px 15px; background: #fafafa; border-radius: 12px; }
+        .radar-section h4, .ai-analysis-section h4, .weakness-section h4, .suggestions-section h4, .wrong-questions-section h4 { font-size: 18px; color: #333; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid #e8e8e8; }
+        .radar-chart-container { display: flex; justify-content: center; padding: 20px; }
+        #radarChart { max-width: 100%; height: auto; }
+        .analysis-content { line-height: 1.5; color: #444; font-size: 15px; text-align: left; }
+        .analysis-content p { margin-bottom: 2px; margin-top: 0; }
+        .analysis-content h5 { margin: 6px 0 2px 0; font-size: 16px; color: #333; }
+        .analysis-content br { display: block; line-height: 0.3; }
+        .analysis-content br + br { display: none; }
+        .loading-ai { text-align: center; padding: 30px; color: #888; }
+        .loading-ai i { font-size: 28px; color: #1677ff; margin-bottom: 10px; display: block; }
+        .weakness-item, .suggestion-item { display: flex; align-items: flex-start; gap: 12px; padding: 14px; background: white; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid #ff4d4f; }
+        .suggestion-item { border-left-color: #52c41a; }
+        .weakness-item .icon, .suggestion-item .icon { font-size: 20px; flex-shrink: 0; }
+        .weakness-item .text, .suggestion-item .text { font-size: 14px; color: #555; line-height: 1.6; }
+        .weakness-item .text strong, .suggestion-item .text strong { color: #333; display: block; margin-bottom: 4px; }
+        .wrong-q-item { background: white; border-radius: 10px; padding: 18px; margin-bottom: 12px; border: 2px solid #ffccc7; }
+        .wrong-q-item.correct-q-item { border: 2px solid #b7eb8f; background: #f6ffed; }
+        .wrong-q-item .wq-question { font-weight: 600; color: #333; margin-bottom: 10px; font-size: 15px; }
+        .wrong-q-item .wq-answer { color: #52c41a; margin-bottom: 6px; font-size: 14px; }
+        .wrong-q-item .wq-explanation { color: #666; font-size: 13px; line-height: 1.6; background: #f5f5f5; padding: 10px; border-radius: 6px; }
+        .wrong-q-item .wq-user-answer { color: #ff4d4f; font-size: 14px; margin-bottom: 6px; }
+        .report-actions { display: flex; gap: 15px; justify-content: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #e8e8e8; }
+        @media (max-width: 768px) {
+            .score-overview { flex-direction: column; gap: 20px; }
+            .start-features { flex-direction: column; align-items: center; }
+            .exam-header { flex-direction: column; text-align: center; }
+        }
+</style>
+<base target="_blank">
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<base target="_blank">
+<base target="_blank">
+<base target="_blank">
+</head>
+<body>
+    <!-- 新增：进入弹窗 - 页面加载后默认显示 -->
+    <div class="enter-modal" id="enterModal">
+        <div class="modal-content" id="modalContent">
+            <!-- 主题小标 -->
+            <div class="modal-tag">地理微课·自然探索</div>
+            <!-- 主标题 -->
+            <h2 class="modal-title">探秘喀斯特地貌</h2>
+            <!-- 描述文案 -->
+            <p class="modal-desc">流水雕山石，山水藏奥秘<br>点击进入，开启神奇的地理探索之旅吧！</p>
+            <!-- 进入按钮 -->
+            <button class="enter-btn" id="enterBtn">点击进入</button>
+        </div>
+    </div>
+
+    <!-- 顶部头图区 -->
+    <div class="header" style="background-image: url('picture/1.jpg'); background-size: cover; background-position: center;">
+        <div class="header-text">
+            <h1 class="header-title">探寻徐霞客笔下的喀斯特地貌</h1>
+        </div>
+    </div>
+
+    <!-- 新增：导入语区域 -->
+    <div class="intro-section">
+        <div class="intro-container">
+            <h2 class="intro-title">✨ 欢迎开启今天的地理之旅</h2>
+            <div class="intro-content">
+                <p>山是水的诗，石是时光的信。</p>
+                <p>在温暖湿润的土地上，流水以温柔却坚定的力量，将石灰岩雕琢成峰林、溶洞与石林。</p>
+                <p>这便是喀斯特地貌，大地写给岁月的情书。</p>
+                <p>接下来，让我们一起在光影中，读懂这份来自地球的浪漫地质密码。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主视频容器 -->
+    <div class="video-container" style="display: none;" id="videoBox">
+        <div class="video-wrapper">
+            <div class="video-timeline">
+                <div class="timeline-title">视频章节导航</div>
+                <div class="timeline-item" data-time="0">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-time">0:00</div>
+                    <div class="timeline-label">徐霞客与喀斯特地貌</div>
+                </div>
+                <div class="timeline-item" data-time="56">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-time">0:56</div>
+                    <div class="timeline-label">喀斯特地貌的成因与化学反应方程式</div>
+                </div>
+                <div class="timeline-item" data-time="112">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-time">1:52</div>
+                    <div class="timeline-label">喀斯特地貌演变过程的动画模拟</div>
+                </div>
+                <div class="timeline-item" data-time="217">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-time">3:37</div>
+                    <div class="timeline-label">喀斯特沉积地貌的演变过程</div>
+                </div>
+                <div class="timeline-item" data-time="281">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-time">4:41</div>
+                    <div class="timeline-label">喀斯特地貌与人类活动的联系</div>
+                </div>
+                <div class="timeline-item" data-time="350">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-time">5:50</div>
+                    <div class="timeline-label">课程作业布置</div>
+                </div>
+            </div>
+            <div class="video-content">
+                <video class="main-video" controls poster="picture/v.jpg" id="mainVideo">
+                    <source src="video/video.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 课程拓展模块 -->
+    <div class="core-questions-section">
+        <div class="core-questions-container">
+            <h2 class="core-questions-title">课程拓展</h2>
+            <div class="questions-flowchart">
+                <div class="center-node">
+                    <h3>探寻徐霞客笔下的喀斯特地貌</h3>
+                </div>
+                <div class="flow-line"></div>
+                <div class="sub-nodes">
+                    <div class="sub-node" data-video-id="1" onclick="playSubVideo(1)">
+                        <div class="node-thumbnail">
+                            <img src="picture/v1.jpg" alt="地下水富集机制">
+                            <div class="node-play-icon">▶</div>
+                        </div>
+                        <div class="node-content">
+                            <div class="node-title">地下水富集机制</div>
+                            <div class="node-desc">从“岩石海绵”到“地下水库”的成因解析</div>
+                        </div>
+                    </div>
+                    <div class="sub-node" data-video-id="2" onclick="playSubVideo(2)">
+                        <div class="node-thumbnail">
+                            <img src="picture/v2.jpg" alt="碳酸钙重析出条件">
+                            <div class="node-play-icon">▶</div>
+                        </div>
+                        <div class="node-content">
+                            <div class="node-title">碳酸钙重析出条件</div>
+                            <div class="node-desc">从化学溶解到地貌沉积的转化机制</div>
+                        </div>
+                    </div>
+                    <div class="sub-node" data-video-id="3" onclick="playSubVideo(3)">
+                        <div class="node-thumbnail">
+                            <img src="picture/v3.jpg" alt="喀斯特地貌工程难题">
+                            <div class="node-play-icon">▶</div>
+                        </div>
+                        <div class="node-content">
+                            <div class="node-title">喀斯特地貌工程难题</div>
+                            <div class="node-desc">复杂地质下的建设挑战与技术突围</div>
+                        </div>
+                    </div>
+                    <div class="sub-node" data-video-id="4" onclick="playSubVideo(4)">
+                        <div class="node-thumbnail">
+                            <img src="picture/v4.jpg" alt="石漠化">
+                            <div class="node-play-icon">▶</div>
+                        </div>
+                        <div class="node-content">
+                            <div class="node-title">石漠化（石质荒漠化）</div>
+                            <div class="node-desc">生态退化与区域发展的双重危机</div>
+                        </div>
+                    </div>
+                    <div class="sub-node" data-video-id="5" onclick="playSubVideo(5)">
+                        <div class="node-thumbnail">
+                            <img src="picture/v5.jpg" alt="喀斯特：美景与危机">
+                            <div class="node-play-icon">▶</div>
+                        </div>
+                        <div class="node-content">
+                            <div class="node-title">喀斯特：美景与危机</div>
+                            <div class="node-desc">亿年雕琢的地理传奇与当代保护的严峻考验</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 删除独立的分视频区域 -->
+    
+    <!-- 科考剧情推理学习模块 -->
+    <div class="sub-videos-section">
+        <div class="sub-videos-container">
+            <h2 class="sub-videos-title">科考剧情推理学习</h2>
+            <div class="scenarios-row">
+                <div class="scenario-card" onclick="playScenario(1)">
+                    <div class="scenario-cover">
+                        <img src="picture/s1.png" onerror="this.src='picture/default.jpg'" alt="剧本一：溶洞纪年 - 石笋里的气候密码">
+                    </div>
+                    <div class="scenario-script-shape">
+                    </div>
+                </div>
+                <div class="scenario-card" onclick="playScenario(2)">
+                    <div class="scenario-cover">
+                        <img src="picture/s2.png" onerror="this.src='picture/default.jpg'" alt="剧本二：峰林迷局 - 桂林vs贵州演化之争">
+                    </div>
+                    <div class="scenario-script-shape">
+                    </div>
+                </div>
+                <div class="scenario-card" onclick="playScenario(3)">
+                    <div class="scenario-cover">
+                        <img src="picture/s3.png" onerror="this.src='picture/default.jpg'" alt="剧本三：暗河迷踪 - 喀斯特水文失踪案">
+                    </div>
+                    <div class="scenario-script-shape">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 个性化学习模块 -->
+    <div class="sub-videos-section">
+        <div class="sub-videos-container">
+            <h2 class="sub-videos-title">📚 个性化学习测评</h2>
+            <div class="personalized-learning">
+                <div class="difficulty-selection">
+                    <h3>选择测评难度</h3>
+                    <div class="difficulty-buttons">
+                        <button class="difficulty-btn" data-difficulty="easy">🌱 简单（20题）</button>
+                        <button class="difficulty-btn" data-difficulty="medium">🌿 中等（20题）</button>
+                        <button class="difficulty-btn" data-difficulty="hard">🌳 较难（20题）</button>
+                        <button class="difficulty-btn" data-difficulty="mixed">🎯 综合（25题）</button>
+                    </div>
+                </div>
+                <div class="learning-content">
+                    <div id="loading-container" class="hidden" style="text-align: center; padding: 40px;">
+                        <i class="fa fa-spinner fa-spin" style="font-size: 32px; color: #1677ff; margin-bottom: 15px;"></i>
+                        <p style="color: #666;">正在生成测评试卷...</p>
+                    </div>
+                    <div id="exam-container" class="hidden">
+                        <div class="exam-header">
+                            <h3 id="exam-title">喀斯特地貌知识测评</h3>
+                            <div class="exam-progress">
+                                <span id="progress-text">第 0 / 20 题</span>
+                                <div class="progress-bar"><div id="progress-fill"></div></div>
+                            </div>
+                        </div>
+                        <div id="exam-questions"></div>
+                        <div class="exam-actions">
+                            <button id="submit-exam" class="primary-btn">提交试卷</button>
+                            <button class="back-btn" id="back-from-exam">返回选择</button>
+                        </div>
+                    </div>
+                    <div id="ai-report-container" class="hidden">
+                        <div class="report-header">
+                            <h3>🤖 AI 智能学习分析报告</h3>
+                            <p class="report-subtitle">基于您的答题情况，AI为您生成专属学习诊断</p>
+                        </div>
+                        <div class="score-overview">
+                            <div class="score-circle">
+                                <span id="score-number">0</span>
+                                <small>分</small>
+                            </div>
+                            <div class="score-detail">
+                                <p>答题正确率: <strong id="correct-rate">0%</strong></p>
+                                <p>用时: <strong id="time-used">0分钟</strong></p>
+                                <p id="score-level" class="level-badge">待评定</p>
+                            </div>
+                        </div>
+                        <div class="radar-section">
+                            <h4>📊 能力雷达图</h4>
+                            <div class="radar-chart-container">
+                                <canvas id="radarChart" width="400" height="400"></canvas>
+                            </div>
+                        </div>
+                        <div class="ai-analysis-section">
+                            <h4>🧠 AI 综合分析</h4>
+                            <div id="ai-analysis-content" class="analysis-content">
+                                <div class="loading-ai">
+                                    <i class="fa fa-spinner fa-spin"></i>
+                                    <p>AI正在分析您的答题数据，生成个性化报告...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="weakness-section">
+                            <h4>⚠️ 薄弱知识点</h4>
+                            <div id="weakness-content"></div>
+                        </div>
+                        <div class="suggestions-section">
+                            <h4>💡 改进建议</h4>
+                            <div id="suggestions-content"></div>
+                        </div>
+                        <div class="wrong-questions-section">
+                            <h4>❌ 错题回顾</h4>
+                            <div id="wrong-questions-content"></div>
+                        </div>
+                        <div class="report-actions">
+                            <button id="restart-exam" class="primary-btn">重新测评</button>
+                        </div>
+                    </div>
+                    <div id="start-learning">
+                        <div class="start-icon">📝</div>
+                        <p class="start-title">开启您的喀斯特地貌知识测评</p>
+                        <p class="start-desc">系统将从知识库中智能抽取题目，完成后AI将为您生成包含雷达图、薄弱点分析和改进建议的个性化学习报告。</p>
+                        <div class="start-features">
+                            <div class="feature-item"><span class="feature-icon">📖</span><span>130道精选题库</span></div>
+                            <div class="feature-item"><span class="feature-icon">🎯</span><span>智能难度匹配</span></div>
+                            <div class="feature-item"><span class="feature-icon">🤖</span><span>AI深度分析</span></div>
+                            <div class="feature-item"><span class="feature-icon">📈</span><span>可视化雷达图</span></div>
+                        </div>
+                        <button id="begin-learning" class="primary-btn">开始测评</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- 底部互动区 -->
+    <div class="footer">
+        <div class="tags">
+            <div class="tag">#地理常识</div>
+            <div class="tag">#喀斯特地貌</div>
+            <div class="tag">#自然风光</div>
+            <div class="tag">#地理科普</div>
+        </div>
+        <div class="btns">
+            <button class="btn like-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                点赞
+            </button>
+            <button class="btn collect-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+                </svg>
+                收藏
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // 核心：进入弹窗交互 - 点击按钮隐藏弹窗，显示主视频
+        const enterModal = document.getElementById('enterModal');
+        const enterBtn = document.getElementById('enterBtn');
+        const videoBox = document.getElementById('videoBox');
+        const mainVideo = document.getElementById('mainVideo');
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        const timelineDots = document.querySelectorAll('.timeline-dot');
+
+        // 检查是否从分视频或剧本页面返回
+        const isFromSubVideo = sessionStorage.getItem('fromSubVideo');
+        // 检查URL参数是否包含return=true
+        const urlParams = new URLSearchParams(window.location.search);
+        const isReturning = urlParams.get('return') === 'true';
+        
+        if (isFromSubVideo || isReturning) {
+            // 从分视频或剧本页面返回，不显示弹窗
+            enterModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            // 显示主视频
+            videoBox.style.display = 'block';
+            // 恢复页面滚动位置
+            const scrollPosition = sessionStorage.getItem('scrollPosition');
+            if (scrollPosition) {
+                window.scrollTo(0, parseInt(scrollPosition));
+            }
+            // 清除标志
+            sessionStorage.removeItem('fromSubVideo');
+            sessionStorage.removeItem('scrollPosition');
+        } else {
+            // 首次加载，显示弹窗
+            // 确保页面滚动到顶部
+            window.scrollTo(0, 0);
+            document.body.style.overflow = 'hidden';
+        }
+
+        enterBtn.addEventListener('click', () => {
+            enterModal.style.display = 'none'; // 隐藏弹窗
+            videoBox.style.display = 'block';  // 显示主视频
+            document.body.style.overflow = 'auto'; // 恢复页面滚动
+        });
+        
+        // 时间轴点击事件
+        timelineItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const time = parseInt(item.dataset.time);
+                mainVideo.currentTime = time;
+                mainVideo.play();
+            });
+        });
+        
+        // 视频播放时更新时间轴
+        mainVideo.addEventListener('timeupdate', () => {
+            const currentTime = mainVideo.currentTime;
+            
+            // 更新时间轴点的状态
+            timelineItems.forEach((item, index) => {
+                const time = parseInt(item.dataset.time);
+                const dot = timelineDots[index];
+                
+                if (currentTime >= time) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        });
+        
+        // 分视频播放功能
+        function playSubVideo(videoId) {
+            // 存储当前滚动位置
+            sessionStorage.setItem('scrollPosition', window.scrollY);
+            // 设置从分视频页面返回的标志
+            sessionStorage.setItem('fromSubVideo', 'true');
+            // 根据视频ID跳转到不同的页面
+            switch(videoId) {
+                case 1:
+                    window.location.href = 'video1.html';
+                    break;
+                case 2:
+                    window.location.href = 'video2.html';
+                    break;
+                case 3:
+                    window.location.href = 'video3.html';
+                    break;
+                case 4:
+                    window.location.href = 'video4.html';
+                    break;
+                case 5:
+                    window.location.href = 'video5.html';
+                    break;
+                default:
+                    window.location.href = 'video1.html';
+            }
+        }
+        
+        // 剧本跳转功能
+        function playScenario(scenarioId) {
+            // 存储当前滚动位置
+            sessionStorage.setItem('scrollPosition', window.scrollY);
+            // 设置从剧本页面返回的标志
+            sessionStorage.setItem('fromSubVideo', 'true');
+            // 根据剧本ID跳转到不同的页面
+            switch(scenarioId) {
+                case 1:
+                    window.location.href = 'script1.html';
+                    break;
+                case 2:
+                    window.location.href = 'script2.html';
+                    break;
+                case 3:
+                    window.location.href = 'script3.html';
+                    break;
+                default:
+                    window.location.href = 'script1.html';
+            }
+        }
+        
+        
+        /* ========== 个性化学习测评系统 ========== */
+
+        var questionBank = [{"id": 1, "question": "喀斯特地貌的形成主要是由于哪种岩石被水侵蚀作用形成的？（）", "difficulty": "简单", "options": ["A.花岗岩", "B.玄武岩", "C.碳酸盐岩", "D.页岩"], "answer": "C", "explanation": "喀斯特地貌核心是可溶性岩石被流水溶蚀，碳酸盐岩是最主要的可溶性岩石，如石灰岩、白云岩等", "type": "single", "category": "基础概念"}, {"id": 2, "question": "下列岩石中，不属于喀斯特地貌形成所需的可溶性岩石的是（）", "difficulty": "简单", "options": ["A.石灰岩", "B.白云岩", "C.石英岩", "D.大理岩（石灰岩变质）"], "answer": "C", "explanation": "石英岩主要成分是二氧化硅，不溶于水，无法形成喀斯特地貌；大理岩虽为变质岩，但由石灰岩变质而来，仍具可溶性", "type": "single", "category": "基础概念"}, {"id": 3, "question": "喀斯特地貌发育的最关键条件是（）", "difficulty": "简单", "options": ["A.高温多雨", "B.可溶性岩石广布", "C.地下水丰富", "D.植被覆盖率高"], "answer": "B", "explanation": "可溶性岩石是喀斯特地貌形成的物质基础，没有可溶性岩石，即使有充足水分，也无法发生溶蚀作用", "type": "single", "category": "基础概念"}, {"id": 4, "question": "下列地区中，喀斯特地貌分布最广泛、最典型的是（）", "difficulty": "简单", "options": ["A.青藏高原", "B.黄土高原", "C.云贵高原", "D.内蒙古高原"], "answer": "C", "explanation": "我国云贵高原石灰岩广布，气候湿润，地下水丰富，是喀斯特地貌最典型的分布区", "type": "single", "category": "分布特征"}, {"id": 5, "question": "喀斯特作用的本质是（）", "difficulty": "简单", "options": ["A.流水的侵蚀作用", "B.流水的溶蚀作用", "C.流水的搬运作用", "D.流水的沉积作用"], "answer": "B", "explanation": "喀斯特作用的核心是流水对可溶性岩石的溶蚀，侵蚀、搬运、沉积是伴随作用", "type": "single", "category": "基础概念"}, {"id": 6, "question": "下列属于地表喀斯特地貌的是（）", "difficulty": "简单", "options": ["A.溶洞", "B.石笋", "C.峰林", "D.石钟乳"], "answer": "C", "explanation": "峰林、峰丛、石芽、溶沟等属于地表喀斯特；溶洞、石笋、石钟乳属于地下喀斯特", "type": "single", "category": "地貌类型"}, {"id": 7, "question": "下列属于地下喀斯特地貌的是（）", "difficulty": "简单", "options": ["A.峰丛", "B.孤峰", "C.石芽", "D.地下河"], "answer": "D", "explanation": "地下河、溶洞、石笋、石钟乳、石柱等均为地下喀斯特地貌", "type": "single", "category": "地貌类型"}, {"id": 8, "question": "峰林地貌形成的主要阶段是（）", "difficulty": "中等", "options": ["A.喀斯特发育初期", "B.喀斯特发育中期", "C.喀斯特发育晚期", "D.喀斯特发育衰退期"], "answer": "B", "explanation": "喀斯特中期，可溶性岩石被大量溶蚀，地表形成峰林、溶蚀洼地，地下溶洞初步发育", "type": "single", "category": "地貌类型"}, {"id": 9, "question": "石芽和溶沟主要形成于喀斯特地貌的（）", "difficulty": "简单", "options": ["A.初期阶段", "B.中期阶段", "C.晚期阶段", "D.任何阶段"], "answer": "A", "explanation": "喀斯特初期，地表岩石被流水轻微溶蚀，形成微小的石芽和溶沟", "type": "single", "category": "地貌类型"}, {"id": 10, "question": "溶洞中石钟乳的形成主要是由于（）", "difficulty": "简单", "options": ["A.流水的溶蚀作用", "B.流水的沉积作用", "C.风力的侵蚀作用", "D.风力的沉积作用"], "answer": "B", "explanation": "含有碳酸钙的地下水渗出溶洞顶部，水分蒸发后，碳酸钙沉积形成石钟乳", "type": "single", "category": "地貌类型"}, {"id": 11, "question": "石笋与石钟乳连接后形成的地貌是（）", "difficulty": "简单", "options": ["A.石柱", "B.石芽", "C.石幔", "D.石帘"], "answer": "A", "explanation": "石钟乳从顶部向下生长，石笋从底部向上生长，二者连接后形成石柱", "type": "single", "category": "地貌类型"}, {"id": 12, "question": "下列关于喀斯特地貌对农业生产影响的说法，正确的是（）", "difficulty": "中等", "options": ["A.土壤肥沃，利于农业发展", "B.地表崎岖，不利于耕作", "C.地下水丰富，灌溉便利", "D.植被茂密，土壤有机质含量高"], "answer": "B", "explanation": "喀斯特地貌区地表崎岖，土层浅薄且贫瘠，地下水易渗漏，不利于农业耕作", "type": "single", "category": "地貌类型"}, {"id": 13, "question": "喀斯特地貌区容易出现的环境问题是（）", "difficulty": "简单", "options": ["A.土地荒漠化", "B.水土流失", "C.土壤盐碱化", "D.土地沼泽化"], "answer": "B", "explanation": "喀斯特地貌区土层薄、植被覆盖率低，降水集中且多暴雨，易发生水土流失", "type": "single", "category": "生态环境"}, {"id": 14, "question": "下列国家中，喀斯特地貌分布广泛的是（）", "difficulty": "中等", "options": ["A.俄罗斯", "B.巴西", "C.法国", "D.斯洛文尼亚"], "answer": "D", "explanation": "斯洛文尼亚的喀斯特高原是“喀斯特”一词的起源地，喀斯特地貌分布广泛；俄罗斯、巴西、法国喀斯特地貌分布较少", "type": "single", "category": "分布特征"}, {"id": 15, "question": "我国喀斯特地貌主要分布在（）", "difficulty": "简单", "options": ["A.北方地区", "B.南方地区", "C.西北地区", "D.青藏地区"], "answer": "B", "explanation": "我国南方地区（云贵高原、广西、湖南、湖北等地", "type": "single", "category": "分布特征"}, {"id": 16, "question": "溶蚀洼地的形成是由于（）", "difficulty": "中等", "options": ["A.地表岩石被溶蚀后凹陷形成", "B.地下溶洞塌陷形成", "C.流水搬运作用形成", "D.风力侵蚀作用形成"], "answer": "A", "explanation": "溶蚀洼地是地表可溶性岩石被流水长期溶蚀，形成的圆形或椭圆形凹陷地貌；地下溶洞塌陷形成的是天坑", "type": "single", "category": "地貌类型"}, {"id": 17, "question": "下列地貌中，属于喀斯特沉积地貌的是（）", "difficulty": "简单", "options": ["A.溶沟", "B.峰丛", "C.石钟乳", "D.溶蚀洼地"], "answer": "C", "explanation": "石钟乳、石笋、石柱、石幔等属于喀斯特沉积地貌；溶沟、峰丛、溶蚀洼地属于溶蚀地貌", "type": "single", "category": "地貌类型"}, {"id": 18, "question": "喀斯特地貌区的地下水主要属于（）", "difficulty": "中等", "options": ["A.潜水", "B.承压水", "C.地表水", "D.冰川水"], "answer": "B", "explanation": "喀斯特地貌区地下溶洞、地下河发育，地下水多储存于岩石裂隙和溶洞中，形成承压水", "type": "single", "category": "地貌类型"}, {"id": 19, "question": "下列哪种气候条件最有利于喀斯特地貌的发育？（）", "difficulty": "简单", "options": ["A.热带季风气候", "B.温带大陆性气候", "C.寒带气候", "D.热带沙漠气候"], "answer": "A", "explanation": "热带季风气候高温多雨，降水充足，且气温高加快岩石溶蚀速度，最有利于喀斯特地貌发育", "type": "single", "category": "基础概念"}, {"id": 20, "question": "石幔（石帘）的形成主要与下列哪种作用有关？（）", "difficulty": "中等", "options": ["A.流水的水平溶蚀", "B.流水的垂直溶蚀", "C.流水的垂直沉积", "D.流水的水平沉积"], "answer": "D", "explanation": "含有碳酸钙的地下水沿溶洞壁水平渗出，水分蒸发后，碳酸钙沿壁沉积，形成石幔（石帘", "type": "single", "category": "地貌类型"}, {"id": 21, "question": "我国广西桂林山水属于哪种喀斯特地貌类型？（）", "difficulty": "简单", "options": ["A.地表喀斯特", "B.地下喀斯特", "C.海岸喀斯特", "D.冰川喀斯特"], "answer": "A", "explanation": "桂林山水以峰林、峰丛、溶蚀洼地、漓江等为主，属于典型的地表喀斯特地貌", "type": "single", "category": "地貌类型"}, {"id": 22, "question": "喀斯特地貌区的土壤类型主要是（）", "difficulty": "中等", "options": ["A.黑土", "B.红壤", "C.棕壤", "D.荒漠土"], "answer": "B", "explanation": "喀斯特地貌主要分布在南方湿润地区，高温多雨的气候条件下，土壤多为红壤，土层薄、肥力低", "type": "single", "category": "分布特征"}, {"id": 23, "question": "下列关于溶洞的说法，正确的是（）", "difficulty": "简单", "options": ["A.溶洞只形成于地下深处", "B.溶洞的形成与流水的溶蚀作用无关", "C.溶洞内常伴有沉积地貌", "D.溶洞是风力侵蚀形成的"], "answer": "C", "explanation": "溶洞是流水溶蚀形成的地下洞穴，可形成于地下不同深度，洞内常形成石钟乳、石笋等沉积地貌", "type": "single", "category": "地貌类型"}, {"id": 24, "question": "孤峰地貌形成于喀斯特发育的（）", "difficulty": "中等", "options": ["A.初期", "B.中期", "C.晚期", "D.衰退期"], "answer": "C", "explanation": "喀斯特晚期，峰林被进一步溶蚀、侵蚀，大部分山峰消失，仅残留少数孤立山峰，形成孤峰", "type": "single", "category": "地貌类型"}, {"id": 25, "question": "下列哪种人类活动会加剧喀斯特地貌区的水土流失？（）", "difficulty": "简单", "options": ["A.植树造林", "B.陡坡开垦", "C.修建梯田", "D.修建水库"], "answer": "B", "explanation": "陡坡开垦会破坏地表植被，加剧喀斯特地貌区的水土流失；植树造林、修建梯田可减缓水土流失", "type": "single", "category": "生态环境"}, {"id": 26, "question": "喀斯特地貌区的河流特点是（）", "difficulty": "中等", "options": ["A.河流众多，水量丰富", "B.河流多地下河，地表河流稀少", "C.河流流速缓慢", "D.河流含沙量极大"], "answer": "B", "explanation": "喀斯特地貌区岩石裂隙发育，地下水易渗漏，地表河流较少，多形成地下河", "type": "single", "category": "地貌类型"}, {"id": 27, "question": "下列属于喀斯特地貌发育后期的地貌景观是（）", "difficulty": "简单", "options": ["A.石芽", "B.峰丛", "C.孤峰", "D.溶沟"], "answer": "C", "explanation": "孤峰是喀斯特后期的典型景观，石芽、溶沟是初期景观，峰丛是中期景观", "type": "single", "category": "地貌类型"}, {"id": 28, "question": "石灰岩经流水溶蚀后，形成的可溶性物质主要是（）", "difficulty": "中等", "options": ["A.二氧化硅", "B.碳酸钙", "C.碳酸氢钙", "D.碳酸钠"], "answer": "C", "explanation": "石灰岩（碳酸钙", "type": "single", "category": "基础概念"}, {"id": 29, "question": "下列地区中，不属于我国喀斯特地貌主要分布区的是（）", "difficulty": "简单", "options": ["A.广西", "B.贵州", "C.云南", "D.新疆"], "answer": "D", "explanation": "新疆位于我国西北地区，气候干旱，石灰岩分布较少，喀斯特地貌不发育；广西、贵州、云南是我国喀斯特主要分布区", "type": "single", "category": "分布特征"}, {"id": 30, "question": "地下河的形成主要是由于（）", "difficulty": "中等", "options": ["A.地表河流下渗形成", "B.地下水溶蚀岩石形成溶洞，水流汇集而成", "C.冰川侵蚀形成", "D.风力侵蚀形成"], "answer": "B", "explanation": "地下河是地下水长期溶蚀可溶性岩石，形成地下溶洞，溶洞内水流汇集形成的地下水体", "type": "single", "category": "基础概念"}, {"id": 31, "question": "下列哪种地貌不属于喀斯特地貌？（）", "difficulty": "简单", "options": ["A.雅丹地貌", "B.峰林", "C.溶洞", "D.石笋"], "answer": "A", "explanation": "雅丹地貌是风力侵蚀形成的地貌，主要分布在干旱地区；峰林、溶洞、石笋均为喀斯特地貌", "type": "single", "category": "地貌类型"}, {"id": 32, "question": "喀斯特地貌区植被覆盖率低的主要原因是（）", "difficulty": "中等", "options": ["A.气候干旱", "B.土壤贫瘠，土层浅薄", "C.光照不足", "D.降水过多"], "answer": "B", "explanation": "喀斯特地貌区土层薄、肥力低，且地下水易渗漏，不利于植被生长，导致植被覆盖率低", "type": "single", "category": "水文特征"}, {"id": 33, "question": "石钟乳和石笋的生长速度主要取决于（）", "difficulty": "简单", "options": ["A.风力大小", "B.降水多少", "C.地下水的渗出速度和碳酸钙含量", "D.气温高低"], "answer": "C", "explanation": "地下水渗出速度越快、碳酸钙含量越高，石钟乳和石笋的生长速度越快", "type": "single", "category": "地貌类型"}, {"id": 34, "question": "下列关于喀斯特地貌旅游开发的说法，正确的是（）", "difficulty": "中等", "options": ["A.喀斯特地貌景观独特，适合大规模开发旅游", "B.开发旅游无需考虑环境保护", "C.旅游开发会加剧喀斯特地貌的破坏", "D.应合理开发，兼顾保护与利用"], "answer": "D", "explanation": "喀斯特地貌景观独特，适合旅游开发，但需合理规划，兼顾环境保护，避免过度开发导致地貌破坏", "type": "single", "category": "生态环境"}, {"id": 35, "question": "喀斯特地貌发育的基础是（）", "difficulty": "简单", "options": ["A.流水", "B.可溶性岩石", "C.高温", "D.多雨"], "answer": "B", "explanation": "可溶性岩石是喀斯特地貌发育的物质基础，流水是动力条件，高温多雨是有利条件", "type": "single", "category": "基础概念"}, {"id": 36, "question": "溶蚀漏斗的形成主要是由于（）", "difficulty": "中等", "options": ["A.地表岩石被溶蚀，形成的漏斗状凹陷", "B.地下溶洞塌陷形成", "C.风力侵蚀形成", "D.流水搬运形成"], "answer": "A", "explanation": "溶蚀漏斗是地表可溶性岩石被流水局部溶蚀，形成的小型漏斗状凹陷，规模小于溶蚀洼地", "type": "single", "category": "基础概念"}, {"id": 37, "question": "下列属于喀斯特地貌的是（）", "difficulty": "简单", "options": ["A.丹霞山", "B.张家界峰林", "C.桂林山水", "D.泰山"], "answer": "C", "explanation": "桂林山水是喀斯特地貌；丹霞山是丹霞地貌，张家界峰林是石英砂岩峰林，泰山是花岗岩地貌", "type": "single", "category": "地貌类型"}, {"id": 38, "question": "喀斯特地貌区的地下水水质特点是（）", "difficulty": "中等", "options": ["A.含沙量高", "B.硬度高（富含碳酸钙）", "C.水质浑浊", "D.含盐量高"], "answer": "B", "explanation": "喀斯特地貌区的地下水长期与可溶性岩石接触，富含碳酸钙，水质硬度较高", "type": "single", "category": "基础概念"}, {"id": 39, "question": "峰丛与峰林的主要区别在于（）", "difficulty": "简单", "options": ["A.峰的高度不同", "B.峰的数量不同", "C.峰与峰之间是否相连", "D.形成阶段不同"], "answer": "C", "explanation": "峰丛是峰与峰之间底部相连，顶部独立；峰林是峰与峰之间完全分离，互不相连", "type": "single", "category": "地貌类型"}, {"id": 40, "question": "下列哪种作用不属于喀斯特作用？（）", "difficulty": "中等", "options": ["A.流水溶蚀", "B.流水沉积", "C.风力侵蚀", "D.地下水溶蚀"], "answer": "C", "explanation": "喀斯特作用主要是流水（地表流水和地下水", "type": "single", "category": "地貌类型"}, {"id": 41, "question": "我国喀斯特地貌中，地下溶洞最发育的地区是（）", "difficulty": "简单", "options": ["A.广西桂林", "B.贵州安顺", "C.云南石林", "D.重庆武隆"], "answer": "B", "explanation": "贵州安顺龙宫、织金洞等地下溶洞发育完善，是我国地下喀斯特地貌的典型代表", "type": "single", "category": "地貌类型"}, {"id": 42, "question": "喀斯特地貌区容易发生的地质灾害是（）", "difficulty": "中等", "options": ["A.地震", "B.火山喷发", "C.滑坡、崩塌", "D.泥石流"], "answer": "C", "explanation": "喀斯特地貌区岩石破碎、土层薄，降水集中时，易发生滑坡、崩塌等地质灾害；地震、火山喷发与板块运动有关，泥石流多发生在山区且植被覆盖率低的区域", "type": "single", "category": "基础概念"}, {"id": 43, "question": "石芽的形成主要是由于（）", "difficulty": "简单", "options": ["A.流水的垂直溶蚀", "B.流水的水平溶蚀", "C.风力侵蚀", "D.流水沉积"], "answer": "A", "explanation": "地表可溶性岩石被流水垂直溶蚀，形成突出地表的石质芽体，即石芽", "type": "single", "category": "基础概念"}, {"id": 44, "question": "下列关于喀斯特地貌与人类活动的关系，说法错误的是（）", "difficulty": "中等", "options": ["A.喀斯特地貌区可发展旅游业", "B.喀斯特地貌区不利于交通建设", "C.喀斯特地貌区适合发展种植业", "D.喀斯特地貌区需注重水土保持"], "answer": "C", "explanation": "喀斯特地貌区土层薄、肥力低，不利于种植业发展；适合发展旅游业、林业等", "type": "single", "category": "人类活动"}, {"id": 45, "question": "喀斯特沉积地貌的形成条件是（）", "difficulty": "简单", "options": ["A.地下水富含碳酸钙，水分蒸发", "B.流水溶蚀岩石", "C.风力沉积", "D.冰川沉积"], "answer": "A", "explanation": "含有碳酸钙的地下水渗出后，水分蒸发，碳酸钙析出沉积，形成石钟乳、石笋等沉积地貌", "type": "single", "category": "地貌类型"}, {"id": 46, "question": "下列地区中，喀斯特地貌属于海岸喀斯特的是（）", "difficulty": "较难", "options": ["A.广西桂林", "B.福建武夷山", "C.山东半岛", "D.云南石林"], "answer": "C", "explanation": "山东半岛部分地区有海岸喀斯特地貌，由海水溶蚀海岸可溶性岩石形成；桂林、石林是陆地喀斯特，武夷山是丹霞地貌", "type": "single", "category": "基础概念"}, {"id": 47, "question": "喀斯特地貌发育过程中，地表岩石的可溶性逐渐（）", "difficulty": "中等", "options": ["A.增强", "B.减弱", "C.不变", "D.先增强后减弱"], "answer": "B", "explanation": "喀斯特发育过程中，可溶性岩石不断被溶蚀，岩石中的可溶性成分减少，可溶性逐渐减弱", "type": "single", "category": "基础概念"}, {"id": 48, "question": "下列哪种现象不属于喀斯特地貌的特征？（）", "difficulty": "简单", "options": ["A.地表崎岖", "B.地下溶洞多", "C.土壤肥沃", "D.地下水丰富但易渗漏"], "answer": "C", "explanation": "喀斯特地貌区土壤贫瘠，土层浅薄，这是其典型特征之一；地表崎岖、地下溶洞多、地下水易渗漏均是喀斯特地貌的特征", "type": "single", "category": "地貌类型"}, {"id": 49, "question": "溶洞内的石幔与石钟乳的区别在于（）", "difficulty": "中等", "options": ["A.形成位置不同", "B.形成物质不同", "C.形成作用不同", "D.形态不同"], "answer": "A", "explanation": "石钟乳形成于溶洞顶部，向下生长；石幔形成于溶洞壁，水平延伸；二者形成物质和作用相同，均为碳酸钙沉积", "type": "single", "category": "地貌类型"}, {"id": 50, "question": "喀斯特地貌区的生态环境特点是（）", "difficulty": "较难", "options": ["A.生态系统稳定，不易破坏", "B.生态系统脆弱，易退化", "C.植被茂密，生物多样性丰富", "D.土壤肥沃，适合多种作物生长"], "answer": "B", "explanation": "喀斯特地貌区土层薄、植被覆盖率低，地下水易渗漏，生态系统脆弱，一旦破坏难以恢复，易发生退化", "type": "single", "category": "生态环境"}, {"id": 51, "question": "下列关于喀斯特地貌与板块运动关系的说法，正确的是（）", "difficulty": "较难", "options": ["A.板块挤压区不利于喀斯特地貌发育", "B.板块张裂区可溶性岩石广布，利于喀斯特发育", "C.板块交界处地壳活跃，地下水循环加快，促进喀斯特发育", "D.板块内部地壳稳定，无法形成喀斯特地貌"], "answer": "C", "explanation": "板块交界处地壳活跃，岩石裂隙发育，地下水循环速度加快，能更充分地溶蚀可溶性岩石，促进喀斯特地貌发育；板块挤压区若有可溶性岩石和充足水分，也能发育喀斯特；板块张裂区不一定有可溶性岩石；板块内部地壳稳定，若具备物质和动力条件，也可形成喀斯特地貌", "type": "single", "category": "基础概念"}, {"id": 52, "question": "喀斯特地貌区地下溶洞中，钟乳石的生长方向与下列哪种因素无关？（）", "difficulty": "较难", "options": ["A.重力作用", "B.地下水渗出方向", "C.溶洞内气流方向", "D.岩石可溶性强弱"], "answer": "D", "explanation": "钟乳石生长方向受重力（向下生长", "type": "single", "category": "地貌类型"}, {"id": 53, "question": "下列关于喀斯特地貌区地下水补给关系的说法，正确的是（）", "difficulty": "较难", "options": ["A.地表径流完全不补给地下水", "B.地下水主要依靠大气降水补给，且补给速度快", "C.地下水补给地表径流的现象罕见", "D.喀斯特裂隙发育，大气降水可快速下渗补给地下水，且地下水易通过地下河补给地表径流"], "answer": "D", "explanation": "喀斯特地貌区岩石裂隙和溶洞发育，大气降水可快速下渗补给地下水，形成丰富的地下水资源；地下水也可通过地下河、溶洞出口等形式补给地表径流，形成“地下水补给地表水”的特殊现象；地表径流也会通过渗漏补给地下水", "type": "single", "category": "地貌类型"}, {"id": 54, "question": "某喀斯特地区出现“地表无流、地下暗流”的现象，其主要原因是（）", "difficulty": "较难", "options": ["A.气候干旱，降水稀少", "B.岩石透水性差，地下水无法渗出", "C.可溶性岩石广布，地表径流大量下渗形成地下河", "D.植被覆盖率高，地表径流被截留"], "answer": "C", "explanation": "“地表无流、地下暗流”是喀斯特地貌区的典型特征，核心原因是可溶性岩石（如石灰岩", "type": "single", "category": "基础概念"}, {"id": 55, "question": "下列哪种喀斯特地貌景观的形成，与地下水的化学性质变化直接相关？（）", "difficulty": "较难", "options": ["A.峰林", "B.溶沟", "C.石笋", "D.溶蚀漏斗"], "answer": "C", "explanation": "石笋是地下水富含碳酸氢钙，当地下水渗出后，二氧化碳逸出，碳酸氢钙分解为碳酸钙并沉积形成，与地下水化学性质变化直接相关；峰林、溶沟、溶蚀漏斗均是流水溶蚀作用形成，主要与地下水的溶蚀能力相关，不直接涉及化学性质变化", "type": "single", "category": "形成机制"}, {"id": 56, "question": "喀斯特地貌区进行交通建设时，最需要防范的地质风险是（）", "difficulty": "较难", "options": ["A.地震", "B.火山喷发", "C.溶洞塌陷", "D.泥石流"], "answer": "C", "explanation": "喀斯特地貌区地下溶洞广泛发育，部分溶洞顶部岩石薄弱，交通建设（如修路、建桥", "type": "single", "category": "地貌类型"}, {"id": 57, "question": "下列关于喀斯特地貌与全球气候变化的关系，说法正确的是（）", "difficulty": "较难", "options": ["A.全球变暖会减缓喀斯特溶蚀速度", "B.降水增多会增强喀斯特溶蚀作用，但会减少沉积地貌形成", "C.全球变暖导致降水格局变化，可能使喀斯特地貌发育呈现区域差异", "D.气候变化对喀斯特地貌发育无明显影响"], "answer": "C", "explanation": "全球变暖会使气温升高，加快岩石溶蚀速度；降水增多会增强溶蚀作用，同时也会增加地下水的碳酸钙含量，促进沉积地貌形成；全球变暖会改变区域降水格局，部分地区降水增多、部分地区减少，导致喀斯特地貌发育呈现区域差异；气候变化通过影响气温和降水，对喀斯特地貌发育有显著影响", "type": "single", "category": "形成机制"}, {"id": 58, "question": "下列地区中，喀斯特地貌发育呈现“地上峰林稀疏、地下溶洞密集”特征的是（）", "difficulty": "较难", "options": ["A.广西桂林", "B.贵州安顺", "C.云南石林", "D.重庆武隆"], "answer": "B", "explanation": "贵州安顺地区可溶性岩石深厚，地下溶洞密集且发育完善，地表因长期溶蚀，峰林相对稀疏；广西桂林以地表峰林密集为特征；云南石林以石芽、峰丛为主，地下溶洞发育不如安顺密集；重庆武隆地表峰林和地下溶洞均较发育，但未呈现“地上稀疏、地下密集”的特征", "type": "single", "category": "地貌类型"}, {"id": 59, "question": "喀斯特地貌区土壤中有机质含量低的主要原因是（）", "difficulty": "较难", "options": ["A.植被覆盖率低，有机质输入少", "B.土壤质地疏松，有机质易流失", "C.地下水渗漏快，土壤水分不足，微生物分解缓慢", "D.溶蚀作用强，土壤中有机质被分解溶解"], "answer": "A", "explanation": "喀斯特地貌区土层薄、肥力低，不利于植被生长，植被覆盖率低，导致有机质输入少，这是土壤有机质含量低的主要原因；土壤质地疏松不是主要原因，且有机质流失与植被覆盖相关；地下水渗漏快导致土壤水分不足，会加快微生物分解，而非缓慢；溶蚀作用主要针对岩石，对土壤有机质分解溶解作用较弱", "type": "single", "category": "形成机制"}, {"id": 60, "question": "下列关于喀斯特地貌与岩溶水的说法，错误的是（）", "difficulty": "较难", "options": ["A.岩溶水是指储存于喀斯特溶洞、裂隙中的地下水", "B.岩溶水的水质硬度普遍较高", "C.岩溶水的分布与可溶性岩石的分布高度一致", "D.岩溶水的补给速度慢，且难以恢复"], "answer": "D", "explanation": "岩溶水是储存于喀斯特溶洞、裂隙中的地下水，因长期与可溶性岩石接触，水质硬度较高，且分布与可溶性岩石分布高度一致；喀斯特地貌区岩石裂隙发育，大气降水可快速下渗补给岩溶水，补给速度较快，但一旦过度开采，恢复难度较大", "type": "single", "category": "水文特征"}, {"id": 1, "question": "下列岩石中，属于喀斯特地貌形成所需的可溶性岩石的有（）", "difficulty": "简单", "options": ["A.石灰岩", "B.白云岩", "C.大理岩", "D.石英岩"], "answer": "ABC", "explanation": "石灰岩、白云岩是原生可溶性岩石，大理岩是石灰岩变质形成的，仍具可溶性；石英岩不溶于水，不属于可溶性岩石", "type": "single", "category": "基础概念"}, {"id": 2, "question": "下列属于地表喀斯特地貌的有（）", "difficulty": "简单", "options": ["A.峰林", "B.峰丛", "C.石芽", "D.溶洞"], "answer": "ABC", "explanation": "峰林、峰丛、石芽均为地表喀斯特地貌；溶洞属于地下喀斯特地貌", "type": "single", "category": "地貌类型"}, {"id": 3, "question": "喀斯特地貌发育的必要条件有（）", "difficulty": "中等", "options": ["A.可溶性岩石广布", "B.充足的水分", "C.适宜的气候条件", "D.茂密的植被"], "answer": "ABC", "explanation": "可溶性岩石是物质基础，充足水分是动力条件，适宜气候（高温多雨", "type": "single", "category": "基础概念"}, {"id": 4, "question": "下列属于地下喀斯特地貌的有（）", "difficulty": "简单", "options": ["A.地下河", "B.石笋", "C.石柱", "D.溶沟"], "answer": "ABC", "explanation": "地下河、石笋、石柱均为地下喀斯特地貌；溶沟属于地表喀斯特地貌", "type": "single", "category": "地貌类型"}, {"id": 5, "question": "喀斯特作用的主要表现形式有（）", "difficulty": "中等", "options": ["A.流水溶蚀", "B.流水沉积", "C.风力侵蚀", "D.地下水溶蚀"], "answer": "ABD", "explanation": "喀斯特作用主要是流水（地表和地下水", "type": "single", "category": "地貌类型"}, {"id": 6, "question": "我国喀斯特地貌主要分布在南方地区的原因有（）", "difficulty": "简单", "options": ["A.南方地区石灰岩广布", "B.南方地区气候湿润，降水充足", "C.南方地区气温高，加快溶蚀", "D.南方地区植被茂密"], "answer": "ABC", "explanation": "南方地区石灰岩广布、降水充足、气温高，为喀斯特地貌发育提供了物质和动力条件；植被茂密不是主要原因", "type": "single", "category": "分布特征"}, {"id": 7, "question": "下列关于喀斯特地貌对交通的影响，说法正确的有（）", "difficulty": "中等", "options": ["A.地表崎岖，不利于公路、铁路建设", "B.地下溶洞多，易导致道路塌陷", "C.河流稀少，不利于水运", "D.地形复杂，建设成本高"], "answer": "ABD", "explanation": "喀斯特地貌区地表崎岖、地下溶洞多，导致交通建设难度大、成本高，易发生道路塌陷；部分地区有地下河，但地表河流稀少，对水运影响较小", "type": "single", "category": "地貌类型"}, {"id": 8, "question": "下列属于喀斯特沉积地貌的有（）", "difficulty": "简单", "options": ["A.石钟乳", "B.石笋", "C.石柱", "D.溶蚀洼地"], "answer": "ABC", "explanation": "石钟乳、石笋、石柱均为碳酸钙沉积形成；溶蚀洼地是溶蚀作用形成的，属于溶蚀地貌", "type": "single", "category": "地貌类型"}, {"id": 9, "question": "喀斯特地貌区容易出现的环境问题有（）", "difficulty": "中等", "options": ["A.水土流失", "B.土地石漠化", "C.地下水污染", "D.土壤盐碱化"], "answer": "ABC", "explanation": "喀斯特地貌区土层薄、植被少，易发生水土流失和土地石漠化；地下溶洞多，地下水易被污染；土壤盐碱化主要发生在干旱、半干旱地区", "type": "single", "category": "生态环境"}, {"id": 10, "question": "下列国家中，喀斯特地貌分布广泛的有（）", "difficulty": "较难", "options": ["A.中国", "B.斯洛文尼亚", "C.法国", "D.澳大利亚"], "answer": "ABD", "explanation": "中国、斯洛文尼亚、澳大利亚喀斯特地貌分布广泛；法国喀斯特地貌分布较少", "type": "single", "category": "分布特征"}, {"id": 11, "question": "峰林与峰丛的共同点有（）", "difficulty": "简单", "options": ["A.均为地表喀斯特地貌", "B.均由流水溶蚀形成", "C.峰体均较为陡峭", "D.均形成于喀斯特中期"], "answer": "ABC", "explanation": "峰林和峰丛均为地表喀斯特、流水溶蚀形成，峰体陡峭；峰丛形成于中期，峰林形成于中期向晚期过渡阶段", "type": "single", "category": "地貌类型"}, {"id": 12, "question": "喀斯特地貌区的地下水特点有（）", "difficulty": "中等", "options": ["A.水量丰富", "B.易渗漏", "C.水质硬度高", "D.含沙量高"], "answer": "ABC", "explanation": "喀斯特地貌区地下水丰富、易渗漏，且富含碳酸钙，水质硬度高；地下水多在溶洞中流动，含沙量低", "type": "single", "category": "地貌类型"}, {"id": 13, "question": "下列关于石钟乳、石笋、石柱的说法，正确的有（）", "difficulty": "简单", "options": ["A.均为地下喀斯特沉积地貌", "B.均由碳酸钙沉积形成", "C.石钟乳向下生长，石笋向上生长", "D.石柱是石钟乳与石笋连接形成的"], "answer": "ABCD", "explanation": "石钟乳、石笋、石柱均为地下喀斯特沉积地貌，由碳酸钙沉积形成，生长方式和形成关系符合上述描述", "type": "single", "category": "地貌类型"}, {"id": 14, "question": "喀斯特地貌发育的阶段包括（）", "difficulty": "中等", "options": ["A.初期阶段", "B.中期阶段", "C.晚期阶段", "D.衰退阶段"], "answer": "ABCD", "explanation": "喀斯特地貌发育依次经历初期、中期、晚期、衰退四个阶段，每个阶段有不同的地貌特征", "type": "single", "category": "发育阶段"}, {"id": 15, "question": "下列人类活动中，能保护喀斯特地貌区生态环境的有（）", "difficulty": "简单", "options": ["A.植树造林", "B.陡坡开垦", "C.合理开发旅游", "D.修建水库"], "answer": "AC", "explanation": "植树造林可保持水土，合理开发旅游可避免过度破坏；陡坡开垦会加剧水土流失，修建水库对喀斯特区生态保护影响较小", "type": "single", "category": "生态环境"}, {"id": 16, "question": "下列地貌中，由流水溶蚀作用形成的有（）", "difficulty": "中等", "options": ["A.溶沟", "B.溶蚀洼地", "C.峰林", "D.石钟乳"], "answer": "ABC", "explanation": "溶沟、溶蚀洼地、峰林均由流水溶蚀形成；石钟乳由流水沉积形成", "type": "single", "category": "地貌类型"}, {"id": 17, "question": "我国喀斯特地貌的典型分布区有（）", "difficulty": "简单", "options": ["A.云贵高原", "B.广西壮族自治区", "C.湖南张家界", "D.重庆武隆"], "answer": "ABD", "explanation": "云贵高原、广西、重庆武隆是我国喀斯特典型分布区；张家界是石英砂岩峰林，不属于喀斯特地貌", "type": "single", "category": "分布特征"}, {"id": 18, "question": "喀斯特地貌对农业生产的不利影响有（）", "difficulty": "中等", "options": ["A.地表崎岖，不利于耕作", "B.土壤贫瘠，肥力低", "C.地下水易渗漏，灌溉不便", "D.植被稀少，水土流失严重"], "answer": "ABCD", "explanation": "上述四点均是喀斯特地貌对农业生产的不利影响，导致该区域农业发展受限", "type": "single", "category": "人类活动"}, {"id": 19, "question": "下列关于溶洞的说法，正确的有（）", "difficulty": "简单", "options": ["A.溶洞是地下喀斯特地貌的主要类型", "B.溶洞的形成与流水溶蚀作用有关", "C.溶洞内常伴有沉积地貌", "D.溶洞大小不一，形态各异"], "answer": "ABCD", "explanation": "溶洞是地下喀斯特的主要类型，由流水溶蚀形成，洞内有石钟乳等沉积地貌，且形态、大小差异较大", "type": "single", "category": "地貌类型"}, {"id": 20, "question": "喀斯特地貌区的气候特点通常是（）", "difficulty": "较难", "options": ["A.高温多雨", "B.降水集中", "C.气温年较差小", "D.气候干旱"], "answer": "ABC", "explanation": "喀斯特地貌多分布在热带、亚热带湿润地区，气候特点为高温多雨、降水集中、气温年较差小；气候干旱不利于喀斯特发育", "type": "single", "category": "分布特征"}, {"id": 21, "question": "下列属于喀斯特地貌与其他地貌区别的特征有（）", "difficulty": "中等", "options": ["A.可溶性岩石为物质基础", "B.流水溶蚀为主要作用", "C.地表崎岖，地下溶洞多", "D.植被茂密"], "answer": "ABC", "explanation": "可溶性岩石、流水溶蚀、地表地下地貌特征是喀斯特与其他地貌的主要区别；喀斯特区植被多较稀疏", "type": "single", "category": "基础概念"}, {"id": 22, "question": "石芽与溶沟的关系是（）", "difficulty": "简单", "options": ["A.均形成于喀斯特初期", "B.溶沟是石芽之间的凹陷部分", "C.均由流水溶蚀形成", "D.石芽是溶沟之间的突出部分"], "answer": "ABCD", "explanation": "石芽和溶沟均形成于喀斯特初期，由流水溶蚀形成，溶沟是凹陷部分，石芽是突出部分，二者相互依存", "type": "single", "category": "地貌类型"}, {"id": 23, "question": "喀斯特地貌区的地质灾害主要有（）", "difficulty": "中等", "options": ["A.滑坡", "B.崩塌", "C.泥石流", "D.地震"], "answer": "ABC", "explanation": "喀斯特区岩石破碎、土层薄，易发生滑坡、崩塌、泥石流；地震与板块运动有关，不是该区域主要地质灾害", "type": "single", "category": "基础概念"}, {"id": 24, "question": "下列关于喀斯特沉积地貌的形成条件，说法正确的有（）", "difficulty": "简单", "options": ["A.地下水富含碳酸钙", "B.水分蒸发", "C.地下水渗出速度适中", "D.地表崎岖"], "answer": "ABC", "explanation": "地下水富含碳酸钙、水分蒸发、渗出速度适中是沉积地貌形成的必要条件；地表崎岖与沉积地貌形成无关", "type": "single", "category": "地貌类型"}, {"id": 25, "question": "下列地区中，属于海岸喀斯特地貌的有（）", "difficulty": "较难", "options": ["A.山东半岛", "B.福建沿海", "C.广西沿海", "D.云南石林"], "answer": "ABC", "explanation": "山东半岛、福建沿海、广西沿海有海岸喀斯特地貌，由海水溶蚀形成；云南石林是陆地喀斯特", "type": "single", "category": "分布特征"}, {"id": 26, "question": "喀斯特地貌区植被覆盖率低的原因有（）", "difficulty": "中等", "options": ["A.土壤贫瘠，土层浅薄", "B.地下水易渗漏，水分不足", "C.气温过高，蒸发旺盛", "D.人类活动破坏"], "answer": "ABD", "explanation": "土壤贫瘠、地下水渗漏、人类活动破坏均导致喀斯特区植被覆盖率低；气温过高不是主要原因，热带地区植被可生长茂盛", "type": "single", "category": "生态环境"}, {"id": 27, "question": "下列关于喀斯特地貌旅游开发的优势，说法正确的有（）", "difficulty": "简单", "options": ["A.景观独特，吸引力强", "B.旅游资源丰富", "C.适合发展生态旅游", "D.开发成本低"], "answer": "ABC", "explanation": "喀斯特地貌景观独特、旅游资源丰富，适合发展生态旅游；但地形复杂，开发成本较高", "type": "single", "category": "人类活动"}, {"id": 28, "question": "下列属于喀斯特地貌发育后期的地貌景观有（）", "difficulty": "中等", "options": ["A.孤峰", "B.溶蚀洼地", "C.地下河", "D.石芽"], "answer": "AB", "explanation": "孤峰、溶蚀洼地是喀斯特后期景观；地下河在中期已发育，石芽是初期景观", "type": "single", "category": "地貌类型"}, {"id": 29, "question": "喀斯特作用与流水作用的关系是（）", "difficulty": "简单", "options": ["A.喀斯特作用是流水作用的一种特殊形式", "B.流水作用是喀斯特作用的主要动力", "C.喀斯特作用仅包括流水溶蚀", "D.流水作用仅参与喀斯特溶蚀"], "answer": "AB", "explanation": "喀斯特作用是流水作用在可溶性岩石地区的特殊表现，流水是喀斯特作用的主要动力；喀斯特作用包括溶蚀和沉积，流水作用还参与其他地貌形成", "type": "single", "category": "基础概念"}, {"id": 30, "question": "下列关于喀斯特地貌的说法，正确的有（）", "difficulty": "较难", "options": ["A.喀斯特地貌又称岩溶地貌", "B.喀斯特地貌的形成需要漫长的时间", "C.喀斯特地貌只分布在陆地", "D.喀斯特地貌区生态环境脆弱"], "answer": "ABD", "explanation": "喀斯特地貌又称岩溶地貌，形成过程漫长，生态环境脆弱；喀斯特地貌不仅分布在陆地，还有海岸喀斯特", "type": "single", "category": "生态环境"}, {"id": 31, "question": "下列关于喀斯特地貌区地下水与地表水相互转化的说法，正确的有（）", "difficulty": "较难", "options": ["A.雨季时，地表径流大量下渗，补给地下水", "B.旱季时，地下水通过地下河、泉眼等形式补给地表水", "C.喀斯特地貌区地下水与地表水的转化速度比非喀斯特区快", "D.地下水与地表水的转化只受降水季节变化影响"], "answer": "ABC", "explanation": "喀斯特地貌区岩石裂隙发育，雨季降水多，地表径流快速下渗补给地下水；旱季降水少，地下水通过地下河、泉眼等补给地表水；因岩石透水性强，转化速度比非喀斯特区快；地下水与地表水的转化还受岩石透水性、地形坡度等因素影响，并非只受降水季节变化影响", "type": "single", "category": "地貌类型"}, {"id": 32, "question": "喀斯特地貌发育过程中，影响溶蚀速度的因素有（）", "difficulty": "较难", "options": ["A.岩石中碳酸钙的含量", "B.地下水的pH值", "C.地下水的流动速度", "D.地表植被覆盖率"], "answer": "ABCD", "explanation": "岩石中碳酸钙含量越高，越易被溶蚀；地下水pH值越低（酸性越强", "type": "single", "category": "形成机制"}, {"id": 33, "question": "下列关于喀斯特溶洞内沉积地貌的说法，正确的有（）", "difficulty": "较难", "options": ["A.石幔的形成与地下水沿溶洞壁水平渗出有关", "B.石花是由地下水在溶洞底部缓慢沉积形成的", "C.石柱的形成速度取决于石钟乳和石笋的生长速度", "D.溶洞内的沉积地貌颜色均为白色"], "answer": "AC", "explanation": "石幔是地下水沿溶洞壁水平渗出，碳酸钙沉积形成；石花是地下水在溶洞壁或顶部微小裂隙中沉积形成，并非底部；石柱由石钟乳和石笋连接形成，生长速度取决于二者的生长速度；溶洞内沉积地貌颜色受杂质影响，可呈现灰色、黄色等，并非均为白色", "type": "single", "category": "地貌类型"}, {"id": 34, "question": "喀斯特地貌区土地石漠化的形成与下列哪些因素有关？（）", "difficulty": "较难", "options": ["A.可溶性岩石广布，土层浅薄", "B.降水集中且多暴雨", "C.人类过度开垦、砍伐植被", "D.地下水渗漏快，土壤水分不足"], "answer": "ABCD", "explanation": "土地石漠化是喀斯特区典型环境问题，可溶性岩石广布导致土层浅薄，是物质基础；降水集中多暴雨，加剧水土流失；人类过度开垦、砍伐植被，破坏地表覆盖，加剧石漠化；地下水渗漏快，土壤水分不足，植被难以生长，进一步推动石漠化", "type": "single", "category": "生态环境"}, {"id": 35, "question": "下列关于海岸喀斯特地貌与陆地喀斯特地貌的区别，说法正确的有（）", "difficulty": "较难", "options": ["A.海岸喀斯特由海水溶蚀形成，陆地喀斯特由淡水溶蚀形成", "B.海岸喀斯特多分布在温带沿海地区，陆地喀斯特多分布在热带、亚热带地区", "C.海岸喀斯特地貌形态更破碎，陆地喀斯特地貌形态更完整", "D.海岸喀斯特受海水潮汐影响，陆地喀斯特受地表径流影响"], "answer": "ABD", "explanation": "海岸喀斯特由海水（咸水", "type": "single", "category": "基础概念"}, {"id": 36, "question": "下列关于喀斯特地貌区土壤改良的措施，合理的有（）", "difficulty": "较难", "options": ["A.增施有机肥，提高土壤肥力", "B.修建梯田，减缓水土流失", "C.引地下水灌溉，改善土壤水分条件", "D.种植耐贫瘠、耐旱的植被，提高植被覆盖率"], "answer": "ABD", "explanation": "喀斯特地貌区土壤贫瘠、土层薄、地下水易渗漏，增施有机肥可提高土壤肥力；修建梯田能减缓水土流失，减少土壤流失；种植耐贫瘠、耐旱植被可改善地表覆盖，保护土壤；引地下水灌溉需合理规划，避免过度开采导致地下水枯竭，且喀斯特区地下水硬度高，直接灌溉可能影响作物生长，故C不合理", "type": "single", "category": "生态环境"}, {"id": 37, "question": "下列关于喀斯特溶洞形成过程的说法，正确的有（）", "difficulty": "较难", "options": ["A.首先由地下水溶蚀岩石，形成小型裂隙", "B.裂隙不断扩大，形成地下洞穴", "C.洞穴内持续发生溶蚀作用，使溶洞不断扩大", "D.溶洞形成后，不会再发生变化"], "answer": "ABC", "explanation": "喀斯特溶洞形成初期，地下水沿岩石裂隙溶蚀，使裂隙扩大；随着溶蚀作用持续，裂隙逐渐发育成地下洞穴；洞穴形成后，地下水仍会持续溶蚀岩石，同时伴随沉积作用，溶洞会不断变化，并非一成不变，故D错误", "type": "single", "category": "基础概念"}, {"id": 38, "question": "喀斯特地貌区发展旅游业时，需要防范的环境问题有（）", "difficulty": "较难", "options": ["A.旅游垃圾污染", "B.植被破坏", "C.溶洞坍塌", "D.地下水污染"], "answer": "ABCD", "explanation": "喀斯特地貌区生态脆弱，发展旅游业时，游客产生的垃圾会造成环境污染；旅游开发过程中可能破坏地表植被，加剧水土流失；溶洞顶部岩石薄弱，大量游客进入或开发不当可能引发溶洞坍塌；旅游活动产生的污水可能渗入地下，污染地下水", "type": "single", "category": "生态环境"}, {"id": 39, "question": "下列关于喀斯特地貌与河流地貌的区别，说法正确的有（）", "difficulty": "较难", "options": ["A.喀斯特地貌以可溶性岩石为基础，河流地貌以各类岩石为基础", "B.喀斯特地貌主要由溶蚀、沉积作用形成，河流地貌主要由侵蚀、搬运、沉积作用形成", "C.喀斯特地貌多地下水体，河流地貌多地表水体", "D.喀斯特地貌只分布在湿润地区，河流地貌可分布在各类气候区"], "answer": "ABC", "explanation": "喀斯特地貌必须以可溶性岩石为物质基础，河流地貌可在各类岩石分布区形成；喀斯特地貌核心是溶蚀和沉积，河流地貌核心是流水的侵蚀、搬运、沉积；喀斯特区多地下河，河流地貌以地表河流、冲积平原等为主；喀斯特地貌主要分布在湿润地区，但并非只分布在湿润地区，部分半湿润地区也有发育，故D错误", "type": "single", "category": "基础概念"}, {"id": 40, "question": "下列关于喀斯特地貌发育与岩石透水性关系的说法，正确的有（）", "difficulty": "较难", "options": ["A.岩石透水性越强，喀斯特地貌发育越旺盛", "B.岩石透水性差，地下水难以渗透，不利于喀斯特溶蚀", "C.岩石裂隙越发育，透水性越强，喀斯特地貌越典型", "D.岩石透水性只影响地下喀斯特地貌，不影响地表喀斯特地貌"], "answer": "ABC", "explanation": "岩石透水性越强，地下水越易渗透，能更充分地溶蚀可溶性岩石，喀斯特地貌发育越旺盛；岩石透水性差，地下水难以渗透，溶蚀作用难以发生，不利于喀斯特发育；岩石裂隙越发育，透水性越强，溶蚀作用越明显，喀斯特地貌越典型；岩石透水性不仅影响地下喀斯特（如溶洞、地下河", "type": "single", "category": "地貌类型"}, {"id": 41, "question": "下列关于喀斯特地貌区生态修复的措施，可行的有（）", "difficulty": "较难", "options": ["A.退耕还林还草，恢复地表植被", "B.封山育林，减少人类活动干扰", "C.修建水利设施，缓解水资源短缺", "D.大规模开采地下水，改善土壤水分"], "answer": "ABC", "explanation": "退耕还林还草、封山育林可恢复地表植被，减少水土流失，促进生态修复；修建水利设施可储存降水，缓解喀斯特区地下水渗漏导致的水资源短缺；大规模开采地下水会导致地下水位下降，加剧溶洞塌陷和生态退化，故D不可行", "type": "single", "category": "地貌类型"}, {"id": 42, "question": "下列关于喀斯特溶蚀作用与温度关系的说法，正确的有（）", "difficulty": "较难", "options": ["A.温度越高，溶蚀速度越快", "B.温度过低，溶蚀作用几乎停止", "C.温度变化对溶蚀速度无明显影响", "D.适宜的温度范围（15-25℃）最有利于溶蚀作用"], "answer": "ABD", "explanation": "温度升高会加快碳酸钙与水、二氧化碳的反应速度，溶蚀速度随之加快；温度过低（如低于0℃", "type": "single", "category": "形成机制"}, {"id": 43, "question": "下列地貌中，既属于喀斯特地貌，又与沉积作用相关的有（）", "difficulty": "中等", "options": ["A.石钟乳", "B.石柱", "C.峰林", "D.石幔"], "answer": "ABD", "explanation": "石钟乳、石柱、石幔均为喀斯特沉积地貌，由碳酸钙沉积形成；峰林是流水溶蚀形成的喀斯特溶蚀地貌，与沉积作用无关", "type": "single", "category": "地貌类型"}, {"id": 44, "question": "喀斯特地貌区的地下水与地表水相比，具有的特点有（）", "difficulty": "较难", "options": ["A.水量更稳定，受季节变化影响小", "B.水质更纯净，不含杂质", "C.流动速度更快，循环周期短", "D.埋藏较深，开采难度大"], "answer": "AD", "explanation": "喀斯特区地下水储存于溶洞、裂隙中，受季节降水影响较小，水量更稳定；地下水长期与岩石接触，富含碳酸钙等物质，并非更纯净；地下水流动速度取决于岩石裂隙发育程度，不一定更快，循环周期也可能较长；地下水埋藏较深，且分布分散，开采难度较大，故B、C错误", "type": "single", "category": "地貌类型"}, {"id": 45, "question": "下列关于喀斯特地貌与丹霞地貌的区别，说法正确的有（）", "difficulty": "较难", "options": ["A.喀斯特地貌以可溶性岩石为基础，丹霞地貌以红色砂岩为基础", "B.喀斯特地貌主要由溶蚀作用形成，丹霞地貌主要由流水侵蚀作用形成", "C.喀斯特地貌多地下溶洞，丹霞地貌多地表陡崖、峰林", "D.喀斯特地貌多分布在湿润地区，丹霞地貌多分布在干旱地区"], "answer": "ABC", "explanation": "喀斯特地貌的物质基础是可溶性岩石（如石灰岩", "type": "single", "category": "基础概念"}, {"id": 46, "question": "下列人类活动中，会加剧喀斯特地貌区石漠化的有（）", "difficulty": "中等", "options": ["A.过度放牧", "B.乱砍滥伐", "C.修建梯田", "D.不合理开矿"], "answer": "ABD", "explanation": "过度放牧、乱砍滥伐会破坏地表植被，不合理开矿会破坏岩石结构和地表覆盖，均会加剧水土流失和石漠化；修建梯田可减缓水土流失，有利于防治石漠化，故C错误", "type": "single", "category": "生态环境"}, {"id": 47, "question": "下列关于喀斯特溶洞内环境的说法，正确的有（）", "difficulty": "较难", "options": ["A.温度稳定，昼夜温差小", "B.湿度大，空气湿润", "C.光照充足，植物茂盛", "D.二氧化碳浓度高于地表"], "answer": "ABD", "explanation": "溶洞位于地下，受外界环境影响小，温度稳定、昼夜温差小；地下水渗出多，空气湿度大；溶洞内缺乏光照，植物难以生长；岩石溶蚀过程会释放二氧化碳，且空气流通不畅，二氧化碳浓度高于地表，故C错误", "type": "single", "category": "地貌类型"}, {"id": 48, "question": "喀斯特地貌发育过程中，地表形态的变化趋势是（）", "difficulty": "较难", "options": ["A.从崎岖逐渐变得平缓", "B.从平缓逐渐变得崎岖", "C.峰体从密集逐渐变得稀疏", "D.洼地从小型逐渐变得大型"], "answer": "ACD", "explanation": "喀斯特初期地表较平缓，随着溶蚀作用加剧，地表变得崎岖；进入中期、晚期，峰林逐渐被溶蚀，峰体从密集变得稀疏，溶蚀洼地不断扩大，从小型变为大型；整体趋势是从崎岖逐步趋于平缓，故B错误", "type": "single", "category": "地貌类型"}, {"id": 49, "question": "下列关于喀斯特地貌区水资源利用的说法，正确的有（）", "difficulty": "较难", "options": ["A.可修建蓄水池，储存地表降水", "B.可开发地下河，合理利用地下水", "C.地下水硬度高，需处理后再用于灌溉", "D.应大量开采地下水，满足生产生活需求"], "answer": "ABC", "explanation": "喀斯特区地下水易渗漏，修建蓄水池可储存地表降水，提高水资源利用率；合理开发地下河，可充分利用地下水资源；地下水富含碳酸钙，硬度高，直接灌溉会影响作物生长，需处理后使用；大量开采地下水会导致地下水位下降，引发溶洞塌陷等问题，故D错误", "type": "single", "category": "地貌类型"}, {"id": 50, "question": "下列关于喀斯特地貌的研究意义，说法正确的有（）", "difficulty": "较难", "options": ["A.有助于研究区域地质演化历史", "B.为水资源开发利用提供科学依据", "C.对地质灾害防治具有指导意义", "D.为旅游资源开发提供理论支撑"], "answer": "ABCD", "explanation": "喀斯特地貌的形成与地质演化、气候变迁密切相关，研究其可了解区域地质历史；喀斯特区地下水丰富，研究地貌可指导水资源合理开发；掌握喀斯特地貌特征，能有效防范溶洞塌陷、滑坡等地质灾害；喀斯特景观独特，研究其可为旅游开发规划提供理论支撑", "type": "single", "category": "地貌类型"}, {"id": 1, "question": "喀斯特地貌只形成于地表，地下不会有喀斯特地貌。（）", "difficulty": "简单", "options": ["A.正确", "B.错误"], "answer": "B", "explanation": "喀斯特地貌分为地表喀斯特和地下喀斯特，地下溶洞、地下河、石钟乳等均为地下喀斯特地貌", "type": "judge", "category": "地貌类型"}, {"id": 2, "question": "石灰岩是喀斯特地貌形成最主要的可溶性岩石。（）", "difficulty": "简单", "options": ["A.正确", "B.错误"], "answer": "A", "explanation": "石灰岩主要成分是碳酸钙，易被流水溶蚀，是喀斯特地貌形成最核心的可溶性岩石", "type": "judge", "category": "基础概念"}, {"id": 3, "question": "喀斯特地貌的形成只与流水的溶蚀作用有关，与沉积作用无关。（）", "difficulty": "简单", "options": ["A.正确", "B.错误"], "answer": "B", "explanation": "喀斯特作用包括流水的溶蚀作用和沉积作用，石钟乳、石笋等均为沉积作用形成", "type": "judge", "category": "地貌类型"}, {"id": 4, "question": "我国喀斯特地貌主要分布在北方地区，南方地区分布较少。（）", "difficulty": "简单", "options": ["A.正确", "B.错误"], "answer": "B", "explanation": "我国喀斯特地貌主要分布在南方地区，如云贵高原、广西等地，北方地区因气候干旱、石灰岩分布少，喀斯特地貌不发育", "type": "judge", "category": "分布特征"}, {"id": 5, "question": "地下河是喀斯特地貌区特有的地下水体。（）", "difficulty": "简单", "options": ["A.正确", "B.错误"], "answer": "A", "explanation": "地下河是地下水长期溶蚀可溶性岩石形成溶洞，水流汇集而成，是喀斯特地貌区典型的地下水体", "type": "judge", "category": "基础概念"}, {"id": 6, "question": "喀斯特地貌区的土壤肥沃，适合大规模发展种植业。（）", "difficulty": "简单", "options": ["A.正确", "B.错误"], "answer": "B", "explanation": "喀斯特地貌区土层薄、肥力低，且地下水易渗漏，不利于种植业发展", "type": "judge", "category": "水文特征"}, {"id": 7, "question": "石钟乳和石笋的形成物质都是碳酸钙。（）", "difficulty": "简单", "options": ["A.正确", "B.错误"], "answer": "A", "explanation": "石钟乳和石笋均由含有碳酸钙的地下水渗出后，水分蒸发、碳酸钙沉积形成", "type": "judge", "category": "地貌类型"}, {"id": 8, "question": "喀斯特地貌发育的初期，地表会形成峰林景观。（）", "difficulty": "中等", "options": ["A.正确", "B.错误"], "answer": "B", "explanation": "峰林形成于喀斯特发育的中期，初期主要形成石芽、溶沟等小型地表地貌", "type": "judge", "category": "地貌类型"}, {"id": 9, "question": "喀斯特地貌区的地下水主要是承压水，埋藏较深。（）", "difficulty": "中等", "options": ["A.正确", "B.错误"], "answer": "A", "explanation": "喀斯特地貌区地下溶洞、岩石裂隙发育，地下水储存于其中，形成埋藏较深的承压水", "type": "judge", "category": "基础概念"}, {"id": 10, "question": "风力侵蚀作用也会参与喀斯特地貌的形成。（）", "difficulty": "中等", "options": ["A.正确", "B.错误"], "answer": "B", "explanation": "喀斯特地貌的形成主要与流水的溶蚀和沉积作用有关，与风力侵蚀作用无关", "type": "judge", "category": "形成机制"}, {"id": 11, "question": "孤峰是喀斯特地貌发育晚期的典型景观。（）", "difficulty": "简单", "options": ["A.正确", "B.错误"], "answer": "A", "explanation": "喀斯特晚期，峰林被进一步溶蚀，大部分山峰消失，仅残留少数孤立山峰，形成孤峰", "type": "judge", "category": "地貌类型"}, {"id": 12, "question": "喀斯特地貌区容易发生水土流失和土地石漠化。（）", "difficulty": "简单", "options": ["A.正确", "B.错误"], "answer": "A", "explanation": "喀斯特地貌区土层薄、植被覆盖率低，降水集中且多暴雨，易发生水土流失，进而导致土地石漠化", "type": "judge", "category": "生态环境"}, {"id": 13, "question": "海岸喀斯特地貌是由淡水溶蚀海岸岩石形成的。（）", "difficulty": "中等", "options": ["A.正确", "B.错误"], "answer": "B", "explanation": "海岸喀斯特地貌是由海水（咸水", "type": "judge", "category": "基础概念"}, {"id": 14, "question": "溶洞内的沉积地貌颜色均为白色。（）", "difficulty": "简单", "options": ["A.正确", "B.错误"], "answer": "B", "explanation": "溶洞内的沉积地貌颜色受岩石杂质影响，可呈现灰色、黄色、褐色等，并非均为白色", "type": "judge", "category": "基础概念"}, {"id": 15, "question": "喀斯特地貌区的植被覆盖率普遍较高。（）", "difficulty": "简单", "options": ["A.正确", "B.错误"], "answer": "B", "explanation": "喀斯特地貌区土壤贫瘠、土层薄、地下水易渗漏，不利于植被生长，植被覆盖率普遍较低", "type": "judge", "category": "生态环境"}, {"id": 16, "question": "喀斯特作用的本质是流水对可溶性岩石的溶蚀作用。（）", "difficulty": "中等", "options": ["A.正确", "B.错误"], "answer": "A", "explanation": "喀斯特作用的核心的是流水对可溶性岩石的溶蚀，沉积作用是伴随发生的次要作用", "type": "judge", "category": "基础概念"}, {"id": 17, "question": "我国贵州安顺是地下喀斯特地貌最发育的地区之一。（）", "difficulty": "简单", "options": ["A.正确", "B.错误"], "answer": "A", "explanation": "贵州安顺的龙宫、织金洞等地下溶洞发育完善，是我国地下喀斯特地貌的典型代表", "type": "judge", "category": "地貌类型"}, {"id": 18, "question": "喀斯特地貌区的地下水补给速度慢，难以恢复。（）", "difficulty": "中等", "options": ["A.正确", "B.错误"], "answer": "B", "explanation": "喀斯特地貌区岩石裂隙发育，大气降水可快速下渗补给地下水，补给速度较快，但过度开采后恢复难度较大", "type": "judge", "category": "水文特征"}, {"id": 19, "question": "峰丛和峰林的主要区别在于峰体的高度不同。（）", "difficulty": "简单", "options": ["A.正确", "B.错误"], "answer": "B", "explanation": "峰丛和峰林的主要区别在于峰与峰之间是否相连，峰丛底部相连，峰林完全分离", "type": "judge", "category": "地貌类型"}, {"id": 20, "question": "合理开发旅游资源，可实现喀斯特地貌区生态保护与经济发展的双赢。（）", "difficulty": "中等", "options": ["A.正确", "B.错误"], "answer": "A", "explanation": "喀斯特地貌景观独特，合理开发旅游可带动经济发展，同时通过科学规划，可减少对生态环境的破坏，实现保护与发展双赢", "type": "judge", "category": "生态环境"}]
+
+        var learnBaseUrl = 'https://open.bigmodel.cn/api/paas/v4';
+        var learnModel = 'glm-4-flash';
+        var learnApiKey = '795328bbbb4442f8a2258b0642cb1988.s4a6GtVcMTluclRR';
+        var learnTimeout = 60000;
+
+        var selectedDifficulty = '';
+        var currentExamQuestions = [];
+        var userAnswers = {};
+        var examStartTime = null;
+        var examResults = null;
+
+        var difficultyConfig = {
+            easy: { count: 20, difficulties: ['简单'], label: '简单' },
+            medium: { count: 20, difficulties: ['中等'], label: '中等' },
+            hard: { count: 20, difficulties: ['较难'], label: '较难' },
+            mixed: { count: 25, difficulties: ['简单', '中等', '较难'], label: '综合' }
+        };
+
+        function classifyQuestion(q) {
+            var text = (q.question + ' ' + q.explanation).toLowerCase();
+            var categories = {
+                '基础概念': ['形成', '岩石', '石灰岩', '可溶性', '碳酸盐', '本质', '定义'],
+                '地貌类型': ['地表', '地下', '峰林', '峰丛', '石芽', '溶沟', '溶洞', '石钟乳', '石笋', '石柱', '地下河', '孤峰', '洼地'],
+                '形成机制': ['溶蚀', '沉积', '化学反应', '碳酸钙', '碳酸氢钙', '二氧化碳', '溶解'],
+                '分布特征': ['分布', '地区', '云贵高原', '广西', '贵州', '云南', '南方'],
+                '生态环境': ['生态', '植被', '土壤', '水土流失', '石漠化', '环境', '保护'],
+                '人类活动': ['农业', '旅游', '交通', '工程', '人类', '开发', '利用'],
+                '发育阶段': ['初期', '中期', '晚期', '衰退', '阶段', '演化'],
+                '水文特征': ['地下水', '地表水', '河流', '补给', '渗漏', '岩溶水']
+            };
+            var scores = {};
+            for (var cat in categories) {
+                scores[cat] = 0;
+                for (var k = 0; k < categories[cat].length; k++) {
+                    if (text.indexOf(categories[cat][k]) !== -1) scores[cat]++;
+                }
+            }
+            var maxCat = '基础概念';
+            var maxScore = 0;
+            for (var c in scores) {
+                if (scores[c] > maxScore) {
+                    maxScore = scores[c];
+                    maxCat = c;
+                }
+            }
+            return maxCat;
+        }
+
+        for (var i = 0; i < questionBank.length; i++) {
+            questionBank[i].category = classifyQuestion(questionBank[i]);
+        }
+
+        function learnFetchWithTimeout(url, options, timeout) {
+            timeout = timeout || learnTimeout;
+            var controller = new AbortController();
+            var id = setTimeout(function() { controller.abort(); }, timeout);
+            return fetch(url, Object.assign({}, options, { signal: controller.signal })).then(function(response) {
+                clearTimeout(id);
+                return response;
+            }).catch(function(error) {
+                clearTimeout(id);
+                if (error.name === 'AbortError') {
+                    alert('请求超时(' + (timeout/1000) + '秒)，请检查网络或稍后重试');
+                    return null;
+                }
+                alert('API请求失败，请稍后重试');
+                throw error;
+            });
+        }
+
+        function learnGenerateBody(prompt) {
+            return JSON.stringify({
+                model: learnModel,
+                messages: [{ role: 'user', content: prompt }],
+                temperature: 0.7,
+                max_tokens: 3000
+            });
+        }
+
+        function showContainer(containerName) {
+            document.getElementById('start-learning').classList.add('hidden');
+            document.getElementById('loading-container').classList.add('hidden');
+            document.getElementById('exam-container').classList.add('hidden');
+            document.getElementById('ai-report-container').classList.add('hidden');
+            if (containerName === 'start') document.getElementById('start-learning').classList.remove('hidden');
+            else if (containerName === 'loading') document.getElementById('loading-container').classList.remove('hidden');
+            else if (containerName === 'exam') document.getElementById('exam-container').classList.remove('hidden');
+            else if (containerName === 'report') document.getElementById('ai-report-container').classList.remove('hidden');
+        }
+
+        function generateExamQuestions(difficulty) {
+            var config = difficultyConfig[difficulty];
+            var pool = [];
+            if (difficulty === 'mixed') {
+                var easyQs = questionBank.filter(function(q) { return q.difficulty === '简单'; });
+                var mediumQs = questionBank.filter(function(q) { return q.difficulty === '中等'; });
+                var hardQs = questionBank.filter(function(q) { return q.difficulty === '较难'; });
+                var easyCount = Math.floor(config.count * 0.4);
+                var mediumCount = Math.floor(config.count * 0.4);
+                var hardCount = config.count - easyCount - mediumCount;
+                pool = pool.concat(shuffleArray(easyQs.slice()).slice(0, easyCount));
+                pool = pool.concat(shuffleArray(mediumQs.slice()).slice(0, mediumCount));
+                pool = pool.concat(shuffleArray(hardQs.slice()).slice(0, hardCount));
+            } else {
+                pool = questionBank.filter(function(q) { return config.difficulties.indexOf(q.difficulty) !== -1; });
+                pool = shuffleArray(pool.slice()).slice(0, config.count);
+            }
+            return shuffleArray(pool);
+        }
+
+        function shuffleArray(array) {
+            for (var i = array.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+            return array;
+        }
+
+        function renderExam() {
+            var container = document.getElementById('exam-questions');
+            container.innerHTML = '';
+            for (var idx = 0; idx < currentExamQuestions.length; idx++) {
+                var q = currentExamQuestions[idx];
+                var qDiv = document.createElement('div');
+                qDiv.className = 'question-item';
+                qDiv.id = 'q-item-' + idx;
+                var optionsHtml = '';
+                for (var oi = 0; oi < q.options.length; oi++) {
+                    var opt = q.options[oi];
+                    var label = opt.charAt(0);
+                    var text = opt.substring(2);
+                    optionsHtml += '<div class="question-option" data-q="' + idx + '" data-opt="' + label + '" onclick="window.selectAnswer(' + idx + ', \'' + label + '\')"><span class="option-label">' + label + '</span><span>' + text + '</span></div>';
+                }
+                var typeLabel = q.type === 'judge' ? '判断题' : (q.options.length > 4 || q.answer.length > 1 ? '多选题' : '单选题');
+qDiv.innerHTML = '<div class="question-text"><span class="question-number">' + (idx + 1) + '</span>' + q.question + '<span style="color:#999;font-size:12px;margin-left:8px;">[' + q.difficulty + ']</span><span style="color:#1677ff;font-size:12px;margin-left:8px;font-weight:bold;">[' + typeLabel + ']</span></div><div class="question-options">' + optionsHtml + '</div>';
+                container.appendChild(qDiv);
+            }
+            updateProgress();
+        }
+        window.selectAnswer = function(qIndex, answer) {
+            var q = currentExamQuestions[qIndex];
+            var item = document.getElementById('q-item-' + qIndex);
+            var isMulti = q.type !== 'judge' && (q.options.length > 4 || q.answer.length > 1);
+            
+            if (isMulti) {
+                // 多选题：支持多选/取消选择
+                if (!userAnswers[qIndex]) userAnswers[qIndex] = [];
+                var idx = userAnswers[qIndex].indexOf(answer);
+                if (idx > -1) {
+                    userAnswers[qIndex].splice(idx, 1);
+                } else {
+                    userAnswers[qIndex].push(answer);
+                }
+                // 更新选中状态
+                var options = item.querySelectorAll('.question-option');
+                for (var i = 0; i < options.length; i++) {
+                    options[i].classList.remove('selected');
+                }
+                userAnswers[qIndex].forEach(function(ans) {
+                    var opt = item.querySelector('[data-opt="' + ans + '"]');
+                    if (opt) opt.classList.add('selected');
+                });
+                if (userAnswers[qIndex].length > 0) {
+                    item.classList.add('answered');
+                } else {
+                    item.classList.remove('answered');
+                }
+            } else {
+                // 单选题/判断题：单选逻辑
+                userAnswers[qIndex] = answer;
+                item.classList.add('answered');
+                var options = item.querySelectorAll('.question-option');
+                for (var i = 0; i < options.length; i++) {
+                    options[i].classList.remove('selected');
+                }
+                var selectedOpt = item.querySelector('[data-opt="' + answer + '"]');
+                if (selectedOpt) selectedOpt.classList.add('selected');
+            }
+            updateProgress();
+        };
+
+        function updateProgress() {
+            var total = currentExamQuestions.length;
+            var answered = 0;
+            for (var key in userAnswers) {
+                var ans = userAnswers[key];
+                if (Array.isArray(ans) && ans.length > 0) answered++;
+                else if (typeof ans === 'string' && ans !== '') answered++;
+            }
+            var pct = (answered / total * 100).toFixed(0);
+            document.getElementById('progress-text').textContent = '第 ' + answered + ' / ' + total + ' 题';
+            document.getElementById('progress-fill').style.width = pct + '%';
+        }
+
+        function submitExam() {
+            var total = currentExamQuestions.length;
+            var answered = 0;
+            for (var idx = 0; idx < total; idx++) {
+                var ans = userAnswers[idx];
+                if (Array.isArray(ans) && ans.length > 0) answered++;
+                else if (typeof ans === 'string' && ans !== '') answered++;
+            }
+            if (answered < total) {
+                if (!confirm('您还有 ' + (total - answered) + ' 道题未作答，确定要提交吗？')) return;
+            }
+            var endTime = Date.now();
+            var timeUsed = Math.floor((endTime - examStartTime) / 60000);
+            var correct = 0;
+            var allQuestions = [];
+            var wrongQuestions = [];
+            var categoryStats = {};
+            for (var idx = 0; idx < currentExamQuestions.length; idx++) {
+                var q = currentExamQuestions[idx];
+                var userAns = userAnswers[idx];
+                var isCorrect = false;
+                var displayAns = '';
+                if (Array.isArray(userAns)) {
+                    var sortedUser = userAns.slice().sort().join('');
+                    var sortedCorrect = q.answer.split('').sort().join('');
+                    isCorrect = sortedUser === sortedCorrect;
+                    displayAns = userAns.sort().join('');
+                } else {
+                    displayAns = userAns || '';
+                    isCorrect = displayAns === q.answer;
+                }
+                if (isCorrect) correct++;
+                else {
+                    wrongQuestions.push({
+                        question: q.question, options: q.options, correctAnswer: q.answer,
+                        userAnswer: displayAns || '未作答', explanation: q.explanation, category: q.category
+                    });
+                }
+                allQuestions.push({
+                    index: idx,
+                    question: q.question,
+                    options: q.options,
+                    correctAnswer: q.answer,
+                    userAnswer: displayAns || '未作答',
+                    explanation: q.explanation,
+                    category: q.category,
+                    isCorrect: isCorrect,
+                    difficulty: q.difficulty,
+                    type: q.type
+                });
+                var cat = q.category;
+                if (!categoryStats[cat]) categoryStats[cat] = { total: 0, correct: 0 };
+                categoryStats[cat].total++;
+                if (isCorrect) categoryStats[cat].correct++;
+            }
+            examResults = {
+                total: total, correct: correct, wrong: total - correct,
+                score: Math.round(correct / total * 100), timeUsed: timeUsed,
+                wrongQuestions: wrongQuestions, allQuestions: allQuestions, categoryStats: categoryStats, difficulty: selectedDifficulty
+            };
+            showContainer('report');
+            renderReport();
+            var reportEl = document.getElementById('ai-report-container');
+            if (reportEl) {
+                window.scrollTo({ top: reportEl.offsetTop - 20, behavior: 'smooth' });
+            }
+        }
+
+        function renderReport() {
+            var r = examResults;
+            animateScore(r.score);
+            document.getElementById('correct-rate').textContent = r.score + '%';
+            document.getElementById('time-used').textContent = r.timeUsed + '分钟';
+            var levelEl = document.getElementById('score-level');
+            if (r.score >= 90) { levelEl.textContent = '🏆 优秀'; levelEl.className = 'level-badge level-excellent'; }
+            else if (r.score >= 75) { levelEl.textContent = '👍 良好'; levelEl.className = 'level-badge level-good'; }
+            else if (r.score >= 60) { levelEl.textContent = '📖 及格'; levelEl.className = 'level-badge level-average'; }
+            else { levelEl.textContent = '💪 需努力'; levelEl.className = 'level-badge level-poor'; }
+            drawRadarChart(r.categoryStats);
+            renderWeakness(r);
+            renderSuggestions(r);
+            renderWrongQuestions();
+            generateAIReport(r);
+        }
+
+        function animateScore(target) {
+            var el = document.getElementById('score-number');
+            var current = 0;
+            var step = Math.ceil(target / 30);
+            var timer = setInterval(function() {
+                current += step;
+                if (current >= target) { current = target; clearInterval(timer); }
+                el.textContent = current;
+            }, 30);
+        }
+
+        function drawRadarChart(stats) {
+            var canvas = document.getElementById('radarChart');
+            var ctx = canvas.getContext('2d');
+            var size = 400;
+            var center = size / 2;
+            var radius = 140;
+            ctx.clearRect(0, 0, size, size);
+            var categories = Object.keys(stats);
+            var count = categories.length;
+            var angleStep = (Math.PI * 2) / count;
+            for (var i = 1; i <= 5; i++) {
+                ctx.beginPath(); ctx.strokeStyle = '#e0e0e0'; ctx.lineWidth = 1;
+                for (var j = 0; j < count; j++) {
+                    var angle = j * angleStep - Math.PI / 2;
+                    var r = (radius / 5) * i;
+                    var x = center + r * Math.cos(angle);
+                    var y = center + r * Math.sin(angle);
+                    if (j === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                }
+                ctx.closePath(); ctx.stroke();
+            }
+            for (var i = 0; i < count; i++) {
+                var angle = i * angleStep - Math.PI / 2;
+                ctx.beginPath(); ctx.strokeStyle = '#e0e0e0';
+                ctx.moveTo(center, center);
+                ctx.lineTo(center + radius * Math.cos(angle), center + radius * Math.sin(angle));
+                ctx.stroke();
+                var labelR = radius + 25;
+                var lx = center + labelR * Math.cos(angle);
+                var ly = center + labelR * Math.sin(angle);
+                ctx.fillStyle = '#555'; ctx.font = '13px sans-serif';
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillText(categories[i], lx, ly);
+            }
+            ctx.beginPath();
+            ctx.fillStyle = 'rgba(22, 119, 255, 0.2)';
+            ctx.strokeStyle = '#1677ff'; ctx.lineWidth = 2;
+            for (var i = 0; i < count; i++) {
+                var cat = categories[i];
+                var rate = stats[cat].correct / stats[cat].total;
+                var angle = i * angleStep - Math.PI / 2;
+                var r = radius * rate;
+                var x = center + r * Math.cos(angle);
+                var y = center + r * Math.sin(angle);
+                if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+            }
+            ctx.closePath(); ctx.fill(); ctx.stroke();
+            for (var i = 0; i < count; i++) {
+                var cat = categories[i];
+                var rate = stats[cat].correct / stats[cat].total;
+                var angle = i * angleStep - Math.PI / 2;
+                var r = radius * rate;
+                var x = center + r * Math.cos(angle);
+                var y = center + r * Math.sin(angle);
+                ctx.beginPath(); ctx.fillStyle = '#1677ff';
+                ctx.arc(x, y, 5, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#1677ff'; ctx.font = 'bold 12px sans-serif';
+                var px = center + (r + 15) * Math.cos(angle);
+                var py = center + (r + 15) * Math.sin(angle);
+                ctx.fillText(Math.round(rate * 100) + '%', px, py);
+            }
+        }
+
+        function renderWeakness(r) {
+            var container = document.getElementById('weakness-content');
+            container.innerHTML = '';
+            var cats = Object.entries(r.categoryStats).sort(function(a, b) {
+                return (a[1].correct/a[1].total) - (b[1].correct/b[1].total);
+            });
+            var weakCount = 0;
+            for (var ci = 0; ci < cats.length; ci++) {
+                var cat = cats[ci][0];
+                var stat = cats[ci][1];
+                var rate = stat.correct / stat.total;
+                if (rate < 0.6 && weakCount < 3) {
+                    weakCount++;
+                    var div = document.createElement('div');
+                    div.className = 'weakness-item';
+                    div.innerHTML = '<span class="icon">⚠️</span><div class="text" style="flex:1;text-align:center;"><strong>' + cat + '</strong>正确率 ' + Math.round(rate*100) + '%（' + stat.correct + '/' + stat.total + '题），建议重点复习该领域知识点</div>';
+                    container.appendChild(div);
+                }
+            }
+            if (weakCount === 0) {
+                container.innerHTML = '<p style="color:#52c41a;text-align:center;">🎉 恭喜！各知识点掌握均衡，无明显薄弱项</p>';
+            }
+        }
+                function renderSuggestions(r) {
+            var container = document.getElementById('suggestions-content');
+            container.innerHTML = '';
+            var cats = Object.entries(r.categoryStats).sort(function(a, b) {
+                return (a[1].correct/a[1].total) - (b[1].correct/b[1].total);
+            });
+            var hasSuggestion = false;
+            
+            // 知识点对应的推荐资源映射
+            var resourceMap = {
+                '基础概念': { video: 'video1.html', videoTitle: '地下水富集机制', script: 'script1.html', scriptTitle: '溶洞纪年：石笋里的气候密码' },
+                '地貌类型': { video: 'video1.html', videoTitle: '地下水富集机制', script: 'script2.html', scriptTitle: '峰林迷局：桂林vs贵州演化之争' },
+                '形成机制': { video: 'video2.html', videoTitle: '碳酸钙重析出条件', script: 'script1.html', scriptTitle: '溶洞纪年：石笋里的气候密码' },
+                '分布特征': { video: 'video2.html', videoTitle: '碳酸钙重析出条件', script: 'script2.html', scriptTitle: '峰林迷局：桂林vs贵州演化之争' },
+                '生态环境': { video: 'video4.html', videoTitle: '石漠化（石质荒漠化）', script: 'script2.html', scriptTitle: '峰林迷局：桂林vs贵州演化之争' },
+                '人类活动': { video: 'video3.html', videoTitle: '喀斯特地区工程难题列举', script: 'script3.html', scriptTitle: '暗河迷踪：喀斯特水文失踪案' },
+                '水文特征': { video: 'video1.html', videoTitle: '地下水富集机制', script: 'script3.html', scriptTitle: '暗河迷踪：喀斯特水文失踪案' },
+                '发育阶段': { video: 'video1.html', videoTitle: '地下水富集机制', script: 'script2.html', scriptTitle: '峰林迷局：桂林vs贵州演化之争' }
+            };
+            
+            for (var ci = 0; ci < cats.length; ci++) {
+                var cat = cats[ci][0];
+                var stat = cats[ci][1];
+                var rate = stat.correct / stat.total;
+                if (rate < 0.6) {
+                    hasSuggestion = true;
+                    var res = resourceMap[cat] || { video: 'video1.html', videoTitle: '地下水富集机制', script: 'script1.html', scriptTitle: '溶洞纪年：石笋里的气候密码' };
+                    var div = document.createElement('div');
+                    div.className = 'suggestion-item';
+                    div.innerHTML = '<span class="icon">💡</span><div class="text" style="flex:1;text-align:center;"><strong>' + cat + '</strong>建议多刷' + cat + '类题目，可学习 <a href="' + res.video + '" style="color:#1677ff;text-decoration:underline;cursor:pointer;">📺 ' + res.videoTitle + '</a> 或体验 <a href="' + res.script + '" style="color:#52c41a;text-decoration:underline;cursor:pointer;">📖 ' + res.scriptTitle + '</a></div>';
+                    container.appendChild(div);
+                }
+            }
+            if (r.score < 60) {
+                hasSuggestion = true;
+                var div = document.createElement('div');
+                div.className = 'suggestion-item';
+                div.innerHTML = '<span class="icon">📚</span><div class="text" style="flex:1;text-align:center;"><strong>基础巩固</strong>整体掌握较薄弱，建议从简单难度重新开始，先系统学习教材基础知识，再进行测评。</div>';
+                container.appendChild(div);
+            } else if (r.score >= 90) {
+                hasSuggestion = true;
+                var div = document.createElement('div');
+                div.className = 'suggestion-item';
+                div.innerHTML = '<span class="icon">🎯</span><div class="text" style="flex:1;text-align:center;"><strong>挑战提升</strong>基础扎实，可尝试较难难度的综合测评，或拓展学习喀斯特地貌的前沿研究。</div>';
+                container.appendChild(div);
+            }
+            if (!hasSuggestion) {
+                container.innerHTML = '<p style="color:#1677ff;text-align:center;">👍 表现不错！继续保持当前的学习节奏即可</p>';
+            }
+        }
+        function renderWrongQuestions(wq) {
+            var container = document.getElementById('wrong-questions-content');
+            container.innerHTML = '';
+            var allQ = examResults.allQuestions;
+            if (!allQ || allQ.length === 0) {
+                container.innerHTML = '<p style="color:#52c41a;text-align:center;">🎉 暂无答题记录</p>';
+                return;
+            }
+            for (var wi = 0; wi < allQ.length; wi++) {
+                var q = allQ[wi];
+                var div = document.createElement('div');
+                div.className = q.isCorrect ? 'wrong-q-item correct-q-item' : 'wrong-q-item';
+                var typeLabel2 = q.type === 'judge' ? '判断题' : (q.correctAnswer.length > 1 ? '多选题' : '单选题');
+                var statusIcon = q.isCorrect ? '✅' : '❌';
+                var statusText = q.isCorrect ? '回答正确' : '回答错误';
+                var statusColor = q.isCorrect ? '#52c41a' : '#ff4d4f';
+                var html = '<div class="wq-question">' + (q.index + 1) + '. ' + q.question + '<span style="color:#1677ff;font-size:12px;margin-left:8px;font-weight:bold;">[' + typeLabel2 + ']</span></div>';
+                html += '<div style="margin:8px 0;font-size:14px;"><span style="color:' + statusColor + ';font-weight:bold;">' + statusIcon + ' ' + statusText + '</span></div>';
+                
+                // 显示选项
+                if (q.options && q.options.length > 0) {
+                    html += '<div style="margin:8px 0;font-size:14px;color:#555;">';
+                    for (var oi = 0; oi < q.options.length; oi++) {
+                        var opt = q.options[oi];
+                        var optLabel = opt.charAt(0);
+                        var optText = opt.substring(2);
+                        // 高亮正确答案，标红错误答案
+                        var isCorrectOpt = q.correctAnswer.indexOf(optLabel) !== -1;
+                        var isUserOpt = q.userAnswer.indexOf(optLabel) !== -1;
+                        var optStyle = '';
+                        if (isCorrectOpt) {
+                            optStyle = 'color:#52c41a;font-weight:bold;';
+                        } else if (isUserOpt && !isCorrectOpt) {
+                            optStyle = 'color:#ff4d4f;text-decoration:line-through;';
+                        }
+                        html += '<div style="margin:4px 0;' + optStyle + '">' + opt + '</div>';
+                    }
+                    html += '</div>';
+                }
+                
+                if (!q.isCorrect) {
+                    html += '<div class="wq-user-answer">您的答案：' + q.userAnswer + '</div>';
+                    html += '<div class="wq-answer">正确答案：' + q.correctAnswer + '</div>';
+                } else {
+                    html += '<div class="wq-answer">您的答案：' + q.userAnswer + ' ✅</div>';
+                }
+                html += '<div class="wq-explanation">' + q.explanation + '</div>';
+                div.innerHTML = html;
+                container.appendChild(div);
+            }
+        }
+
+        function generateAIReport(r) {
+            var container = document.getElementById('ai-analysis-content');
+            container.innerHTML = '<div class="loading-ai"><i class="fa fa-spinner fa-spin"></i><p>AI正在分析您的答题数据，生成个性化报告...</p></div>';
+
+            var categorySummary = '';
+            var catEntries = Object.entries(r.categoryStats);
+            for (var ci = 0; ci < catEntries.length; ci++) {
+                var cat = catEntries[ci][0];
+                var stat = catEntries[ci][1];
+                categorySummary += '  - ' + cat + ': ' + Math.round(stat.correct/stat.total*100) + '% (' + stat.correct + '/' + stat.total + ')\n';
+            }
+
+            var prompt = '你是一位资深地理教育专家，请根据以下学生的喀斯特地貌测评结果，生成一份专业的学习分析报告。\n\n【测评数据】\n- 总分：' + r.score + '分（满分100）\n- 正确率：' + Math.round(r.correct/r.total*100) + '%\n- 用时：' + r.timeUsed + '分钟\n- 难度：' + difficultyConfig[r.difficulty].label + '\n- 各知识点正确率：\n' + categorySummary + '\n- 错题数量：' + r.wrongQuestions.length + '道\n\n请按以下结构输出报告（使用HTML标签格式化）：\n\n<h5>一、整体评价</h5>\n<p>对学生的整体表现进行评价，包括水平定位（优秀/良好/及格/需努力）</p>\n\n<h5>二、知识掌握分析</h5>\n<p>分析各知识点的掌握情况，指出优势和不足</p>\n\n<h5>三、学习建议</h5><p>给出3-5条具体、可操作的学习建议，每条建议必须单独成段（用<p>标签包裹），确保每条建议之间有明确的段落分隔。</p><h5>四、提升路径</h5><p>提供下一阶段的学习重点和备考策略，每条策略必须单独成段（用<p>标签包裹），确保每条之间有明确的段落分隔。</p>\n\n要求：语言亲切专业，分析具体有深度，建议切实可行。';
+
+            learnFetchWithTimeout(learnBaseUrl + '/chat/completions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + learnApiKey },
+                body: learnGenerateBody(prompt)
+            }).then(function(response) {
+                if (response && response.ok) {
+                    return response.json();
+                }
+                throw new Error('API failed');
+            }).then(function(data) {
+                var content = data.choices[0].message.content;
+                // 清理AI返回的多余标记
+                content = content.replace(/^```html\s*/i, '');
+                content = content.replace(/```\s*$/i, '');
+                content = content.replace(/^```\s*/i, '');
+                // 清理开头和结尾的多余换行
+                content = content.replace(/^[\n\r\s]+/, '');
+                content = content.replace(/[\n\r\s]+$/, '');
+                // 将换行符转为<br>标签，让1、2、3等列表项正确换行显示
+                content = content.replace(/\n/g, '<br>');
+                content = content.replace(/\r\n/g, '<br>');
+                container.innerHTML = content;
+            }).catch(function(err) {
+                container.innerHTML = '<p style="color:#ff4d4f;">AI分析服务暂时不可用，请查看下方的薄弱点分析和错题回顾。</p>';
+            });
+        }
+
+        /* 事件绑定 */
+        document.addEventListener('DOMContentLoaded', function() {
+            var difficultyBtns = document.querySelectorAll('.difficulty-btn');
+            var beginBtn = document.getElementById('begin-learning');
+            var submitBtn = document.getElementById('submit-exam');
+            var restartBtn = document.getElementById('restart-exam');
+            var backFromExam = document.getElementById('back-from-exam');
+
+            for (var bi = 0; bi < difficultyBtns.length; bi++) {
+                difficultyBtns[bi].addEventListener('click', function() {
+                    for (var bj = 0; bj < difficultyBtns.length; bj++) {
+                        difficultyBtns[bj].classList.remove('active');
+                    }
+                    this.classList.add('active');
+                    selectedDifficulty = this.dataset.difficulty;
+                });
+            }
+
+            beginBtn.addEventListener('click', function() {
+                if (!selectedDifficulty) { alert('请选择测评难度'); return; }
+                showContainer('loading');
+                setTimeout(function() {
+                    currentExamQuestions = generateExamQuestions(selectedDifficulty);
+                    userAnswers = {};
+                    examStartTime = Date.now();
+                    document.getElementById('exam-title').textContent = '喀斯特地貌知识测评 — ' + difficultyConfig[selectedDifficulty].label + '难度';
+                    renderExam();
+                    showContainer('exam');
+                    window.scrollTo({ top: document.getElementById('exam-container').offsetTop - 100, behavior: 'smooth' });
+                }, 800);
+            });
+
+            submitBtn.addEventListener('click', submitExam);
+
+            restartBtn.addEventListener('click', function() {
+                selectedDifficulty = '';
+                userAnswers = {};
+                examResults = null;
+                for (var bi = 0; bi < difficultyBtns.length; bi++) {
+                    difficultyBtns[bi].classList.remove('active');
+                }
+                showContainer('start');
+                // 重新测评后滚动到"个性化学习测评"标题处
+                var titleEl = document.querySelector('.sub-videos-title');
+                if (titleEl) {
+                    window.scrollTo({ top: titleEl.offsetTop - 80, behavior: 'smooth' });
+                }
+            });
+
+            backFromExam.addEventListener('click', function() {
+                if (confirm('确定要退出当前测评吗？进度将不会保存。')) {
+                    selectedDifficulty = '';
+                    userAnswers = {};
+                    for (var bi = 0; bi < difficultyBtns.length; bi++) {
+                        difficultyBtns[bi].classList.remove('active');
+                    }
+                    showContainer('start');
+                }
+            });
+
+
+        });
+// 导航标签切换交互
+        const tabs = document.querySelectorAll('.nav-tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+        
+        // 核心问题地图交互
+        const subNodes = document.querySelectorAll('.sub-node');
+        subNodes.forEach(node => {
+            node.addEventListener('click', () => {
+                const videoId = node.dataset.videoId;
+                // 滚动到对应分视频卡片
+                const videoCard = document.querySelector(`.sub-video-card:nth-child(${videoId})`);
+                if (videoCard) {
+                    // 高亮播放按钮
+                    const playIcon = videoCard.querySelector('.play-icon');
+                    if (playIcon) {
+                        playIcon.classList.add('highlight');
+                        // 3秒后移除高亮
+                        setTimeout(() => {
+                            playIcon.classList.remove('highlight');
+                        }, 3000);
+                    }
+                    // 滚动到卡片位置
+                    videoCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+        });
+
+        // 点赞/收藏按钮交互
+        const likeBtn = document.querySelector('.like-btn');
+        const collectBtn = document.querySelector('.collect-btn');
+
+        likeBtn.addEventListener('click', () => {
+            likeBtn.innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                已点赞
+            `;
+            likeBtn.style.backgroundColor = '#ff4d4f';
+            likeBtn.style.color = 'white';
+        });
+
+        collectBtn.addEventListener('click', () => {
+            collectBtn.innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+                </svg>
+                已收藏
+            `;
+            collectBtn.style.backgroundColor = '#1677ff';
+            collectBtn.style.color = 'white';
+        });
+
+    </script>
+    <!-- 智能地理助手 -->
+    <script src="chat.js"></script>
+</body>
+</html>
