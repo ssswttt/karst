@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>暗河迷踪：喀斯特水文 "失踪的径流"</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E40AF',
+                        secondary: '#3B82F6',
+                        accent: '#06B6D4',
+                        dark: '#1C1C1E',
+                        light: '#F0F9FF'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        display: ['"ZCOOL QingKe HuangYou"', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow { text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+            .card-hover { transition: all 0.3s ease; }
+            .card-hover:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 10px 25px -5px rgba(30, 64, 175, 0.3); }
+            .btn-hover { transition: all 0.3s ease; }
+            .btn-hover:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2); }
+            .scene-transition { transition: all 0.5s ease; }
+            .puzzle-input:focus { outline: none; box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.3); }
+            .puzzle-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+            .puzzle-card:hover { box-shadow: 0 12px 20px -10px rgba(30, 64, 175, 0.25); }
+        }
+    </style>
+    <style>
+        /* 返回按钮 */
+        .back-btn {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100px;
+            height: 40px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 14px;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        .back-btn .icon {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .back-btn:hover {
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 6px 20px rgba(30, 64, 175, 0.4);
+            background: linear-gradient(135deg, #1E3A8A 0%, #1E40AF 100%);
+        }
+        .back-btn:active {
+            transform: translateY(-50%) scale(1.02);
+            box-shadow: 0 3px 10px rgba(30, 64, 175, 0.3);
+        }
+    </style>
+    <base target="_blank">
+<script>
+  function goBack() {
+    // 确保返回时使用fromSubVideo标志
+    sessionStorage.setItem('fromSubVideo', 'true');
+    // 跳转到主页面
+    window.location.href = 'main.html';
+  }
+</script>
+<base target="_blank">
+</head>
+<body class="bg-light text-dark font-sans min-h-screen">
+
+    <!-- 导航栏 -->
+    <nav class="fixed w-full bg-white/90 backdrop-blur-md shadow-sm z-50 transition-all duration-300">
+        <div class="container mx-auto px-2 py-3 flex justify-between items-center relative">
+            <!-- 左上角返回按钮 -->
+            <div class="back-btn" onclick="window.location.href='main.html'">
+                <span class="icon">←</span>
+                <span>返回</span>
+            </div>
+            <div class="flex items-center space-x-2 ml-32">
+                <i class="fa fa-tint text-primary text-2xl"></i>
+                <h1 class="text-xl font-bold text-primary">暗河迷踪</h1>
+            </div>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#story" class="hover:text-primary transition-colors">案情卷宗</a>
+                <a href="#characters" class="hover:text-primary transition-colors">专家组</a>
+                <a href="#play" class="px-4 py-1 bg-primary text-white rounded-full text-sm hover:bg-primary/90 transition-colors">开始勘察</a>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden text-dark text-xl">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        <!-- 移动端菜单 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="#story" class="py-2 hover:text-primary transition-colors">案情卷宗</a>
+                <a href="#characters" class="py-2 hover:text-primary transition-colors">专家组</a>
+                <a href="#play" class="py-2 hover:text-primary transition-colors">开始勘察</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section id="home" class="pt-24 pb-16 md:pt-32 md:pb-24 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-primary/5 rounded-l-full -z-10"></div>
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight text-shadow mb-6">
+                        暗河迷踪：<br>
+                        <span class="text-primary">喀斯特水文的"失踪"之谜</span>
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-8 max-w-lg">
+                        暴雨过后，古村一边内涝成灾，一边却滴水难求。地表河流神秘"消失"，你需要作为水文专家，追踪地下暗河的踪迹，破解喀斯特地区的水文悖论。
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#play" class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg shadow-md hover:bg-primary/90 transition-all transform hover:-translate-y-1">
+                            开始勘察 <i class="fa fa-search ml-2"></i>
+                        </a>
+                        <a href="#story" class="inline-flex items-center px-6 py-3 bg-white text-primary border border-primary rounded-lg hover:bg-primary/5 transition-all transform hover:-translate-y-1">
+                            查看卷宗 <i class="fa fa-book ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 relative">
+                    <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl transform rotate-1 hover:rotate-0 transition-transform duration-500">
+                        <img src="https://picsum.photos/id/1049/600/400" alt="喀斯特地貌的落水洞与地下河" class="w-full h-auto">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                            <span class="text-white text-shadow font-medium">西南喀斯特古村 · 勘察现场</span>
+                        </div>
+                    </div>
+                    <div class="absolute top-1/4 -left-4 text-4xl text-primary/20 rotate-12">H₂O</div>
+                    <div class="absolute bottom-1/3 -right-2 text-3xl text-primary/20 -rotate-12">CaCO₃</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 故事介绍 -->
+    <section id="story" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <div class="inline-block px-4 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">案情背景</div>
+                <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-4 text-primary">消失的地表径流</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">一场关于水去向的地质追踪，等待你来解密</p>
+            </div>
+            <div class="max-w-4xl mx-auto bg-gray-50 rounded-2xl p-8 shadow-sm">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-1 bg-primary rounded-full mr-3"></div>
+                    <h3 class="text-xl font-bold text-primary">核心任务</h3>
+                </div>
+                <p class="mb-6 leading-relaxed">
+                    西南某喀斯特古村遭遇暴雨。奇怪的是，村庄低洼处严重内涝，而高处的农田却干旱缺水。更诡异的是，原本流经村口的地表河在暴雨后流量反而减小，仿佛"失踪"了。
+                </p>
+                <div class="bg-white p-4 rounded-xl border-l-4 border-primary mb-6 shadow-sm">
+                    <p class="italic text-gray-700">
+                        "在喀斯特地区，水往往不走寻常路。地表的干涸可能意味着地下的汹涌，内涝往往不是因为水多，而是因为排泄不畅。"
+                    </p>
+                    <p class="text-right text-sm text-gray-500 mt-2">—— 水文总顾问</p>
+                </div>
+                <p class="leading-relaxed">
+                    你需要结合裂隙发育、落水洞机制、石漠化影响等线索，还原地下河系统的运作机理，解释"一边涝、一边旱"以及"径流失踪"的真相。
+                </p>
+                <div class="mt-8 flex justify-center">
+                    <a href="#play" class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg shadow-md hover:bg-primary/90 transition-all">
+                        开启勘察 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 角色介绍 -->
+    <section id="characters" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <div class="inline-block px-4 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">专家组成员</div>
+                <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-4 text-primary">智囊团队</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">虽然你扮演队长，但这些专家的智慧在支持着你</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://picsum.photos/id/338/400/300" alt="队长" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-primary">你 (勘察队长)</h3>
+                        <p class="text-gray-600 mb-3">水文地质专家</p>
+                        <p class="text-sm text-gray-500 mb-4">负责统筹全局，综合各专家的意见，做出最终的科学判定，还原水文真相。</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-primary/10 text-primary rounded text-xs">统筹决策</span>
+                            <span class="px-2 py-1 bg-primary/10 text-primary rounded text-xs">机理分析</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://picsum.photos/id/177/400/300" alt="徐霞客" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-primary">徐霞客 (史料)</h3>
+                        <p class="text-gray-600 mb-3">明代地理学家</p>
+                        <p class="text-sm text-gray-500 mb-4">他的游记记录了古村"水入地底，声如雷鸣"的景象，是验证地下河存在的历史铁证。</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-primary/10 text-primary rounded text-xs">历史基准</span>
+                            <span class="px-2 py-1 bg-primary/10 text-primary rounded text-xs">实地考察</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://picsum.photos/id/1027/400/300" alt="水文学家" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-primary">水文学家</h3>
+                        <p class="text-gray-600 mb-3">径流分析专家</p>
+                        <p class="text-sm text-gray-500 mb-4">专注于分析径流系数和过程线，解释为什么喀斯特地区地表水少、地下水多。</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-primary/10 text-primary rounded text-xs">径流系数</span>
+                            <span class="px-2 py-1 bg-primary/10 text-primary rounded text-xs">过程线分析</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://picsum.photos/id/1005/400/300" alt="地质勘探员" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-primary">地质勘探员</h3>
+                        <p class="text-gray-600 mb-3">地下河追踪者</p>
+                        <p class="text-sm text-gray-500 mb-4">利用示踪剂追踪裂隙和管道，绘制地下河的补给-径流-排泄路径。</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-primary/10 text-primary rounded text-xs">裂隙探测</span>
+                            <span class="px-2 py-1 bg-primary/10 text-primary rounded text-xs">管道追踪</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://picsum.photos/id/1011/400/300" alt="气象防灾员" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-primary">气象防灾员</h3>
+                        <p class="text-gray-600 mb-3">内涝机制专家</p>
+                        <p class="text-sm text-gray-500 mb-4">研究暴雨与落水洞的关系，解释为何暴雨时落水洞会倒灌引发内涝。</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-primary/10 text-primary rounded text-xs">暴雨内涝</span>
+                            <span class="px-2 py-1 bg-primary/10 text-primary rounded text-xs">倒灌机制</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://picsum.photos/id/1025/400/300" alt="生态评估师" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-primary">生态评估师</h3>
+                        <p class="text-gray-600 mb-3">石漠化研究员</p>
+                        <p class="text-sm text-gray-500 mb-4">评估石漠化对水文的影响，分析土层变薄如何改变地表与地下的径流分配。</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-primary/10 text-primary rounded text-xs">石漠化</span>
+                            <span class="px-2 py-1 bg-primary/10 text-primary rounded text-xs">生态水文</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 游戏区域 -->
+    <section id="play" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <div class="inline-block px-4 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">勘察现场</div>
+                <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-4 text-primary">还原水文真相</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">解决水文难题，追踪失踪的径流</p>
+            </div>
+            <div class="max-w-4xl mx-auto">
+                <!-- 游戏进度 -->
+                <div class="mb-10 bg-gray-50 p-4 rounded-xl shadow-sm">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-medium">勘察进度</span>
+                        <span class="text-primary font-bold" id="progress-text">0/4</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
+                        <div id="progress-bar" class="bg-primary h-2.5 rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+                    </div>
+                    <div class="flex justify-between mt-1 text-xs text-gray-500">
+                        <span>径流去向</span>
+                        <span>内涝成因</span>
+                        <span>地下河控制</span>
+                        <span>石漠化影响</span>
+                    </div>
+                </div>
+
+                <!-- 游戏容器 -->
+                <div class="bg-gray-50 rounded-2xl shadow-md overflow-hidden">
+                    <!-- 游戏开始界面 -->
+                    <div id="game-start" class="p-8 text-center">
+                        <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fa fa-binoculars text-4xl text-primary"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-primary">准备进入勘察区</h3>
+                        <p class="text-gray-600 mb-8 max-w-lg mx-auto">
+                            你将面对四个关于喀斯特水文过程的核心难题。运用地理知识，追踪地下河，解释内涝与干旱并存的真相。
+                        </p>
+                        <button id="start-shift" class="px-8 py-3 bg-primary text-white rounded-lg shadow-md hover:bg-primary/90 transition-all text-lg transform hover:-translate-y-1 btn-hover">
+                            开始勘察
+                        </button>
+                    </div>
+
+                    <!-- 场景1：径流去向 -->
+                    <div id="scene-1" class="hidden">
+                        <div class="h-64 md:h-80 overflow-hidden relative">
+                            <img src="https://picsum.photos/id/1049/800/400" alt="落水洞与地下河入口" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                                <div class="p-6 text-white">
+                                    <h3 class="text-2xl font-bold mb-1">场景1：失踪的地表河</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="bg-white p-5 rounded-xl shadow-sm mb-6">
+                                <div id="scene-1-loading" class="text-center py-8">
+                                    <i class="fa fa-spinner fa-spin text-3xl text-primary mb-3"></i>
+                                    <p class="text-gray-600">正在加载勘察内容...</p>
+                                </div>
+                                <div id="scene-1-content" class="hidden">
+                                    <p class="mb-6 leading-relaxed scene-description" id="scene-1-desc"></p>
+                                    <div class="bg-primary/5 p-5 rounded-lg border-l-4 border-primary mb-6 puzzle-card" id="puzzle-1-container"></div>
+                                    <div id="puzzle-1-feedback" class="hidden p-4 rounded-lg mb-4 transition-all duration-300"></div>
+                                    <div id="scene-1-clue" class="hidden">
+                                        <div class="bg-primary/10 p-5 rounded-lg border-l-4 border-primary mb-6" id="clue-1-container"></div>
+                                        <div class="mt-6">
+                                            <button class="next-scene-btn w-full px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors btn-hover" data-next="2">
+                                                前往下一区域 <i class="fa fa-arrow-right ml-2"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 场景2：内涝成因 -->
+                    <div id="scene-2" class="hidden">
+                        <div class="h-64 md:h-80 overflow-hidden relative">
+                            <img src="https://picsum.photos/id/1053/800/400" alt="暴雨中的村庄与落水洞" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                                <div class="p-6 text-white">
+                                    <h3 class="text-2xl font-bold mb-1">场景2：暴雨内涝之谜</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="bg-white p-5 rounded-xl shadow-sm mb-6">
+                                <div id="scene-2-loading" class="text-center py-8">
+                                    <i class="fa fa-spinner fa-spin text-3xl text-primary mb-3"></i>
+                                    <p class="text-gray-600">正在加载勘察内容...</p>
+                                </div>
+                                <div id="scene-2-content" class="hidden">
+                                    <p class="mb-6 leading-relaxed scene-description" id="scene-2-desc"></p>
+                                    <div class="bg-primary/5 p-5 rounded-lg border-l-4 border-primary mb-6 puzzle-card" id="puzzle-2-container"></div>
+                                    <div id="puzzle-2-feedback" class="hidden p-4 rounded-lg mb-4 transition-all duration-300"></div>
+                                    <div id="scene-2-clue" class="hidden">
+                                        <div class="bg-primary/10 p-5 rounded-lg border-l-4 border-primary mb-6" id="clue-2-container"></div>
+                                        <div class="mt-6">
+                                            <button class="next-scene-btn w-full px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors btn-hover" data-next="3">
+                                                前往下一区域 <i class="fa fa-arrow-right ml-2"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 场景3：地下河控制 -->
+                    <div id="scene-3" class="hidden">
+                        <div class="h-64 md:h-80 overflow-hidden relative">
+                            <img src="https://picsum.photos/id/1018/800/400" alt="地下溶洞与裂隙结构" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                                <div class="p-6 text-white">
+                                    <h3 class="text-2xl font-bold mb-1">场景3：地下河系统</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="bg-white p-5 rounded-xl shadow-sm mb-6">
+                                <div id="scene-3-loading" class="text-center py-8">
+                                    <i class="fa fa-spinner fa-spin text-3xl text-primary mb-3"></i>
+                                    <p class="text-gray-600">正在加载勘察内容...</p>
+                                </div>
+                                <div id="scene-3-content" class="hidden">
+                                    <p class="mb-6 leading-relaxed scene-description" id="scene-3-desc"></p>
+                                    <div class="bg-primary/5 p-5 rounded-lg border-l-4 border-primary mb-6 puzzle-card" id="puzzle-3-container"></div>
+                                    <div id="puzzle-3-feedback" class="hidden p-4 rounded-lg mb-4 transition-all duration-300"></div>
+                                    <div id="scene-3-clue" class="hidden">
+                                        <div class="bg-primary/10 p-5 rounded-lg border-l-4 border-primary mb-6" id="clue-3-container"></div>
+                                        <div class="mt-6">
+                                            <button class="next-scene-btn w-full px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors btn-hover" data-next="4">
+                                                前往下一区域 <i class="fa fa-arrow-right ml-2"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 场景4：石漠化影响 -->
+                    <div id="scene-4" class="hidden">
+                        <div class="h-64 md:h-80 overflow-hidden relative">
+                            <img src="https://picsum.photos/id/1039/800/400" alt="石漠化景观" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                                <div class="p-6 text-white">
+                                    <h3 class="text-2xl font-bold mb-1">场景4：干旱的石头山</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="bg-white p-5 rounded-xl shadow-sm mb-6">
+                                <div id="scene-4-loading" class="text-center py-8">
+                                    <i class="fa fa-spinner fa-spin text-3xl text-primary mb-3"></i>
+                                    <p class="text-gray-600">正在加载勘察内容...</p>
+                                </div>
+                                <div id="scene-4-content" class="hidden">
+                                    <p class="mb-6 leading-relaxed scene-description" id="scene-4-desc"></p>
+                                    <div class="bg-primary/5 p-5 rounded-lg border-l-4 border-primary mb-6 puzzle-card" id="puzzle-4-container"></div>
+                                    <div id="puzzle-4-feedback" class="hidden p-4 rounded-lg mb-4 transition-all duration-300"></div>
+                                    <div id="scene-4-clue" class="hidden">
+                                        <div class="bg-primary/10 p-5 rounded-lg border-l-4 border-primary mb-6" id="clue-4-container"></div>
+                                        <div class="mt-6">
+                                            <button class="next-scene-btn w-full px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors btn-hover" data-next="5">
+                                                完成勘察报告 <i class="fa fa-flag-checkered ml-2"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 游戏结束界面 -->
+                    <div id="game-end" class="hidden p-8 text-center">
+                        <div class="w-20 h-20 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fa fa-trophy text-4xl text-accent"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-primary">勘察任务完成</h3>
+
+                        <!-- 整体加载状态 -->
+                        <div id="end-page-loading" class="text-center py-8 mb-8">
+                            <i class="fa fa-spinner fa-spin text-4xl text-primary mb-4"></i>
+                            <p class="text-gray-600 text-lg">AI正在生成完整勘察报告...</p>
+                            <p class="text-gray-400 text-sm mt-2">请稍候，分析结果即将呈现</p>
+                        </div>
+
+                        <!-- 报告内容（初始隐藏，全部加载完成后显示） -->
+                        <div id="end-page-content" class="hidden">
+                            <p class="text-gray-600 mb-8 max-w-lg mx-auto" id="summary-content"></p>
+                            <div class="bg-gray-100 p-6 rounded-xl mb-8 text-left" id="summary-detail-container"></div>
+
+                            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                                <button onclick="location.reload()" class="px-6 py-3 bg-primary text-white rounded-lg shadow-md hover:bg-primary/90 transition-all transform hover:-translate-y-1 btn-hover">
+                                    <i class="fa fa-refresh mr-2"></i> 重新勘察
+                                </button>
+                                <a href="main.html" class="inline-flex items-center px-6 py-3 bg-white text-primary border border-primary rounded-lg hover:bg-primary/5 transition-all transform hover:-translate-y-1">
+                                    <i class="fa fa-home mr-2"></i> 返回
+                                </a>
+                            </div>
+
+                            <!-- AI智能分析结果 -->
+                            <div id="ai-analysis-container" class="mb-8">
+                                <div class="bg-white p-6 rounded-xl shadow-md mb-6 text-left">
+                                    <div class="flex items-center mb-4">
+                                        <i class="fa fa-brain text-2xl text-secondary mr-3"></i>
+                                        <h4 class="text-xl font-bold text-primary">AI智能分析</h4>
+                                    </div>
+                                    <div class="mb-4">
+                                        <h5 class="font-semibold text-gray-700 mb-2">薄弱知识点识别:</h5>
+                                        <div id="weakness-list" class="bg-red-50 p-4 rounded-lg text-sm text-gray-700"></div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <h5 class="font-semibold text-gray-700 mb-2">能力评估:</h5>
+                                        <div id="ability-assessment" class="bg-blue-50 p-4 rounded-lg text-sm text-gray-700"></div>
+                                    </div>
+                                </div>
+
+                                <!-- 个性化推荐题目 -->
+                                <div class="bg-white p-6 rounded-xl shadow-md text-left">
+                                    <div class="flex items-center mb-4">
+                                        <i class="fa fa-lightbulb-o text-2xl text-accent mr-3"></i>
+                                        <h4 class="text-xl font-bold text-primary">个性化题目推荐</h4>
+                                    </div>
+                                    <div class="mb-4">
+                                        <h5 class="font-semibold text-gray-700 mb-3">为您推荐的练习题:</h5>
+                                        <div id="recommended-questions" class="space-y-3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 推荐题目详情弹窗 -->
+    <div id="question-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xl font-bold text-primary" id="modal-title">题目详情</h3>
+                    <button id="modal-close" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">
+                        <i class="fa fa-times text-gray-600"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <div id="modal-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API配置
+        const baseUrl = 'https://open.bigmodel.cn/api/paas/v4';
+        const model = 'glm-4-flash';
+        const apiKey = '795328bbbb4442f8a2258b0642cb1988.s4a6GtVcMTluclRR';
+        const timeoutDuration = 60000;
+
+        const userAnswers = {
+            1: { answer: null, correct: false, submitted: false, attempts: [], finalCorrect: false },
+            2: { answer: null, correct: false, submitted: false, attempts: [], finalCorrect: false },
+            3: { answer: null, correct: false, submitted: false, attempts: [], finalCorrect: false },
+            4: { answer: null, correct: false, submitted: false, attempts: [], finalCorrect: false }
+        };
+
+        // 缓存所有场景数据
+        let allScenesData = null;
+        // 缓存推荐题目详情
+        let recommendedQuestionsData = [];
+
+        async function fetchWithTimeout(url, options, timeout = timeoutDuration) {
+            const controller = new AbortController();
+            const id = setTimeout(() => controller.abort(), timeout);
+            try {
+                const response = await fetch(url, { ...options, signal: controller.signal });
+                clearTimeout(id);
+                return response;
+            } catch (error) {
+                clearTimeout(id);
+                if (error.name === 'AbortError') {
+                    alert(`请求超时(${timeout/1000}秒)，请检查网络或稍后重试`);
+                    return null;
+                }
+                alert('API请求失败，请稍后重试');
+                throw error;
+            }
+        }
+
+        function generateApiRequestBody(prompt) {
+            return JSON.stringify({
+                model: model,
+                messages: [{ role: 'user', content: prompt }],
+                temperature: 0.7,
+                max_tokens: 3000
+            });
+        }
+
+        // 一次性加载所有4个场景的数据
+        async function loadAllScenes() {
+            if (allScenesData) return allScenesData;
+
+            const prompt = `请为喀斯特水文科普游戏生成4个场景的完整内容，主题如下：
+
+场景1：喀斯特地区地表径流小、地下径流占比高的原因（裂隙/管道发育、快速入渗）
+场景2：暴雨时落水洞倒灌、村庄内涝的形成机制（地下河排泄能力超限、水位上升、管道排气不畅）
+场景3：地下河补给–径流–排泄受岩溶裂隙如何控制（入渗快、管道连通径流快、出口集中）
+场景4：石漠化如何导致"地表水贵如油"的干旱现象（土层变薄、蓄水保水能力差、降水快速流失）
+
+每个场景要求：
+1. 情景描述：80-120字，生动有代入感，包含地理知识背景
+2. 选择题：1个核心问题+4个选项（1正确3干扰），高中地理难度
+3. 选项格式：{id, value, label}
+4. 提供正确答案和详细解析（包含逻辑链和知识点）
+5. 解析包含专家提示格式：
+   <h4 class="font-bold flex items-center mb-2 text-primary"><i class="fa fa-lightbulb-o mr-2"></i> 专家提示</h4>
+   <p class="text-sm text-gray-700">解析内容</p>
+   <div class="mt-4 flex items-center text-sm text-accent"><i class="fa fa-check-circle mr-2"></i><span class="font-medium">发现：知识点总结</span></div>
+
+返回JSON数组格式，包含4个元素，每个元素：{
+  "description": "情景描述文本",
+  "title": "题目标题",
+  "question": "问题文本",
+  "options": [{"id":"...","value":"...","label":"..."}],
+  "correctAnswer": "正确选项值",
+  "clue": "解析HTML"
+}`;
+
+            try {
+                const response = await fetchWithTimeout(`${baseUrl}/chat/completions`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: generateApiRequestBody(prompt)
+                });
+
+                if (response && response.ok) {
+                    const data = await response.json();
+                    let scenesData = null;
+                    try {
+                        const content = data.choices[0].message.content.trim();
+                        const jsonStr = content.replace(/```json|```/g, '').trim();
+                        scenesData = JSON.parse(jsonStr);
+                        allScenesData = scenesData;
+                        return scenesData;
+                    } catch (e) {
+                        console.error('解析所有场景数据失败:', e);
+                        throw new Error('数据格式错误');
+                    }
+                } else {
+                    throw new Error('API返回异常');
+                }
+            } catch (error) {
+                console.error('加载所有场景失败:', error);
+                allScenesData = getFallbackAllScenes();
+                return allScenesData;
+            }
+        }
+
+        function getFallbackAllScenes() {
+            return [
+                {
+                    description: "水文学家指出，监测数据显示该流域的地表径流系数远小于同纬度的非喀斯特地区。暴雨过后，地表河流流量反而减小，仿佛水'失踪'了。",
+                    title: "难题1：失踪的地表河",
+                    question: "为什么喀斯特流域地表径流小、地下径流占比高？",
+                    options: [
+                        { id: "puzzle-1-option-1", value: "1", label: "降水少，蒸发旺盛，导致地表水少" },
+                        { id: "puzzle-1-option-2", value: "2", label: "灰岩裂隙/管道发育，降水快速入渗转为地下径流" },
+                        { id: "puzzle-1-option-3", value: "3", label: "植被覆盖率高，截留了大量地表径流" },
+                        { id: "puzzle-1-option-4", value: "4", label: "人类抽取地下水导致地表水倒灌" }
+                    ],
+                    correctAnswer: "2",
+                    clue: `<h4 class="font-bold flex items-center mb-2 text-primary"><i class="fa fa-lightbulb-o mr-2"></i> 专家提示</h4><p class="text-sm text-gray-700">喀斯特地区灰岩裂隙、管道发育，降水落地后通过裂隙和落水洞快速入渗，转化为地下径流，导致地表径流少，径流系数低。</p><div class="mt-4 flex items-center text-sm text-accent"><i class="fa fa-check-circle mr-2"></i><span class="font-medium">发现：双重水文结构</span></div>`
+                },
+                {
+                    description: "气象防灾员发现，村庄低洼处的落水洞在暴雨时不仅没有排水，反而向外喷水，导致村庄内涝。这与地下河系统的运作密切相关。",
+                    title: "难题2：暴雨内涝之谜",
+                    question: "暴雨时落水洞倒灌、村庄内涝的形成机制是？",
+                    options: [
+                        { id: "puzzle-2-option-1", value: "1", label: "暴雨流量超地下河排泄能力，水位上升导致倒灌" },
+                        { id: "puzzle-2-option-2", value: "2", label: "落水洞被垃圾堵塞，导致雨水无法下渗" },
+                        { id: "puzzle-2-option-3", value: "3", label: "地下水位下降，形成漏斗区吸水" },
+                        { id: "puzzle-2-option-4", value: "4", label: "地表河流改道，直接冲入村庄" }
+                    ],
+                    correctAnswer: "1",
+                    clue: `<h4 class="font-bold flex items-center mb-2 text-primary"><i class="fa fa-lightbulb-o mr-2"></i> 专家提示</h4><p class="text-sm text-gray-700">暴雨导致流量超过地下河排泄能力，地下水位快速上升；加上管道排气不畅产生顶托作用，导致落水洞倒灌，引发内涝。</p><div class="mt-4 flex items-center text-sm text-accent"><i class="fa fa-check-circle mr-2"></i><span class="font-medium">发现：倒灌机制</span></div>`
+                },
+                {
+                    description: "地质勘探员通过示踪实验发现，地下河的流速极快，且出口非常集中。这解释了为什么水位涨落如此剧烈，以及为什么干旱时高处农田无水可用。",
+                    title: "难题3：地下河系统",
+                    question: "地下河补给–径流–排泄受岩溶裂隙如何控制？",
+                    options: [
+                        { id: "puzzle-3-option-1", value: "1", label: "裂隙发育导致入渗慢，径流缓慢，排泄分散" },
+                        { id: "puzzle-3-option-2", value: "2", label: "裂隙发育导致入渗快，管道连通径流快，出口集中" },
+                        { id: "puzzle-3-option-3", value: "3", label: "裂隙被泥沙填充，阻断了地下河流动" },
+                        { id: "puzzle-3-option-4", value: "4", label: "裂隙主要起储水作用，不参与径流输送" }
+                    ],
+                    correctAnswer: "2",
+                    clue: `<h4 class="font-bold flex items-center mb-2 text-primary"><i class="fa fa-lightbulb-o mr-2"></i> 专家提示</h4><p class="text-sm text-gray-700">裂隙发育使得入渗快、补给集中；管道连通性好导致径流速度快；出口单一集中导致排泄点单一，水位变幅大。</p><div class="mt-4 flex items-center text-sm text-accent"><i class="fa fa-check-circle mr-2"></i><span class="font-medium">发现：管道流特征</span></div>`
+                },
+                {
+                    description: "生态评估师指出，该区域石漠化严重。虽然年降水量丰富，但地表植被缺水枯死，村民面临季节性缺水，呈现出 地表水贵如油 的困境。",
+                    title: "难题4：干旱的石头山",
+                    question: "石漠化如何导致 地表水贵如油 的干旱现象？",
+                    options: [
+                        { id: "puzzle-4-option-1", value: "1", label: "土层变薄，土壤蓄水保水能力极差" },
+                        { id: "puzzle-4-option-2", value: "2", label: "岩石阻挡了地下水的流动" },
+                        { id: "puzzle-4-option-3", value: "3", label: "降水减少，气候变得干旱" },
+                        { id: "puzzle-4-option-4", value: "4", label: "植物蒸腾作用太强，耗尽了水分" }
+                    ],
+                    correctAnswer: "1",
+                    clue: `<h4 class="font-bold flex items-center mb-2 text-primary"><i class="fa fa-lightbulb-o mr-2"></i> 专家提示</h4><p class="text-sm text-gray-700">石漠化导致土层变薄甚至基岩裸露，土壤蓄水保水能力极差。降水迅速转化为地下径流流失，地表无法涵养水源，导致"雨停即旱"。</p><div class="mt-4 flex items-center text-sm text-accent"><i class="fa fa-check-circle mr-2"></i><span class="font-medium">发现：生态水文恶性循环</span></div>`
+                }
+            ];
+        }
+
+        // 渲染指定场景
+        function renderScene(sceneNum) {
+            const sceneData = allScenesData[sceneNum - 1];
+            if (!sceneData) return;
+
+            document.getElementById(`scene-${sceneNum}-desc`).textContent = sceneData.description;
+            document.getElementById(`puzzle-${sceneNum}-container`).innerHTML = generatePuzzleHtml(sceneData, sceneNum);
+            document.getElementById(`clue-${sceneNum}-container`).innerHTML = sceneData.clue || '<p class="text-sm text-gray-700">暂无解析</p>';
+
+            document.getElementById(`check-puzzle-${sceneNum}`).addEventListener('click', () => {
+                checkAnswer(sceneNum);
+            });
+        }
+
+        function generatePuzzleHtml(puzzleData, puzzleNum) {
+            let optionsHtml = '';
+            puzzleData.options.forEach(option => {
+                optionsHtml += `<div class="flex items-center mb-2"><input type="radio" id="${option.id}" name="puzzle-${puzzleNum}" value="${option.value}" class="mr-3 w-4 h-4 text-primary"><label for="${option.id}" class="text-gray-700 cursor-pointer">${option.label}</label></div>`;
+            });
+
+            const icons = ['fa-question-circle', 'fa-exclamation-triangle', 'fa-sitemap', 'fa-tree'];
+            return `
+                <div class="flex items-center mb-3">
+                    <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center mr-3">
+                        <i class="fa ${icons[puzzleNum-1]} text-primary"></i>
+                    </div>
+                    <h4 class="font-medium text-lg text-primary">${puzzleData.title}</h4>
+                </div>
+                <p class="mb-4 text-gray-700 font-medium">${puzzleData.question}</p>
+                <div class="mt-3 space-y-2">
+                    ${optionsHtml}
+                    <button id="check-puzzle-${puzzleNum}" class="w-full px-4 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors btn-hover mt-4">
+                        ${puzzleNum === 1 ? '提交分析' : '提交分析'}
+                    </button>
+                </div>
+            `;
+        }
+
+        function checkAnswer(puzzleNum) {
+            const selectedOption = document.querySelector(`input[name="puzzle-${puzzleNum}"]:checked`);
+            const feedbackElement = document.getElementById(`puzzle-${puzzleNum}-feedback`);
+            const clueElement = document.getElementById(`scene-${puzzleNum}-clue`);
+
+            if (!selectedOption) {
+                feedbackElement.className = 'p-4 rounded-lg mb-4 bg-yellow-50 text-yellow-700 transition-all duration-300';
+                feedbackElement.innerHTML = '<div class="flex items-center"><i class="fa fa-exclamation-triangle mr-2"></i><span>请选择一个选项！</span></div>';
+                feedbackElement.classList.remove('hidden');
+                return;
+            }
+
+            const userAnswer = selectedOption.value;
+            const correctAnswer = allScenesData[puzzleNum - 1].correctAnswer;
+            const isCorrect = userAnswer === correctAnswer;
+
+            if (isCorrect) {
+                // 答对了：标记提交，禁用选项，显示正确反馈和解析
+                userAnswers[puzzleNum].attempts.push({ answer: userAnswer, correct: true });
+                userAnswers[puzzleNum].answer = userAnswer;
+                userAnswers[puzzleNum].correct = true;
+                userAnswers[puzzleNum].submitted = true;
+                userAnswers[puzzleNum].finalCorrect = true;
+
+                const allOptions = document.querySelectorAll(`input[name="puzzle-${puzzleNum}"]`);
+                allOptions.forEach(opt => opt.disabled = true);
+
+                const submitBtn = document.getElementById(`check-puzzle-${puzzleNum}`);
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                submitBtn.textContent = '回答正确';
+
+                feedbackElement.classList.remove('hidden');
+                feedbackElement.className = 'p-4 rounded-lg mb-4 bg-green-50 text-green-600 transition-all duration-300';
+                feedbackElement.innerHTML = `<div class="flex items-center"><i class="fa fa-check-circle mr-2"></i><span>回答正确！</span></div>`;
+
+                clueElement.classList.remove('hidden');
+                updateProgress();
+            } else {
+                // 答错了：给出提示，允许再次回答
+                userAnswers[puzzleNum].attempts.push({ answer: userAnswer, correct: false });
+                userAnswers[puzzleNum].answer = userAnswer;
+                userAnswers[puzzleNum].correct = false;
+                userAnswers[puzzleNum].submitted = false;
+
+                // 取消选中，允许重新选择
+                selectedOption.checked = false;
+
+                feedbackElement.classList.remove('hidden');
+                feedbackElement.className = 'p-4 rounded-lg mb-4 bg-orange-50 text-orange-700 transition-all duration-300';
+                feedbackElement.innerHTML = `<div class="flex items-center"><i class="fa fa-times-circle mr-2"></i><span>回答错误，请再想一想！</span></div><p class="mt-2 text-sm text-orange-600"><i class="fa fa-lightbulb-o mr-1"></i>提示：${getSceneHint(puzzleNum)}</p>`;
+            }
+        }
+
+        function getSceneHint(sceneNum) {
+            const hints = {
+                1: "喀斯特地区的岩石有什么特点？裂隙和管道发育对水的下渗有什么影响？",
+                2: "暴雨时地下河的水位会发生什么变化？管道排气不畅会产生什么效应？",
+                3: "裂隙发育对入渗速度有什么影响？管道连通性好对径流速度有什么影响？出口集中对排泄有什么影响？",
+                4: "石漠化导致土层变薄，土壤的蓄水保水能力会怎样变化？降水会如何流失？"
+            };
+            return hints[sceneNum] || "请仔细阅读题目描述中的线索。";
+        }
+
+        function updateProgress() {
+            const totalAnswered = Object.values(userAnswers).filter(ans => ans.submitted).length;
+            const progressPercent = (totalAnswered / 4) * 100;
+            document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+            document.getElementById('progress-text').textContent = `${totalAnswered}/4`;
+        }
+
+        // 加载勘察总结
+        async function loadSummary() {
+            const summaryContent = document.getElementById('summary-content');
+            const summaryDetail = document.getElementById('summary-detail-container');
+
+            // 统计含重试的答题数据
+            const attemptRecords = Object.entries(userAnswers).map(([num, ans]) => {
+                const names = {1: '径流去向', 2: '内涝成因', 3: '地下河控制', 4: '石漠化影响'};
+                const attemptCount = ans.attempts ? ans.attempts.length : (ans.submitted ? 1 : 0);
+                return {
+                    name: names[num],
+                    attemptCount: attemptCount,
+                    finalCorrect: ans.finalCorrect || ans.correct,
+                    firstTryCorrect: ans.attempts && ans.attempts.length > 0 && ans.attempts[0].correct
+                };
+            });
+
+            const finalCorrectCount = attemptRecords.filter(r => r.finalCorrect).length;
+            const totalAttempts = attemptRecords.reduce((sum, r) => sum + r.attemptCount, 0);
+            const firstTryCorrectCount = attemptRecords.filter(r => r.firstTryCorrect).length;
+            const retriedCorrectCount = attemptRecords.filter(r => r.finalCorrect && !r.firstTryCorrect).length;
+
+            const correctTopics = attemptRecords.filter(r => r.finalCorrect).map(r => r.name);
+            const wrongTopics = attemptRecords.filter(r => !r.finalCorrect).map(r => r.name);
+            const retriedTopics = attemptRecords.filter(r => r.finalCorrect && r.attemptCount > 1).map(r => `${r.name}(尝试${r.attemptCount}次)`);
+
+            const prompt = `根据用户答题结果生成喀斯特水文勘察总结报告。
+最终正确：${finalCorrectCount}题，最终错误：${4-finalCorrectCount}题。
+总尝试次数：${totalAttempts}次，首次正确：${firstTryCorrectCount}题，经重试正确：${retriedCorrectCount}题。
+正确：${correctTopics.join(',')||'无'}；错误：${wrongTopics.join(',')||'无'}；经重试：${retriedTopics.join(',')||'无'}。
+要求：1.简短总结50字以内（brief字段），提及重试情况；2.详细总结HTML格式（detail字段），包含<h4 class="font-bold mb-4 text-primary">勘察总结</h4>标题和<ul>列表，每项带<i class="fa fa-check text-accent mt-1 mr-2"></i>，包含尝试次数信息；3.返回JSON：{brief, detail}`;
+
+            try {
+                const response = await fetchWithTimeout(`${baseUrl}/chat/completions`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: generateApiRequestBody(prompt)
+                });
+
+                if (response && response.ok) {
+                    const data = await response.json();
+                    const content = data.choices[0].message.content.trim();
+                    const jsonStr = content.replace(/```json|```/g, '').trim();
+                    const summaryData = JSON.parse(jsonStr);
+                    summaryContent.textContent = summaryData.brief;
+                    summaryDetail.innerHTML = summaryData.detail;
+                } else {
+                    throw new Error('总结生成失败');
+                }
+            } catch (error) {
+                summaryContent.textContent = `完成勘察！最终正确${finalCorrectCount}题，总尝试${totalAttempts}次。`;
+                let detailHtml = `<h4 class="font-bold mb-4 text-primary">勘察总结</h4><ul class="space-y-2 text-sm text-gray-700">`;
+                detailHtml += `<li class="flex items-start"><i class="fa fa-check text-accent mt-1 mr-2"></i>完成4个喀斯特水文核心问题分析</li>`;
+                detailHtml += `<li class="flex items-start"><i class="fa fa-check text-accent mt-1 mr-2"></i>最终正确识别${finalCorrectCount}个关键知识点</li>`;
+                if (firstTryCorrectCount > 0) {
+                    detailHtml += `<li class="flex items-start"><i class="fa fa-check text-accent mt-1 mr-2"></i>首次即正确：${firstTryCorrectCount}题</li>`;
+                }
+                if (retriedCorrectCount > 0) {
+                    detailHtml += `<li class="flex items-start"><i class="fa fa-check text-accent mt-1 mr-2"></i>经提示后纠正：${retriedCorrectCount}题（${retriedTopics.join('、')}）</li>`;
+                }
+                detailHtml += `<li class="flex items-start"><i class="fa fa-check text-accent mt-1 mr-2"></i>理解喀斯特地区双重水文结构特征</li>`;
+                detailHtml += `<li class="flex items-start"><i class="fa fa-check text-accent mt-1 mr-2"></i>掌握石漠化对水循环的影响机理</li></ul>`;
+                summaryDetail.innerHTML = detailHtml;
+            }
+        }
+
+        // 加载AI智能分析
+        async function loadAIAnalysis() {
+            const weaknessList = document.getElementById('weakness-list');
+            const abilityAssessment = document.getElementById('ability-assessment');
+
+            // 收集每道题的尝试记录
+            const attemptRecords = Object.entries(userAnswers).map(([num, ans]) => {
+                const topics = {1: "喀斯特地表径流与地下径流转换", 2: "暴雨落水洞倒灌机制", 3: "地下河补给-径流-排泄系统", 4: "石漠化与生态水文"};
+                const attemptCount = ans.attempts ? ans.attempts.length : (ans.submitted ? 1 : 0);
+                const wrongAttempts = ans.attempts ? ans.attempts.filter(a => !a.correct).length : (ans.submitted && !ans.correct ? 1 : 0);
+                return {
+                    topic: topics[num],
+                    attemptCount: attemptCount,
+                    wrongAttempts: wrongAttempts,
+                    finalCorrect: ans.finalCorrect || ans.correct,
+                    firstTryCorrect: ans.attempts && ans.attempts.length > 0 && ans.attempts[0].correct
+                };
+            });
+
+            const finalCorrectCount = attemptRecords.filter(r => r.finalCorrect).length;
+            const totalAttempts = attemptRecords.reduce((sum, r) => sum + r.attemptCount, 0);
+            const totalWrongAttempts = attemptRecords.reduce((sum, r) => sum + r.wrongAttempts, 0);
+            const firstTryCorrectCount = attemptRecords.filter(r => r.firstTryCorrect).length;
+            const retriedCorrectCount = attemptRecords.filter(r => r.finalCorrect && !r.firstTryCorrect).length;
+
+            const wrongTopics = attemptRecords
+                .filter(r => !r.finalCorrect)
+                .map(r => r.topic);
+
+            const retriedTopics = attemptRecords
+                .filter(r => r.finalCorrect && r.attemptCount > 1)
+                .map(r => `${r.topic}(尝试${r.attemptCount}次)`);
+
+            const prompt = `根据用户喀斯特水文答题结果生成AI智能分析报告。
+
+答题记录（含重试）：
+- 总题数：4题
+- 最终正确：${finalCorrectCount}题
+- 总尝试次数：${totalAttempts}次
+- 错误尝试次数：${totalWrongAttempts}次
+- 首次即正确：${firstTryCorrectCount}题
+- 经重试后正确：${retriedCorrectCount}题
+- 最终错误知识点：${wrongTopics.join(',')||'无'}
+- 经重试才正确的知识点：${retriedTopics.join(',')||'无'}
+
+要求：
+1.薄弱知识点识别（weakness字段）：结合首次错误和重试情况分析薄弱点，指出哪些知识点需要重点复习（包括虽然最终答对但经多次尝试的），100字以内；
+2.能力评估（ability字段）：综合评分0-100分，考虑首次正确率、总尝试次数、自学纠错能力等维度，100字以内；
+3.返回JSON：{weakness, ability}`;
+
+            try {
+                const response = await fetchWithTimeout(`${baseUrl}/chat/completions`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: generateApiRequestBody(prompt)
+                });
+
+                if (response && response.ok) {
+                    const data = await response.json();
+                    const content = data.choices[0].message.content.trim();
+                    const jsonStr = content.replace(/```json|```/g, '').trim();
+                    const analysisData = JSON.parse(jsonStr);
+                    weaknessList.textContent = analysisData.weakness;
+                    abilityAssessment.textContent = analysisData.ability;
+                } else {
+                    throw new Error('AI分析生成失败');
+                }
+            } catch (error) {
+                // 本地计算 fallback，包含重试记录
+                let score = Math.round((finalCorrectCount / 4) * 60 + (firstTryCorrectCount / 4) * 40);
+
+                let weaknessText = "";
+                if (wrongTopics.length > 0) {
+                    weaknessText += `薄弱点：${wrongTopics.join('、')}。`;
+                }
+                if (retriedTopics.length > 0) {
+                    weaknessText += `经重试才掌握：${retriedTopics.map(t => t.replace(/\(.*\)/, '')).join('、')}，建议巩固。`;
+                }
+                if (weaknessText === "") {
+                    weaknessText = "知识点掌握全面，首次正确率高，无明显薄弱环节。";
+                }
+
+                let abilityText = `综合评分${score}分。`;
+                abilityText += `${score>=80?'优秀':score>=60?'良好':'需加强'}。`;
+                abilityText += `首次正确率${Math.round((firstTryCorrectCount/4)*100)}%，`;
+                abilityText += `${retriedCorrectCount>0?`自学纠错${retriedCorrectCount}题，` : ''}`;
+                abilityText += `${totalWrongAttempts>0?`总错误${totalWrongAttempts}次，` : ''}`;
+                abilityText += `基础概念${score>=70?'扎实':'待巩固'}。`;
+
+                weaknessList.textContent = weaknessText;
+                abilityAssessment.textContent = abilityText;
+            }
+        }
+
+        // 加载个性化题目推荐
+        async function loadRecommendations() {
+            const recommendedQuestions = document.getElementById('recommended-questions');
+
+            const wrongTopics = Object.entries(userAnswers)
+                .filter(([num, ans]) => ans.submitted && !ans.correct)
+                .map(([num]) => {
+                    const topics = {1: "喀斯特地表径流与地下径流", 2: "暴雨内涝与落水洞倒灌", 3: "地下河系统与裂隙控制", 4: "石漠化与生态水文"};
+                    return topics[num];
+                });
+
+            const prompt = `根据用户喀斯特水文答题结果生成3道个性化练习题。薄弱知识点：${wrongTopics.join(',')||'无明显薄弱点'}。
+
+每道题要求：
+1. title：题目标题
+2. difficulty：简单/中等/较难
+3. reason：推荐理由（为什么推荐这道题）
+4. btnText：按钮文字（如"查看题目"）
+5. question：完整的题目内容（问题+4个选项）
+6. correctAnswer：正确答案
+7. explanation：详细解析
+
+返回JSON数组格式，每个元素：{
+  "title": "...",
+  "difficulty": "...",
+  "reason": "...",
+  "btnText": "...",
+  "question": "...",
+  "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
+  "correctAnswer": "...",
+  "explanation": "..."
+}`;
+
+            try {
+                const response = await fetchWithTimeout(`${baseUrl}/chat/completions`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: generateApiRequestBody(prompt)
+                });
+
+                if (response && response.ok) {
+                    const data = await response.json();
+                    const content = data.choices[0].message.content.trim();
+                    const jsonStr = content.replace(/```json|```/g, '').trim();
+                    recommendedQuestionsData = JSON.parse(jsonStr);
+                    renderRecommendations();
+                } else {
+                    throw new Error('推荐题目生成失败');
+                }
+            } catch (error) {
+                recommendedQuestionsData = getDefaultRecommendations();
+                renderRecommendations();
+            }
+        }
+
+        function getDefaultRecommendations() {
+            return [
+                {
+                    title: "喀斯特地貌水文特征",
+                    difficulty: "简单",
+                    reason: "巩固基础概念",
+                    btnText: "查看题目",
+                    question: "喀斯特地区地表径流系数小的主要原因是？",
+                    options: [
+                        "A. 降水稀少，蒸发量大",
+                        "B. 石灰岩裂隙发育，降水快速入渗",
+                        "C. 植被覆盖率高，截留作用强",
+                        "D. 人类大量抽取地下水"
+                    ],
+                    correctAnswer: "B",
+                    explanation: "喀斯特地区石灰岩裂隙和管道发育，降水通过裂隙和落水洞快速入渗转化为地下径流，导致地表径流系数远小于非喀斯特地区。"
+                },
+                {
+                    title: "落水洞倒灌机制分析",
+                    difficulty: "中等",
+                    reason: "强化逻辑分析能力",
+                    btnText: "查看题目",
+                    question: "暴雨时喀斯特地区落水洞发生倒灌的主要原因是？",
+                    options: [
+                        "A. 落水洞被垃圾堵塞",
+                        "B. 暴雨流量超过地下河排泄能力，地下水位上升",
+                        "C. 地下水位下降形成吸水漏斗",
+                        "D. 地表河流改道冲入村庄"
+                    ],
+                    correctAnswer: "B",
+                    explanation: "暴雨导致流量超过地下河排泄能力，地下水位快速上升；加上管道排气不畅产生顶托作用，导致落水洞倒灌，引发内涝。"
+                },
+                {
+                    title: "石漠化对水循环的影响",
+                    difficulty: "较难",
+                    reason: "提升综合应用能力",
+                    btnText: "查看题目",
+                    question: "石漠化地区 地表水贵如油 现象的主要原因是？",
+                    options: [
+                        "A. 岩石阻挡了地下水流动",
+                        "B. 土层变薄，土壤蓄水保水能力极差",
+                        "C. 气候变干，降水量减少",
+                        "D. 植物蒸腾作用过强"
+                    ],
+                    correctAnswer: "B",
+                    explanation: "石漠化导致土层变薄甚至基岩裸露，土壤蓄水保水能力极差。降水迅速转化为地下径流流失，地表无法涵养水源，形成 雨停即旱 的恶性循环。"
+                }
+            ];
+        }
+
+        function renderRecommendations() {
+            const container = document.getElementById('recommended-questions');
+            let html = '';
+
+            recommendedQuestionsData.forEach((q, index) => {
+                const borderColor = q.difficulty === '简单' ? 'border-green-500' : q.difficulty === '中等' ? 'border-primary' : 'border-red-500';
+                const badgeColor = q.difficulty === '简单' ? 'bg-green-100 text-green-800' : q.difficulty === '中等' ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800';
+
+                html += `
+                    <div class="bg-gray-50 p-4 rounded-lg border-l-4 ${borderColor}">
+                        <div class="flex justify-between items-start">
+                            <div class="flex-1">
+                                <h6 class="font-medium text-gray-800">${q.title}</h6>
+                                <div class="flex items-center mt-1 text-xs">
+                                    <span class="px-2 py-0.5 rounded ${badgeColor}">${q.difficulty}</span>
+                                    <span class="ml-2 text-gray-500">${q.reason}</span>
+                                </div>
+                            </div>
+                            <button onclick="showQuestionDetail(${index})" class="px-3 py-1 bg-primary text-white text-xs rounded hover:bg-primary/90 transition-colors btn-hover whitespace-nowrap ml-2">
+                                ${q.btnText}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // 显示推荐题目详情弹窗
+        function showQuestionDetail(index) {
+            const q = recommendedQuestionsData[index];
+            if (!q) return;
+
+            const modal = document.getElementById('question-modal');
+            const title = document.getElementById('modal-title');
+            const content = document.getElementById('modal-content');
+
+            title.textContent = q.title;
+
+            let optionsHtml = '';
+            if (q.options && Array.isArray(q.options)) {
+                q.options.forEach((opt, optIndex) => {
+                    optionsHtml += `
+                        <div class="flex items-center mb-2 p-3 bg-gray-50 rounded hover:bg-gray-100 cursor-pointer" onclick="selectRecOption(${index}, ${optIndex})">
+                            <input type="radio" name="rec-question-${index}" id="rec-opt-${index}-${optIndex}" value="${String.fromCharCode(65 + optIndex)}" class="mr-3 w-4 h-4 text-primary">
+                            <label for="rec-opt-${index}-${optIndex}" class="text-gray-700 cursor-pointer flex-1">${opt}</label>
+                        </div>
+                    `;
+                });
+            }
+
+            content.innerHTML = `
+                <div class="mb-4">
+                    <span class="px-2 py-1 rounded text-xs ${q.difficulty === '简单' ? 'bg-green-100 text-green-800' : q.difficulty === '中等' ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800'}">${q.difficulty}</span>
+                    <span class="ml-2 text-sm text-gray-500">${q.reason}</span>
+                </div>
+                <div class="mb-4">
+                    <p class="font-medium text-gray-800 mb-3">${q.question}</p>
+                    <div class="space-y-2" id="rec-options-${index}">
+                        ${optionsHtml}
+                    </div>
+                </div>
+                <button id="rec-submit-${index}" onclick="submitRecAnswer(${index})" class="w-full px-4 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors btn-hover mb-4">
+                    提交答案
+                </button>
+                <div id="rec-result-${index}" class="hidden"></div>
+            `;
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+
+            // 初始化推荐题目的答题状态
+            if (!window.recAnswerState) window.recAnswerState = {};
+            window.recAnswerState[index] = {
+                submitted: false,
+                attempts: [],
+                finalCorrect: false
+            };
+        }
+
+        // 选择推荐题目选项
+        function selectRecOption(qIndex, optIndex) {
+            const radio = document.getElementById(`rec-opt-${qIndex}-${optIndex}`);
+            if (radio) radio.checked = true;
+        }
+
+        // 提交推荐题目答案
+        function submitRecAnswer(index) {
+            const q = recommendedQuestionsData[index];
+            const selectedOption = document.querySelector(`input[name="rec-question-${index}"]:checked`);
+            const resultDiv = document.getElementById(`rec-result-${index}`);
+            const submitBtn = document.getElementById(`rec-submit-${index}`);
+
+            if (!selectedOption) {
+                resultDiv.className = 'p-4 rounded-lg bg-yellow-50 text-yellow-700 mb-4';
+                resultDiv.innerHTML = '<div class="flex items-center"><i class="fa fa-exclamation-triangle mr-2"></i><span>请选择一个选项！</span></div>';
+                resultDiv.classList.remove('hidden');
+                return;
+            }
+
+            const userAnswer = selectedOption.value;
+            const isCorrect = userAnswer === q.correctAnswer;
+
+            if (!window.recAnswerState) window.recAnswerState = {};
+            if (!window.recAnswerState[index]) {
+                window.recAnswerState[index] = { submitted: false, attempts: [], finalCorrect: false };
+            }
+            const state = window.recAnswerState[index];
+
+            if (isCorrect) {
+                // 答对了：记录状态，禁用选项，显示正确反馈和解析
+                state.attempts.push({ answer: userAnswer, correct: true });
+                state.finalCorrect = true;
+                state.submitted = true;
+
+                // 禁用所有选项
+                const allOptions = document.querySelectorAll(`input[name="rec-question-${index}"]`);
+                allOptions.forEach(opt => opt.disabled = true);
+
+                // 禁用提交按钮
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                submitBtn.textContent = '回答正确';
+
+                resultDiv.classList.remove('hidden');
+                resultDiv.innerHTML = `
+                    <div class="p-4 rounded-lg bg-green-50 text-green-600 mb-4">
+                        <div class="flex items-center"><i class="fa fa-check-circle mr-2"></i><span>回答正确！</span></div>
+                    </div>
+                    <div class="bg-primary/5 p-4 rounded-lg border-l-4 border-primary">
+                        <h4 class="font-bold text-primary mb-2"><i class="fa fa-lightbulb-o mr-2"></i>答案解析</h4>
+                        <p class="text-sm text-gray-700">${q.explanation}</p>
+                    </div>
+                `;
+            } else {
+                // 答错了：给出提示，允许再次回答
+                state.attempts.push({ answer: userAnswer, correct: false });
+
+                // 取消选中，允许重新选择
+                selectedOption.checked = false;
+
+                resultDiv.classList.remove('hidden');
+                resultDiv.innerHTML = `
+                    <div class="p-4 rounded-lg bg-orange-50 text-orange-700 mb-4">
+                        <div class="flex items-center"><i class="fa fa-times-circle mr-2"></i><span>回答错误，请再想一想！</span></div>
+                        <p class="mt-2 text-sm text-orange-600"><i class="fa fa-lightbulb-o mr-1"></i>提示：${getRecHint(index, q)}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // 获取推荐题目的提示
+        function getRecHint(index, q) {
+            const hints = [
+                "喀斯特地区地表水少的关键在于岩石的什么特征？裂隙和管道对水的去向有什么影响？",
+                "暴雨时地下河的水位会发生什么变化？排泄能力超限会导致什么后果？",
+                "裂隙发育对水的入渗速度有什么影响？管道连通性好对径流有什么影响？",
+                "石漠化导致土层变薄，土壤的蓄水保水能力会怎样变化？降水会如何流失？"
+            ];
+            return hints[index] || "请仔细阅读题目描述中的线索，结合喀斯特水文的核心概念进行分析。";
+        }
+
+        // 关闭弹窗
+        function closeModal() {
+            document.getElementById('question-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // 场景切换逻辑
+                // 场景切换逻辑
+        async function switchScene(sceneNum) {
+            document.getElementById('game-start').classList.add('hidden');
+            document.getElementById('scene-1').classList.add('hidden');
+            document.getElementById('scene-2').classList.add('hidden');
+            document.getElementById('scene-3').classList.add('hidden');
+            document.getElementById('scene-4').classList.add('hidden');
+            document.getElementById('game-end').classList.add('hidden');
+
+            if (sceneNum === 0) {
+                document.getElementById('game-start').classList.remove('hidden');
+            } else if (sceneNum === 5) {
+                document.getElementById('game-end').classList.remove('hidden');
+                await Promise.all([
+                    loadSummary(),
+                    loadAIAnalysis(),
+                    loadRecommendations()
+                ]);
+                document.getElementById('end-page-loading').classList.add('hidden');
+                document.getElementById('end-page-content').classList.remove('hidden');
+            } else {
+                const targetScene = document.getElementById(`scene-${sceneNum}`);
+                targetScene.classList.remove('hidden');
+                document.getElementById(`scene-${sceneNum}-loading`).classList.remove('hidden');
+                document.getElementById(`scene-${sceneNum}-content`).classList.add('hidden');
+
+                if (!allScenesData) {
+                    await loadAllScenes();
+                }
+
+                renderScene(sceneNum);
+
+                document.getElementById(`scene-${sceneNum}-loading`).classList.add('hidden');
+                document.getElementById(`scene-${sceneNum}-content`).classList.remove('hidden');
+            }
+        }
+
+        function initEventListeners() {
+            document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.toggle('hidden');
+            });
+
+            document.getElementById('start-shift').addEventListener('click', () => {
+                switchScene(1);
+            });
+
+            document.querySelectorAll('.next-scene-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const nextScene = parseInt(btn.dataset.next);
+                    switchScene(nextScene);
+                });
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({ top: targetElement.offsetTop - 80, behavior: 'smooth' });
+                        document.getElementById('mobile-menu').classList.add('hidden');
+                    }
+                });
+            });
+
+            // 弹窗关闭事件
+            document.getElementById('modal-close').addEventListener('click', closeModal);
+            document.getElementById('question-modal').addEventListener('click', (e) => {
+                if (e.target.id === 'question-modal') closeModal();
+            });
+
+            window.addEventListener('scroll', () => {
+                const nav = document.querySelector('nav');
+                if (window.scrollY > 50) {
+                    nav.classList.add('shadow-md');
+                    nav.classList.remove('shadow-sm');
+                } else {
+                    nav.classList.remove('shadow-md');
+                    nav.classList.add('shadow-sm');
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initEventListeners();
+            switchScene(0);
+        });
+    </script>
+    <!-- 智能地理助手 -->
+    <script src="chat.js"></script>
+</body>
+</html>

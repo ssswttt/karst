@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>溶洞纪年：石笋里的气候密码</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1D4ED8',
+            secondary: '#7C3AED',
+            accent: '#059669',
+            dark: '#1C1C1E',
+            light: '#F9F9F9'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['"ZCOOL QingKe HuangYou"', 'cursive']
+          },
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto { content-visibility: auto; }
+      .text-shadow { text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+      .card-hover { transition: all 0.3s ease; }
+      .card-hover:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 10px 25px -5px rgba(29, 78, 216, 0.3); }
+      .scene-transition { transition: all 0.5s ease; }
+      .puzzle-input:focus { outline: none; box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.3); }
+      .puzzle-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+      .puzzle-card:hover { box-shadow: 0 12px 20px -10px rgba(29, 78, 216, 0.25); }
+      .btn-hover { transition: all 0.3s ease; }
+      .btn-hover:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(29, 78, 216, 0.2); }
+    }
+  </style>
+  <style>
+        /* 返回按钮 */
+        .back-btn {
+            width: 100px;
+            height: 40px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #1677ff 0%, #4096ff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 14px;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(22, 119, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        .back-btn .icon {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(22, 119, 255, 0.4);
+            background: linear-gradient(135deg, #0958d9 0%, #3388ff 100%);
+        }
+        .back-btn:active {
+            transform: scale(1.02);
+            box-shadow: 0 3px 10px rgba(22, 119, 255, 0.3);
+        }
+    </style>
+<base target="_blank">
+<script>
+  function goBack() {
+    // 确保返回时使用fromSubVideo标志
+    sessionStorage.setItem('fromSubVideo', 'true');
+    // 跳转到主页面
+    window.location.href = 'main.html';
+  }
+</script>
+</head>
+<body class="bg-light text-dark font-sans min-h-screen">
+  <!-- 导航栏 -->
+  <nav class="fixed w-full bg-white/90 backdrop-blur-md shadow-sm z-50 transition-all duration-300">
+    <div class="container mx-auto px-2 py-3 flex justify-between items-center">
+      <div class="flex items-center space-x-4">
+        <!-- 左上角返回按钮 -->
+        <div class="back-btn" onclick="window.location.href='main.html'">
+            <span class="icon">←</span>
+            <span>返回</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <i class="fa fa-flask text-primary text-2xl"></i>
+          <h1 class="text-xl font-bold text-primary">溶洞纪年</h1>
+        </div>
+      </div>
+      <div class="hidden md:flex items-center space-x-6">
+        <a href="#story" class="hover:text-primary transition-colors">科考日志</a>
+        <a href="#characters" class="hover:text-primary transition-colors">科考队</a>
+        <a href="#play" class="px-4 py-1 bg-primary text-white rounded-full text-sm hover:bg-primary/90 transition-colors">开始科考</a>
+      </div>
+      <button id="mobile-menu-btn" class="md:hidden text-dark text-xl">
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+    <!-- 移动端菜单 -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+      <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+        <a href="#story" class="py-2 hover:text-primary transition-colors">科考日志</a>
+        <a href="#characters" class="py-2 hover:text-primary transition-colors">科考队</a>
+        <a href="#play" class="py-2 hover:text-primary transition-colors">开始科考</a>
+      </div>
+    </div>
+  </nav>
+       
+  <!-- 英雄区域 -->
+  <section id="home" class="pt-24 pb-16 md:pt-32 md:pb-24 relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-1/3 h-full bg-primary/5 rounded-l-full -z-10"></div>
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 mb-10 md:mb-0">
+          <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight text-shadow mb-6">
+            溶洞纪年：<br>
+            <span class="text-primary">石笋里的气候密码</span>
+          </h1>
+          <p class="text-lg text-gray-600 mb-8 max-w-lg">
+            滇西深处的喀斯特溶洞，徐霞客的游记与现代的石笋样本在此交汇。作为科考队长，你需要运用地理知识还原气候真相，揭开数据背后的自然奥秘。
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="#play" class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg shadow-md hover:bg-primary/90 transition-all transform hover:-translate-y-1">
+              开始科考 <i class="fa fa-flask ml-2"></i>
+            </a>
+            <a href="#story" class="inline-flex items-center px-6 py-3 bg-white text-primary border border-primary rounded-lg hover:bg-primary/5 transition-all transform hover:-translate-y-1">
+              了解详情 <i class="fa fa-info-circle ml-2"></i>
+            </a>
+          </div>
+        </div>
+        <div class="md:w-1/2 relative">
+          <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl transform rotate-1 hover:rotate-0 transition-transform duration-500">
+            <img src="picture/s11.png" alt="神秘的溶洞内部，钟乳石与石笋在灯光下闪烁" class="w-full h-auto"object-cover" style="aspect-ratio: 3/2;">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+              <span class="text-white text-shadow font-medium">滇西喀斯特溶洞 · 科考现场</span>
+            </div>
+          </div>
+          <div class="absolute top-1/4 -left-4 text-4xl text-primary/20 rotate-12">H₂O</div>
+          <div class="absolute bottom-1/3 -right-2 text-3xl text-primary/20 -rotate-12">CaCO₃</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 故事介绍 -->
+  <section id="story" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <div class="inline-block px-4 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">科考背景</div>
+        <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-4 text-primary">石笋之谜</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">一场跨越时空的地质对话，等待你来解码</p>
+      </div>
+      <div class="max-w-4xl mx-auto bg-gray-50 rounded-2xl p-8 shadow-sm">
+        <div class="flex items-center mb-6">
+          <div class="w-10 h-1 bg-primary rounded-full mr-3"></div>
+          <h3 class="text-xl font-bold text-primary">科考任务</h3>
+        </div>
+        <p class="mb-6 leading-relaxed">
+          你作为滇西喀斯特科考队的队长，正在整理徐霞客的游记与现代采集的石笋样本。这根石笋记录了千年的气候变迁，但数据出现了异常波动，有人怀疑是人为篡改。
+        </p>
+        <div class="bg-white p-4 rounded-xl border-l-4 border-primary mb-6 shadow-sm">
+          <p class="italic text-gray-700">"这不仅仅是数据，这是地球的记忆。必须用喀斯特地貌的原理，还原湿润与干旱的真相。"</p>
+          <p class="text-right text-sm text-gray-500 mt-2">—— 科考队总顾问</p>
+        </div>
+        <p class="leading-relaxed">
+          你必须通过分析溶洞结构、水文动力和化学沉积过程，证明这些数据是自然气候波动的结果，而非人为造假。只有解开这四个谜题，才能完成这份地质报告。
+        </p>
+        <div class="mt-8 flex justify-center">
+          <a href="#play" class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg shadow-md hover:bg-primary/90 transition-all">
+            开启科考 <i class="fa fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 角色介绍 -->
+  <section id="characters" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <div class="inline-block px-4 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">科考队成员</div>
+        <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-4 text-primary">幕后专家</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">虽然你扮演队长，但这些专家的智慧在支持着你</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+          <div class="h-56 overflow-hidden">
+            <img src="https://picsum.photos/id/64/400/300" alt="穿着科考服的队长正在看地图" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2 text-primary">你 (科考队长)</h3>
+            <p class="text-gray-600 mb-3">地质学博士</p>
+            <p class="text-sm text-gray-500 mb-4">负责统筹全局，汇总各领域的数据。你需要做出最终的判断，还原气候真相。</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-2 py-1 bg-primary/10 text-primary rounded text-xs">统筹决策</span>
+              <span class="px-2 py-1 bg-primary/10 text-primary rounded text-xs">逻辑严密</span>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+          <div class="h-56 overflow-hidden">
+            <img src="https://picsum.photos/id/177/400/300" alt="徐霞客在山中考察" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2 text-primary">徐霞客</h3>
+            <p class="text-gray-600 mb-3">明代地理学家</p>
+            <p class="text-sm text-gray-500 mb-4">他的游记记录了溶洞的形态和当时的水文状况，是验证现代数据的重要历史依据。</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-2 py-1 bg-primary/10 text-primary rounded text-xs">历史见证</span>
+              <span class="px-2 py-1 bg-primary/10 text-primary rounded text-xs">实地考察</span>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+          <div class="h-56 overflow-hidden">
+            <img src="https://picsum.photos/id/1005/400/300" alt="科学家在分析数据图表" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2 text-primary">气候分析师</h3>
+            <p class="text-gray-600 mb-3">古气候专家</p>
+            <p class="text-sm text-gray-500 mb-4">负责解读石笋微层的宽窄变化，将其转化为千年的干湿气候数据。</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-2 py-1 bg-primary/10 text-primary rounded text-xs">数据解码</span>
+              <span class="px-2 py-1 bg-primary/10 text-primary rounded text-xs">古气候重建</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 游戏区域 -->
+  <section id="play" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <div class="inline-block px-4 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">科考现场</div>
+        <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-4 text-primary">破解气候密码</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">解决地质难题，还原历史真相</p>
+      </div>
+      <div class="max-w-4xl mx-auto">
+
+        <!-- 游戏进度 -->
+        <div class="mb-10 bg-gray-50 p-4 rounded-xl shadow-sm">
+          <div class="flex justify-between mb-2">
+            <span class="font-medium">科考进度</span>
+            <span class="text-primary font-bold" id="progress-text">0/4</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
+            <div id="progress-bar" class="bg-primary h-2.5 rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+          </div>
+          <div class="flex justify-between mt-1 text-xs text-gray-500">
+            <span>溶洞分层</span>
+            <span>石笋微层</span>
+            <span>水文化学</span>
+            <span>环境对比</span>
+          </div>
+        </div>
+
+        <!-- 游戏容器 -->
+        <div class="bg-gray-50 rounded-2xl shadow-md overflow-hidden">
+
+          <!-- 游戏开始界面 -->
+          <div id="game-start" class="p-8 text-center">
+            <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <i class="fa fa-binoculars text-4xl text-primary"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-4 text-primary">准备进入溶洞</h3>
+            <p class="text-gray-600 mb-8 max-w-lg mx-auto">
+              你将面对四个关于喀斯特地貌与古气候的核心难题。运用地理知识，证明数据的真实性，完成这次跨越时空的科考。
+            </p>
+            <button id="start-shift" class="px-8 py-3 bg-primary text-white rounded-lg shadow-md hover:bg-primary/90 transition-all text-lg transform hover:-translate-y-1 btn-hover">
+              开始科考
+            </button>
+          </div>
+
+          <!-- 场景1：溶洞分层 -->
+          <div id="scene-1" class="hidden">
+            <div class="h-64 md:h-80 overflow-hidden relative">
+              <img src="https://picsum.photos/id/212/800/400" alt="溶洞的多层结构示意图" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                <div class="p-6 text-white">
+                  <h3 class="text-2xl font-bold mb-1">场景1：多层溶洞</h3>
+                </div>
+              </div>
+            </div>
+            <div class="p-6">
+              <div class="bg-white p-5 rounded-xl shadow-sm mb-6">
+                <div id="scene-1-loading" class="text-center py-8">
+                  <i class="fa fa-spinner fa-spin text-3xl text-primary mb-3"></i>
+                  <p class="text-gray-600">正在加载科考内容...</p>
+                </div>
+                <div id="scene-1-content" class="hidden">
+                  <p class="mb-6 leading-relaxed scene-description" id="scene-1-desc"></p>
+                  <div class="bg-primary/5 p-5 rounded-lg border-l-4 border-primary mb-6 puzzle-card" id="puzzle-1-container"></div>
+                  <div id="puzzle-1-feedback" class="hidden p-4 rounded-lg mb-4 transition-all duration-300"></div>
+                  <div id="scene-1-clue" class="hidden">
+                    <div class="bg-primary/10 p-5 rounded-lg border-l-4 border-primary mb-6" id="clue-1-container"></div>
+                    <div class="mt-6">
+                      <button class="next-scene-btn w-full px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors btn-hover" data-next="2">
+                        前往下一区域 <i class="fa fa-arrow-right ml-2"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 场景2：石笋微层 -->
+          <div id="scene-2" class="hidden">
+            <div class="h-64 md:h-80 overflow-hidden relative">
+              <img src="https://picsum.photos/id/1005/800/400" alt="石笋样本的微层结构" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                <div class="p-6 text-white">
+                  <h3 class="text-2xl font-bold mb-1">场景2：石笋微层</h3>
+                </div>
+              </div>
+            </div>
+            <div class="p-6">
+              <div class="bg-white p-5 rounded-xl shadow-sm mb-6">
+                <div id="scene-2-loading" class="text-center py-8">
+                  <i class="fa fa-spinner fa-spin text-3xl text-primary mb-3"></i>
+                  <p class="text-gray-600">正在加载科考内容...</p>
+                </div>
+                <div id="scene-2-content" class="hidden">
+                  <p class="mb-6 leading-relaxed scene-description" id="scene-2-desc"></p>
+                  <div class="bg-primary/5 p-5 rounded-lg border-l-4 border-primary mb-6 puzzle-card" id="puzzle-2-container"></div>
+                  <div id="puzzle-2-feedback" class="hidden p-4 rounded-lg mb-4 transition-all duration-300"></div>
+                  <div id="scene-2-clue" class="hidden">
+                    <div class="bg-primary/10 p-5 rounded-lg border-l-4 border-primary mb-6" id="clue-2-container"></div>
+                    <div class="mt-6">
+                      <button class="next-scene-btn w-full px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors btn-hover" data-next="3">
+                        前往下一区域 <i class="fa fa-arrow-right ml-2"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 场景3：水文化学 -->
+          <div id="scene-3" class="hidden">
+            <div class="h-64 md:h-80 overflow-hidden relative">
+              <img src="https://picsum.photos/id/282/800/400" alt="实验室中的化学试剂" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                <div class="p-6 text-white">
+                  <h3 class="text-2xl font-bold mb-1">场景3：水文化学</h3>
+                </div>
+              </div>
+            </div>
+            <div class="p-6">
+              <div class="bg-white p-5 rounded-xl shadow-sm mb-6">
+                <div id="scene-3-loading" class="text-center py-8">
+                  <i class="fa fa-spinner fa-spin text-3xl text-primary mb-3"></i>
+                  <p class="text-gray-600">正在加载科考内容...</p>
+                </div>
+                <div id="scene-3-content" class="hidden">
+                  <p class="mb-6 leading-relaxed scene-description" id="scene-3-desc"></p>
+                  <div class="bg-primary/5 p-5 rounded-lg border-l-4 border-primary mb-6 puzzle-card" id="puzzle-3-container"></div>
+                  <div id="puzzle-3-feedback" class="hidden p-4 rounded-lg mb-4 transition-all duration-300"></div>
+                  <div id="scene-3-clue" class="hidden">
+                    <div class="bg-primary/10 p-5 rounded-lg border-l-4 border-primary mb-6" id="clue-3-container"></div>
+                    <div class="mt-6">
+                      <button class="next-scene-btn w-full px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors btn-hover" data-next="4">
+                        前往下一区域 <i class="fa fa-arrow-right ml-2"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 场景4：环境对比 -->
+          <div id="scene-4" class="hidden">
+            <div class="h-64 md:h-80 overflow-hidden relative">
+              <img src="https://picsum.photos/id/1039/800/400" alt="热带雨林与温带森林对比" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                <div class="p-6 text-white">
+                  <h3 class="text-2xl font-bold mb-1">场景4：环境对比</h3>
+                </div>
+              </div>
+            </div>
+            <div class="p-6">
+              <div class="bg-white p-5 rounded-xl shadow-sm mb-6">
+                <div id="scene-4-loading" class="text-center py-8">
+                  <i class="fa fa-spinner fa-spin text-3xl text-primary mb-3"></i>
+                  <p class="text-gray-600">正在加载科考内容...</p>
+                </div>
+                <div id="scene-4-content" class="hidden">
+                  <p class="mb-6 leading-relaxed scene-description" id="scene-4-desc"></p>
+                  <div class="bg-primary/5 p-5 rounded-lg border-l-4 border-primary mb-6 puzzle-card" id="puzzle-4-container"></div>
+                  <div id="puzzle-4-feedback" class="hidden p-4 rounded-lg mb-4 transition-all duration-300"></div>
+                  <div id="scene-4-clue" class="hidden">
+                    <div class="bg-primary/10 p-5 rounded-lg border-l-4 border-primary mb-6" id="clue-4-container"></div>
+                    <div class="mt-6">
+                      <button class="next-scene-btn w-full px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors btn-hover" data-next="5">
+                        完成科考报告 <i class="fa fa-flag-checkered ml-2"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 游戏结束界面 -->
+          <div id="game-end" class="hidden p-8 text-center">
+            <div class="w-20 h-20 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <i class="fa fa-trophy text-4xl text-accent"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-4 text-primary">科考任务完成</h3>
+
+            <!-- 整体加载状态 -->
+            <div id="end-page-loading" class="text-center py-8 mb-8">
+              <i class="fa fa-spinner fa-spin text-4xl text-primary mb-4"></i>
+              <p class="text-gray-600 text-lg">AI正在生成完整科考报告...</p>
+              <p class="text-gray-400 text-sm mt-2">请稍候，分析结果即将呈现</p>
+            </div>
+
+            <!-- 报告内容（初始隐藏，全部加载完成后显示） -->
+            <div id="end-page-content" class="hidden">
+              <p class="text-gray-600 mb-8 max-w-lg mx-auto" id="summary-content"></p>
+              <div class="bg-gray-100 p-6 rounded-xl mb-8 text-left" id="summary-detail-container"></div>
+
+              <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <button onclick="location.reload()" class="px-6 py-3 bg-primary text-white rounded-lg shadow-md hover:bg-primary/90 transition-all transform hover:-translate-y-1 btn-hover">
+                  <i class="fa fa-refresh mr-2"></i> 重新科考
+                </button>
+                <a href="main.html" class="inline-flex items-center px-6 py-3 bg-white text-primary border border-primary rounded-lg hover:bg-primary/5 transition-all transform hover:-translate-y-1">
+                  <i class="fa fa-home mr-2"></i> 返回
+                </a>
+              </div>
+
+              <!-- AI智能分析结果 -->
+              <div id="ai-analysis-container" class="mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-md mb-6 text-left">
+                  <div class="flex items-center mb-4">
+                    <i class="fa fa-brain text-2xl text-secondary mr-3"></i>
+                    <h4 class="text-xl font-bold text-primary">AI智能分析</h4>
+                  </div>
+                  <div class="mb-4">
+                    <h5 class="font-semibold text-gray-700 mb-2">薄弱知识点识别:</h5>
+                    <div id="weakness-list" class="bg-red-50 p-4 rounded-lg text-sm text-gray-700"></div>
+                  </div>
+                  <div class="mb-4">
+                    <h5 class="font-semibold text-gray-700 mb-2">能力评估:</h5>
+                    <div id="ability-assessment" class="bg-blue-50 p-4 rounded-lg text-sm text-gray-700"></div>
+                  </div>
+                </div>
+
+                <!-- 个性化推荐题目 -->
+                <div class="bg-white p-6 rounded-xl shadow-md text-left">
+                  <div class="flex items-center mb-4">
+                    <i class="fa fa-lightbulb-o text-2xl text-accent mr-3"></i>
+                    <h4 class="text-xl font-bold text-primary">个性化题目推荐</h4>
+                  </div>
+                  <div class="mb-4">
+                    <h5 class="font-semibold text-gray-700 mb-3">为您推荐的练习题:</h5>
+                    <div id="recommended-questions" class="space-y-3"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 推荐题目详情弹窗 -->
+  <div id="question-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div class="p-6 border-b">
+        <div class="flex justify-between items-center">
+          <h3 class="text-xl font-bold text-primary" id="modal-title">题目详情</h3>
+          <button id="modal-close" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">
+            <i class="fa fa-times text-gray-600"></i>
+          </button>
+        </div>
+      </div>
+      <div class="p-6">
+        <div id="modal-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // API配置
+    const baseUrl = 'https://open.bigmodel.cn/api/paas/v4';
+    const model = 'glm-4-flash';
+    const apiKey = '795328bbbb4442f8a2258b0642cb1988.s4a6GtVcMTluclRR';
+    const timeoutDuration = 60000;
+
+    const userAnswers = {
+      1: { answer: null, correct: false, submitted: false, attempts: [], finalCorrect: false },
+      2: { answer: null, correct: false, submitted: false, attempts: [], finalCorrect: false },
+      3: { answer: null, correct: false, submitted: false, attempts: [], finalCorrect: false },
+      4: { answer: null, correct: false, submitted: false, attempts: [], finalCorrect: false }
+    };
+
+    // 缓存所有场景数据
+    let allScenesData = null;
+    // 缓存推荐题目详情
+    let recommendedQuestionsData = [];
+
+    async function fetchWithTimeout(url, options, timeout = timeoutDuration) {
+      const controller = new AbortController();
+      const id = setTimeout(() => controller.abort(), timeout);
+      try {
+        const response = await fetch(url, { ...options, signal: controller.signal });
+        clearTimeout(id);
+        return response;
+      } catch (error) {
+        clearTimeout(id);
+        if (error.name === 'AbortError') {
+          alert(`请求超时(${timeout/1000}秒)，请检查网络或稍后重试`);
+          return null;
+        }
+        alert('API请求失败，请稍后重试');
+        throw error;
+      }
+    }
+
+    function generateApiRequestBody(prompt) {
+      return JSON.stringify({
+        model: model,
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.7,
+        max_tokens: 3000
+      });
+    }
+
+    // 一次性加载所有4个场景的数据
+    async function loadAllScenes() {
+      if (allScenesData) return allScenesData;
+
+      const prompt = `请为喀斯特地貌科普游戏生成4个场景的完整内容，主题如下：
+
+      场景1：多层溶洞与地壳抬升
+      场景2：石笋微层与干湿气候
+      场景3：干旱年份石笋生长变慢的水文化学原因
+      场景4：温带与热带喀斯特石笋生长速率差异
+
+      每个场景要求：
+      1. 情景描述：80-120字，生动有代入感，包含地理知识背景
+      2. 选择题：1个核心问题+4个选项（1正确3干扰），高中地理难度
+      3. 选项格式：{id, value, label}
+      4. 提供正确答案和详细解析（包含逻辑链和知识点）
+      5. 解析包含专家提示格式：
+        <h4 class="font-bold flex items-center mb-2 text-primary"><i class="fa fa-lightbulb-o mr-2"></i> 专家提示</h4>
+        <p class="text-sm text-gray-700">解析内容</p>
+        <div class="mt-4 flex items-center text-sm text-accent"><i class="fa fa-check-circle mr-2"></i><span class="font-medium">发现：知识点总结</span></div>
+
+      返回JSON数组格式，包含4个元素，每个元素：{
+        "description": "情景描述文本",
+        "title": "题目标题",
+        "question": "问题文本",
+        "options": [{"id":"...","value":"...","label":"..."}],
+        "correctAnswer": "正确选项值",
+        "clue": "解析HTML"
+      }`;
+
+      try {
+        const response = await fetchWithTimeout(`${baseUrl}/chat/completions`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+          },
+          body: generateApiRequestBody(prompt)
+        });
+
+        if (response && response.ok) {
+          const data = await response.json();
+          let scenesData = null;
+          try {
+            const content = data.choices[0].message.content.trim();
+            const jsonStr = content.replace(/```json|```/g, '').trim();
+            scenesData = JSON.parse(jsonStr);
+            allScenesData = scenesData;
+            return scenesData;
+          } catch (e) {
+            console.error('解析所有场景数据失败:', e);
+            throw new Error('数据格式错误');
+          }
+        } else {
+          throw new Error('API返回异常');
+        }
+      } catch (error) {
+        console.error('加载所有场景失败:', error);
+        allScenesData = getFallbackAllScenes();
+        return allScenesData;
+      }
+    }
+
+    function getFallbackAllScenes() {
+      return [
+        {
+          description: "溶洞呈水平多层分布，高度差相近，每层形成年代间隔数万年。这是地壳运动的结果，也记录了地质历史的环境变化。",
+          title: "难题1：多层溶洞的形成",
+          question: "同一溶洞出现多层水平溶洞，这与地壳抬升、气候变化是什么关系？",
+          options: [
+            { id: "puzzle-1-option-1", value: "1", label: "地壳间歇性抬升，导致地下河下切，原河道形成层状溶洞" },
+            { id: "puzzle-1-option-2", value: "2", label: "气候变化导致海平面升降，形成不同高度的溶洞" },
+            { id: "puzzle-1-option-3", value: "3", label: "地壳持续下沉，导致溶洞分层" },
+            { id: "puzzle-1-option-4", value: "4", label: "人类活动破坏导致溶洞坍塌形成分层" }
+          ],
+          correctAnswer: "1",
+          clue: `<h4 class="font-bold flex items-center mb-2 text-primary"><i class="fa fa-lightbulb-o mr-2"></i> 专家提示</h4><p class="text-sm text-gray-700">逻辑链：地壳间歇性抬升→地下河下切→原河道成层状溶洞。多层代表多期稳定–抬升旋回。</p><div class="mt-4 flex items-center text-sm text-accent"><i class="fa fa-check-circle mr-2"></i><span class="font-medium">发现：地壳运动证据</span></div>`
+        },
+        {
+          description: "显微镜下，石笋切片呈现毫米级微层结构，明暗相间如同年轮，记录着千年尺度的气候变迁。",
+          title: "难题2：石笋微层与气候",
+          question: "石笋微层宽窄变化如何反映干湿气候？",
+          options: [
+            { id: "puzzle-2-option-1", value: "1", label: "湿润年石笋层窄，干旱年石笋层宽" },
+            { id: "puzzle-2-option-2", value: "2", label: "湿润年石笋层宽，干旱年石笋层窄" },
+            { id: "puzzle-2-option-3", value: "3", label: "石笋层的宽窄与气候无关" },
+            { id: "puzzle-2-option-4", value: "4", label: "石笋层的宽窄只与温度有关" }
+          ],
+          correctAnswer: "2",
+          clue: `<h4 class="font-bold flex items-center mb-2 text-primary"><i class="fa fa-lightbulb-o mr-2"></i> 专家提示</h4><p class="text-sm text-gray-700">湿润年→降水多→径流强→溶解Ca(HCO₃)₂多→CO₂逸出→CaCO₃沉积快→层宽；干旱年相反→层窄。</p><div class="mt-4 flex items-center text-sm text-accent"><i class="fa fa-check-circle mr-2"></i><span class="font-medium">发现：古气候记录</span></div>`
+        },
+        {
+          description: "监测数据显示，干旱年份石笋生长速率显著降低，Ca²⁺浓度与CO₂分压呈现规律性变化。",
+          title: "难题3：水文化学机制",
+          question: "从CO₂分压与水动力解释：干旱年份石笋生长为什么变慢？",
+          options: [
+            { id: "puzzle-3-option-1", value: "1", label: "干旱年份CO₂分压高，促进CaCO₃溶解" },
+            { id: "puzzle-3-option-2", value: "2", label: "干旱年份水动力强，带走更多CaCO₃" },
+            { id: "puzzle-3-option-3", value: "3", label: "干旱年份滴水减少，水动力弱，CO₂逸出少，CaCO₃析出少" },
+            { id: "puzzle-3-option-4", value: "4", label: "干旱年份温度高，加速CaCO₃分解" }
+          ],
+          correctAnswer: "3",
+          clue: `<h4 class="font-bold flex items-center mb-2 text-primary"><i class="fa fa-lightbulb-o mr-2"></i> 专家提示</h4><p class="text-sm text-gray-700">干旱→滴水减少→水动力弱→CO₂逸出少→CaCO₃析出少→生长慢。</p><div class="mt-4 flex items-center text-sm text-accent"><i class="fa fa-check-circle mr-2"></i><span class="font-medium">发现：化学沉积机理</span></div>`
+        },
+        {
+          description: "滇西石笋年均生长速率0.12mm/年，远低于热带地区的0.8mm/年。数据差异是否合理？",
+          title: "难题4：环境对比",
+          question: "对比热带/亚热带，温带喀斯特石笋生长速率更低的原因是什么？",
+          options: [
+            { id: "puzzle-4-option-1", value: "1", label: "温带地区石灰岩更坚硬，不易溶解" },
+            { id: "puzzle-4-option-2", value: "2", label: "温带地区人类活动更多，破坏了石笋生长" },
+            { id: "puzzle-4-option-3", value: "3", label: "温带地区降水少，温度低，生物量低，土壤CO₂少，溶蚀力弱" },
+            { id: "puzzle-4-option-4", value: "4", label: "温带地区地震更频繁，破坏了石笋生长" }
+          ],
+          correctAnswer: "3",
+          clue: `<h4 class="font-bold flex items-center mb-2 text-primary"><i class="fa fa-lightbulb-o mr-2"></i> 专家提示</h4><p class="text-sm text-gray-700">温带气温低、降水少、生物量低→土壤CO₂少→溶蚀力弱→补给离子少→沉积慢。</p><div class="mt-4 flex items-center text-sm text-accent"><i class="fa fa-check-circle mr-2"></i><span class="font-medium">发现：环境差异</span></div>`
+        }
+      ];
+    }
+
+    // 渲染指定场景
+    function renderScene(sceneNum) {
+      const sceneData = allScenesData[sceneNum - 1];
+      if (!sceneData) return;
+
+      document.getElementById(`scene-${sceneNum}-desc`).textContent = sceneData.description;
+      document.getElementById(`puzzle-${sceneNum}-container`).innerHTML = generatePuzzleHtml(sceneData, sceneNum);
+      document.getElementById(`clue-${sceneNum}-container`).innerHTML = sceneData.clue || '<p class="text-sm text-gray-700">暂无解析</p>';
+
+      document.getElementById(`check-puzzle-${sceneNum}`).addEventListener('click', () => {
+        checkAnswer(sceneNum);
+      });
+    }
+
+    function generatePuzzleHtml(puzzleData, puzzleNum) {
+      let optionsHtml = '';
+      puzzleData.options.forEach(option => {
+        optionsHtml += `<div class="flex items-center mb-2"><input type="radio" id="${option.id}" name="puzzle-${puzzleNum}" value="${option.value}" class="mr-3 w-4 h-4 text-primary"><label for="${option.id}" class="text-gray-700 cursor-pointer">${option.label}</label></div>`;
+      });
+
+      const icons = ['fa-level-up', 'fa-clock-o', 'fa-flask', 'fa-globe'];
+      return `
+        <div class="flex items-center mb-3">
+          <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center mr-3">
+            <i class="fa ${icons[puzzleNum-1]} text-primary"></i>
+          </div>
+          <h4 class="font-medium text-lg text-primary">${puzzleData.title}</h4>
+        </div>
+        <p class="mb-4 text-gray-700 font-medium">${puzzleData.question}</p>
+        <div class="mt-3 space-y-2">
+          ${optionsHtml}
+          <button id="check-puzzle-${puzzleNum}" class="w-full px-4 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors btn-hover mt-4">
+            ${puzzleNum === 1 ? '提交推理' : '提交分析'}
+          </button>
+        </div>
+      `;
+    }
+
+    function checkAnswer(puzzleNum) {
+      const selectedOption = document.querySelector(`input[name="puzzle-${puzzleNum}"]:checked`);
+      const feedbackElement = document.getElementById(`puzzle-${puzzleNum}-feedback`);
+      const clueElement = document.getElementById(`scene-${puzzleNum}-clue`);
+
+      if (!selectedOption) {
+        feedbackElement.className = 'p-4 rounded-lg mb-4 bg-yellow-50 text-yellow-700 transition-all duration-300';
+        feedbackElement.innerHTML = '<div class="flex items-center"><i class="fa fa-exclamation-triangle mr-2"></i><span>请选择一个选项！</span></div>';
+        feedbackElement.classList.remove('hidden');
+        return;
+      }
+
+      const userAnswer = selectedOption.value;
+      const correctAnswer = allScenesData[puzzleNum - 1].correctAnswer;
+      const isCorrect = userAnswer === correctAnswer;
+
+      if (isCorrect) {
+        // 答对了：标记提交，禁用选项，显示正确反馈和解析
+        userAnswers[puzzleNum].attempts.push({ answer: userAnswer, correct: true });
+        userAnswers[puzzleNum].answer = userAnswer;
+        userAnswers[puzzleNum].correct = true;
+        userAnswers[puzzleNum].submitted = true;
+        userAnswers[puzzleNum].finalCorrect = true;
+
+        const allOptions = document.querySelectorAll(`input[name="puzzle-${puzzleNum}"]`);
+        allOptions.forEach(opt => opt.disabled = true);
+
+        const submitBtn = document.getElementById(`check-puzzle-${puzzleNum}`);
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        submitBtn.textContent = '回答正确';
+
+        feedbackElement.classList.remove('hidden');
+        feedbackElement.className = 'p-4 rounded-lg mb-4 bg-green-50 text-green-600 transition-all duration-300';
+        feedbackElement.innerHTML = `<div class="flex items-center"><i class="fa fa-check-circle mr-2"></i><span>回答正确！</span></div>`;
+
+        clueElement.classList.remove('hidden');
+        updateProgress();
+      } else {
+        // 答错了：给出提示，允许再次回答
+        userAnswers[puzzleNum].attempts.push({ answer: userAnswer, correct: false });
+        userAnswers[puzzleNum].answer = userAnswer;
+        userAnswers[puzzleNum].correct = false;
+        userAnswers[puzzleNum].submitted = false;
+
+        // 取消选中，允许重新选择
+        selectedOption.checked = false;
+
+        feedbackElement.classList.remove('hidden');
+        feedbackElement.className = 'p-4 rounded-lg mb-4 bg-orange-50 text-orange-700 transition-all duration-300';
+        feedbackElement.innerHTML = `<div class="flex items-center"><i class="fa fa-times-circle mr-2"></i><span>回答错误，请再想一想！</span></div><p class="mt-2 text-sm text-orange-600"><i class="fa fa-lightbulb-o mr-1"></i>提示：${getSceneHint(puzzleNum)}</p>`;
+      }
+    }
+
+    function getSceneHint(sceneNum) {
+      const hints = {
+        1: "地壳是间歇性抬升还是持续抬升？地下河如何下切形成多层溶洞？",
+        2: "湿润年份降水多，溶解和沉积作用会更强还是更弱？石笋生长快慢与层宽有什么关系？",
+        3: "干旱年份滴水减少，水动力变弱，CO₂逸出会怎样影响CaCO₃的析出？",
+        4: "温带地区相比热带，降水、温度、生物量各有什么差异？这些因素如何影响溶蚀力？"
+      };
+      return hints[sceneNum] || "请仔细阅读题目描述中的线索。";
+    }
+
+    function updateProgress() {
+      const totalAnswered = Object.values(userAnswers).filter(ans => ans.submitted).length;
+      const progressPercent = (totalAnswered / 4) * 100;
+      document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+      document.getElementById('progress-text').textContent = `${totalAnswered}/4`;
+    }
+
+    // 加载科考总结
+    async function loadSummary() {
+      const summaryContent = document.getElementById('summary-content');
+      const summaryDetail = document.getElementById('summary-detail-container');
+
+      // 统计含重试的答题数据
+      const attemptRecords = Object.entries(userAnswers).map(([num, ans]) => {
+        const names = {1: '多层溶洞', 2: '石笋微层', 3: '水文化学', 4: '环境对比'};
+        const attemptCount = ans.attempts ? ans.attempts.length : (ans.submitted ? 1 : 0);
+        return {
+          name: names[num],
+          attemptCount: attemptCount,
+          finalCorrect: ans.finalCorrect || ans.correct,
+          firstTryCorrect: ans.attempts && ans.attempts.length > 0 && ans.attempts[0].correct
+        };
+      });
+
+      const finalCorrectCount = attemptRecords.filter(r => r.finalCorrect).length;
+      const totalAttempts = attemptRecords.reduce((sum, r) => sum + r.attemptCount, 0);
+      const firstTryCorrectCount = attemptRecords.filter(r => r.firstTryCorrect).length;
+      const retriedCorrectCount = attemptRecords.filter(r => r.finalCorrect && !r.firstTryCorrect).length;
+
+      const correctTopics = attemptRecords.filter(r => r.finalCorrect).map(r => r.name);
+      const wrongTopics = attemptRecords.filter(r => !r.finalCorrect).map(r => r.name);
+      const retriedTopics = attemptRecords.filter(r => r.finalCorrect && r.attemptCount > 1).map(r => `${r.name}(尝试${r.attemptCount}次)`);
+
+      const prompt = `根据用户答题结果生成喀斯特科考总结报告。
+最终正确：${finalCorrectCount}题，最终错误：${4-finalCorrectCount}题。
+总尝试次数：${totalAttempts}次，首次正确：${firstTryCorrectCount}题，经重试正确：${retriedCorrectCount}题。
+正确：${correctTopics.join(',')||'无'}；错误：${wrongTopics.join(',')||'无'}；经重试：${retriedTopics.join(',')||'无'}。
+要求：1.简短总结50字以内（brief字段），提及重试情况；2.详细总结HTML格式（detail字段），包含<h4 class="font-bold mb-4 text-primary">科考总结</h4>标题和<ul>列表，每项带<i class="fa fa-check text-accent mt-1 mr-2"></i>，包含尝试次数信息；3.返回JSON：{brief, detail}`;
+
+      try {
+        const response = await fetchWithTimeout(`${baseUrl}/chat/completions`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+          },
+          body: generateApiRequestBody(prompt)
+        });
+
+        if (response && response.ok) {
+          const data = await response.json();
+          const content = data.choices[0].message.content.trim();
+          const jsonStr = content.replace(/```json|```/g, '').trim();
+          const summaryData = JSON.parse(jsonStr);
+          summaryContent.textContent = summaryData.brief;
+          summaryDetail.innerHTML = summaryData.detail;
+        } else {
+          throw new Error('总结生成失败');
+        }
+      } catch (error) {
+        summaryContent.textContent = `完成科考！最终正确${finalCorrectCount}题，总尝试${totalAttempts}次。`;
+        let detailHtml = `<h4 class="font-bold mb-4 text-primary">科考总结</h4><ul class="space-y-2 text-sm text-gray-700">`;
+        detailHtml += `<li class="flex items-start"><i class="fa fa-check text-accent mt-1 mr-2"></i>完成4个喀斯特地貌核心问题分析</li>`;
+        detailHtml += `<li class="flex items-start"><i class="fa fa-check text-accent mt-1 mr-2"></i>最终正确识别${finalCorrectCount}个关键知识点</li>`;
+        if (firstTryCorrectCount > 0) {
+          detailHtml += `<li class="flex items-start"><i class="fa fa-check text-accent mt-1 mr-2"></i>首次即正确：${firstTryCorrectCount}题</li>`;
+        }
+        if (retriedCorrectCount > 0) {
+          detailHtml += `<li class="flex items-start"><i class="fa fa-check text-accent mt-1 mr-2"></i>经提示后纠正：${retriedCorrectCount}题（${retriedTopics.join('、')}）</li>`;
+        }
+        detailHtml += `<li class="flex items-start"><i class="fa fa-check text-accent mt-1 mr-2"></i>理解石笋作为古气候记录载体的原理</li>`;
+        detailHtml += `<li class="flex items-start"><i class="fa fa-check text-accent mt-1 mr-2"></i>掌握不同气候带喀斯特发育差异</li></ul>`;
+        summaryDetail.innerHTML = detailHtml;
+      }
+    }
+
+    // 加载AI智能分析
+    async function loadAIAnalysis() {
+      const weaknessList = document.getElementById('weakness-list');
+      const abilityAssessment = document.getElementById('ability-assessment');
+
+      // 收集每道题的尝试记录
+      const attemptRecords = Object.entries(userAnswers).map(([num, ans]) => {
+        const topics = {1: "多层溶洞与地壳抬升", 2: "石笋微层与干湿气候", 3: "干旱年份石笋生长变慢的水文化学原因", 4: "温带与热带喀斯特石笋生长速率差异"};
+        const attemptCount = ans.attempts ? ans.attempts.length : (ans.submitted ? 1 : 0);
+        const wrongAttempts = ans.attempts ? ans.attempts.filter(a => !a.correct).length : (ans.submitted && !ans.correct ? 1 : 0);
+        return {
+          topic: topics[num],
+          attemptCount: attemptCount,
+          wrongAttempts: wrongAttempts,
+          finalCorrect: ans.finalCorrect || ans.correct,
+          firstTryCorrect: ans.attempts && ans.attempts.length > 0 && ans.attempts[0].correct
+        };
+      });
+
+      const finalCorrectCount = attemptRecords.filter(r => r.finalCorrect).length;
+      const totalAttempts = attemptRecords.reduce((sum, r) => sum + r.attemptCount, 0);
+      const totalWrongAttempts = attemptRecords.reduce((sum, r) => sum + r.wrongAttempts, 0);
+      const firstTryCorrectCount = attemptRecords.filter(r => r.firstTryCorrect).length;
+      const retriedCorrectCount = attemptRecords.filter(r => r.finalCorrect && !r.firstTryCorrect).length;
+
+      const wrongTopics = attemptRecords
+        .filter(r => !r.finalCorrect)
+        .map(r => r.topic);
+
+      const retriedTopics = attemptRecords
+        .filter(r => r.finalCorrect && r.attemptCount > 1)
+        .map(r => `${r.topic}(尝试${r.attemptCount}次)`);
+
+      const prompt = `根据用户喀斯特地貌答题结果生成AI智能分析报告。
+
+      答题记录（含重试）：
+      - 总题数：4题
+      - 最终正确：${finalCorrectCount}题
+      - 总尝试次数：${totalAttempts}次
+      - 错误尝试次数：${totalWrongAttempts}次
+      - 首次即正确：${firstTryCorrectCount}题
+      - 经重试后正确：${retriedCorrectCount}题
+      - 最终错误知识点：${wrongTopics.join(',')||'无'}
+      - 经重试才正确的知识点：${retriedTopics.join(',')||'无'}
+
+      要求：
+      1.薄弱知识点识别（weakness字段）：结合首次错误和重试情况分析薄弱点，指出哪些知识点需要重点复习（包括虽然最终答对但经多次尝试的），100字以内；
+      2.能力评估（ability字段）：综合评分0-100分，考虑首次正确率、总尝试次数、自学纠错能力等维度，100字以内；
+      3.返回JSON：{weakness, ability}`;
+
+      try {
+        const response = await fetchWithTimeout(`${baseUrl}/chat/completions`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+          },
+          body: generateApiRequestBody(prompt)
+        });
+
+        if (response && response.ok) {
+          const data = await response.json();
+          const content = data.choices[0].message.content.trim();
+          const jsonStr = content.replace(/```json|```/g, '').trim();
+          const analysisData = JSON.parse(jsonStr);
+          weaknessList.textContent = analysisData.weakness;
+          abilityAssessment.textContent = analysisData.ability;
+        } else {
+          throw new Error('AI分析生成失败');
+        }
+      } catch (error) {
+        // 本地计算 fallback，包含重试记录
+        let score = Math.round((finalCorrectCount / 4) * 60 + (firstTryCorrectCount / 4) * 40);
+
+        let weaknessText = "";
+        if (wrongTopics.length > 0) {
+          weaknessText += `薄弱点：${wrongTopics.join('、')}。`;
+        }
+        if (retriedTopics.length > 0) {
+          weaknessText += `经重试才掌握：${retriedTopics.map(t => t.replace(/\(.*\)/, '')).join('、')}，建议巩固。`;
+        }
+        if (weaknessText === "") {
+          weaknessText = "知识点掌握全面，首次正确率高，无明显薄弱环节。";
+        }
+
+        let abilityText = `综合评分${score}分。`;
+        abilityText += `${score>=80?'优秀':score>=60?'良好':'需加强'}。`;
+        abilityText += `首次正确率${Math.round((firstTryCorrectCount/4)*100)}%，`;
+        abilityText += `${retriedCorrectCount>0?`自学纠错${retriedCorrectCount}题，` : ''}`;
+        abilityText += `${totalWrongAttempts>0?`总错误${totalWrongAttempts}次，` : ''}`;
+        abilityText += `基础概念${score>=70?'扎实':'待巩固'}。`;
+
+        weaknessList.textContent = weaknessText;
+        abilityAssessment.textContent = abilityText;
+      }
+    }
+
+    // 加载个性化题目推荐 - 包含完整题目内容，但先不显示答案
+    async function loadRecommendations() {
+      const recommendedQuestions = document.getElementById('recommended-questions');
+
+      const wrongTopics = Object.entries(userAnswers)
+        .filter(([num, ans]) => ans.submitted && !ans.correct)
+        .map(([num]) => {
+          const topics = {1: "多层溶洞与地壳抬升", 2: "石笋微层与古气候", 3: "喀斯特水文化学", 4: "不同气候带喀斯特对比"};
+          return topics[num];
+        });
+
+      const prompt = `根据用户喀斯特地貌答题结果生成3道个性化练习题。薄弱知识点：${wrongTopics.join(',')||'无明显薄弱点'}。
+
+      每道题要求：
+      1. title：题目标题
+      2. difficulty：简单/中等/较难
+      3. reason：推荐理由（为什么推荐这道题）
+      4. btnText：按钮文字（如"查看题目"）
+      5. question：完整的题目内容（问题+4个选项）
+      6. correctAnswer：正确答案
+      7. explanation：详细解析
+
+      返回JSON数组格式，每个元素：{
+        "title": "...",
+        "difficulty": "...",
+        "reason": "...",
+        "btnText": "...",
+        "question": "...",
+        "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
+        "correctAnswer": "...",
+        "explanation": "..."
+      }`;
+
+      try {
+        const response = await fetchWithTimeout(`${baseUrl}/chat/completions`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+          },
+          body: generateApiRequestBody(prompt)
+        });
+
+        if (response && response.ok) {
+          const data = await response.json();
+          const content = data.choices[0].message.content.trim();
+          const jsonStr = content.replace(/```json|```/g, '').trim();
+          recommendedQuestionsData = JSON.parse(jsonStr);
+          renderRecommendations();
+        } else {
+          throw new Error('推荐题目生成失败');
+        }
+      } catch (error) {
+        recommendedQuestionsData = getDefaultRecommendations();
+        renderRecommendations();
+      }
+    }
+
+    function getDefaultRecommendations() {
+      return [
+        {
+          title: "喀斯特地貌形成条件",
+          difficulty: "简单",
+          reason: "巩固基础概念",
+          btnText: "查看题目",
+          question: "喀斯特地貌发育的基本条件包括哪些？",
+          options: [
+            "A. 可溶性岩石、丰富的降水、适宜的温度",
+            "B. 坚硬的花岗岩、干旱的气候、低温环境",
+            "C. 厚厚的黄土层、季节性降水、高温环境",
+            "D. 玄武岩地貌、充足的日照、高海拔"
+          ],
+          correctAnswer: "A",
+          explanation: "喀斯特地貌发育需要三个基本条件：可溶性岩石（如石灰岩、白云岩）、丰富的降水提供溶蚀动力、适宜的温度加速化学反应。"
+        },
+        {
+          title: "石笋沉积速率影响因素",
+          difficulty: "中等",
+          reason: "强化逻辑分析能力",
+          btnText: "查看题目",
+          question: "下列哪项不是影响石笋沉积速率的主要因素？",
+          options: [
+            "A. 滴水频率和水量",
+            "B. 洞内CO₂浓度",
+            "C. 洞外风速大小",
+            "D. 水中Ca²⁺浓度"
+          ],
+          correctAnswer: "C",
+          explanation: "石笋沉积速率主要受滴水频率、水量、洞内CO₂浓度和水中Ca²⁺浓度影响。洞外风速对洞内微环境有一定影响，但不是主要因素。"
+        },
+        {
+          title: "全球喀斯特分布与气候",
+          difficulty: "较难",
+          reason: "提升综合应用能力",
+          btnText: "查看题目",
+          question: "为什么中国西南地区（广西、贵州、云南）成为全球喀斯特地貌最发育的地区之一？",
+          options: [
+            "A. 仅因为石灰岩分布广泛",
+            "B. 仅因为降水量大",
+            "C. 石灰岩分布+亚热带季风气候+构造抬升共同作用",
+            "D. 仅因为人类活动干扰少"
+          ],
+          correctAnswer: "C",
+          explanation: "中国西南喀斯特发育是多种因素共同作用的结果：大面积厚层石灰岩分布提供物质基础，亚热带季风气候带来充沛降水，新构造抬升为溶蚀提供势能条件。"
+        }
+      ];
+    }
+
+    function renderRecommendations() {
+      const container = document.getElementById('recommended-questions');
+      let html = '';
+
+      recommendedQuestionsData.forEach((q, index) => {
+        const borderColor = q.difficulty === '简单' ? 'border-green-500' : q.difficulty === '中等' ? 'border-primary' : 'border-red-500';
+        const badgeColor = q.difficulty === '简单' ? 'bg-green-100 text-green-800' : q.difficulty === '中等' ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800';
+
+        html += `
+          <div class="bg-gray-50 p-4 rounded-lg border-l-4 ${borderColor}">
+            <div class="flex justify-between items-start">
+              <div class="flex-1">
+                <h6 class="font-medium text-gray-800">${q.title}</h6>
+                <div class="flex items-center mt-1 text-xs">
+                  <span class="px-2 py-0.5 rounded ${badgeColor}">${q.difficulty}</span>
+                  <span class="ml-2 text-gray-500">${q.reason}</span>
+                </div>
+              </div>
+              <button onclick="showQuestionDetail(${index})" class="px-3 py-1 bg-primary text-white text-xs rounded hover:bg-primary/90 transition-colors btn-hover whitespace-nowrap ml-2">
+                ${q.btnText}
+              </button>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    // 显示推荐题目详情弹窗 - 先做题，后显示答案解析
+    function showQuestionDetail(index) {
+      const q = recommendedQuestionsData[index];
+      if (!q) return;
+
+      const modal = document.getElementById('question-modal');
+      const title = document.getElementById('modal-title');
+      const content = document.getElementById('modal-content');
+
+      title.textContent = q.title;
+
+      let optionsHtml = '';
+      if (q.options && Array.isArray(q.options)) {
+        q.options.forEach((opt, optIndex) => {
+          optionsHtml += `
+            <div class="flex items-center mb-2 p-3 bg-gray-50 rounded hover:bg-gray-100 cursor-pointer" onclick="selectRecOption(${index}, ${optIndex})">
+              <input type="radio" name="rec-question-${index}" id="rec-opt-${index}-${optIndex}" value="${String.fromCharCode(65 + optIndex)}" class="mr-3 w-4 h-4 text-primary">
+              <label for="rec-opt-${index}-${optIndex}" class="text-gray-700 cursor-pointer flex-1">${opt}</label>
+            </div>
+          `;
+        });
+      }
+
+      content.innerHTML = `
+        <div class="mb-4">
+          <span class="px-2 py-1 rounded text-xs ${q.difficulty === '简单' ? 'bg-green-100 text-green-800' : q.difficulty === '中等' ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800'}">${q.difficulty}</span>
+          <span class="ml-2 text-sm text-gray-500">${q.reason}</span>
+        </div>
+        <div class="mb-4">
+          <p class="font-medium text-gray-800 mb-3">${q.question}</p>
+          <div class="space-y-2" id="rec-options-${index}">
+            ${optionsHtml}
+          </div>
+        </div>
+        <button id="rec-submit-${index}" onclick="submitRecAnswer(${index})" class="w-full px-4 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors btn-hover mb-4">
+          提交答案
+        </button>
+        <div id="rec-result-${index}" class="hidden"></div>
+      `;
+
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // 选择推荐题目选项
+    function selectRecOption(qIndex, optIndex) {
+      const radio = document.getElementById(`rec-opt-${qIndex}-${optIndex}`);
+      if (radio) radio.checked = true;
+    }
+
+    // 提交推荐题目答案
+    function submitRecAnswer(index) {
+      const q = recommendedQuestionsData[index];
+      const selectedOption = document.querySelector(`input[name="rec-question-${index}"]:checked`);
+      const resultDiv = document.getElementById(`rec-result-${index}`);
+      const submitBtn = document.getElementById(`rec-submit-${index}`);
+
+      if (!selectedOption) {
+        resultDiv.className = 'p-4 rounded-lg bg-yellow-50 text-yellow-700 mb-4';
+        resultDiv.innerHTML = '<div class="flex items-center"><i class="fa fa-exclamation-triangle mr-2"></i><span>请选择一个选项！</span></div>';
+        resultDiv.classList.remove('hidden');
+        return;
+      }
+
+      const userAnswer = selectedOption.value;
+      const isCorrect = userAnswer === q.correctAnswer;
+
+      if (isCorrect) {
+        // 答对了：禁用选项，显示正确反馈和解析
+        const allOptions = document.querySelectorAll(`input[name="rec-question-${index}"]`);
+        allOptions.forEach(opt => opt.disabled = true);
+
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        submitBtn.textContent = '回答正确';
+
+        resultDiv.classList.remove('hidden');
+        resultDiv.innerHTML = `
+          <div class="p-4 rounded-lg bg-green-50 text-green-600 mb-4">
+            <div class="flex items-center"><i class="fa fa-check-circle mr-2"></i><span>回答正确！</span></div>
+          </div>
+          <div class="bg-primary/5 p-4 rounded-lg border-l-4 border-primary">
+            <h4 class="font-bold text-primary mb-2"><i class="fa fa-lightbulb-o mr-2"></i>答案解析</h4>
+            <p class="text-sm text-gray-700">${q.explanation}</p>
+          </div>
+        `;
+      } else {
+        // 答错了：给出提示，允许再次回答
+        selectedOption.checked = false;
+
+        resultDiv.classList.remove('hidden');
+        resultDiv.innerHTML = `
+          <div class="p-4 rounded-lg bg-orange-50 text-orange-700 mb-4">
+            <div class="flex items-center"><i class="fa fa-times-circle mr-2"></i><span>回答错误，请再想一想！</span></div>
+            <p class="mt-2 text-sm text-orange-600"><i class="fa fa-lightbulb-o mr-1"></i>提示：请回顾${q.title}的相关知识，仔细分析每个选项。</p>
+          </div>
+        `;
+      }
+    }
+
+    // 关闭弹窗
+    function closeModal() {
+      document.getElementById('question-modal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    // 场景切换逻辑
+    async function switchScene(sceneNum) {
+      document.getElementById('game-start').classList.add('hidden');
+      document.getElementById('scene-1').classList.add('hidden');
+      document.getElementById('scene-2').classList.add('hidden');
+      document.getElementById('scene-3').classList.add('hidden');
+      document.getElementById('scene-4').classList.add('hidden');
+      document.getElementById('game-end').classList.add('hidden');
+
+      if (sceneNum === 0) {
+        document.getElementById('game-start').classList.remove('hidden');
+      } else if (sceneNum === 5) {
+        document.getElementById('game-end').classList.remove('hidden');
+        await Promise.all([
+          loadSummary(),
+          loadAIAnalysis(),
+          loadRecommendations()
+        ]);
+        document.getElementById('end-page-loading').classList.add('hidden');
+        document.getElementById('end-page-content').classList.remove('hidden');
+      } else {
+        const targetScene = document.getElementById(`scene-${sceneNum}`);
+        targetScene.classList.remove('hidden');
+        document.getElementById(`scene-${sceneNum}-loading`).classList.remove('hidden');
+        document.getElementById(`scene-${sceneNum}-content`).classList.add('hidden');
+
+        if (!allScenesData) {
+          await loadAllScenes();
+        }
+
+        renderScene(sceneNum);
+
+        document.getElementById(`scene-${sceneNum}-loading`).classList.add('hidden');
+        document.getElementById(`scene-${sceneNum}-content`).classList.remove('hidden');
+      }
+    }
+
+    function initEventListeners() {
+      document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+        document.getElementById('mobile-menu').classList.toggle('hidden');
+      });
+
+      document.getElementById('start-shift').addEventListener('click', () => {
+        switchScene(1);
+      });
+
+      document.querySelectorAll('.next-scene-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const nextScene = parseInt(btn.dataset.next);
+          switchScene(nextScene);
+        });
+      });
+
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            window.scrollTo({ top: targetElement.offsetTop - 80, behavior: 'smooth' });
+            document.getElementById('mobile-menu').classList.add('hidden');
+          }
+        });
+      });
+
+      // 弹窗关闭事件
+      document.getElementById('modal-close').addEventListener('click', closeModal);
+      document.getElementById('question-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'question-modal') closeModal();
+      });
+
+      window.addEventListener('scroll', () => {
+        const nav = document.querySelector('nav');
+        if (window.scrollY > 50) {
+          nav.classList.add('shadow-md');
+          nav.classList.remove('shadow-sm');
+        } else {
+          nav.classList.remove('shadow-md');
+          nav.classList.add('shadow-sm');
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initEventListeners();
+      switchScene(0);
+    });
+    
+  </script>
+  <!-- 智能地理助手 -->
+  <script src="chat.js"></script>
+</body>
+</html>
