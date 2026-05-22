@@ -1254,6 +1254,472 @@
                 justify-content: center;
             }
         }
+
+        /* ========== 课程探究模块 - 小组讨论样式 ========== */
+        .group-discussion {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        /* 主体内容行 */
+        .discussion-main-row {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        /* 左侧区域 */
+        .discussion-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        /* 讨论课题区域 */
+        .discussion-topic {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            color: white;
+        }
+        
+        .topic-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .teacher-icon {
+            font-size: 28px;
+        }
+        
+        .topic-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .topic-content {
+            font-size: 17px;
+            line-height: 1.7;
+            font-weight: 500;
+        }
+        
+        .topic-prompt {
+            opacity: 0.8;
+            font-style: italic;
+        }
+        
+        /* 成员展示 */
+        .discussion-members {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .member-card {
+            text-align: center;
+            padding: 15px 20px;
+            background: #f5f7fa;
+            border-radius: 12px;
+            min-width: 100px;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            cursor: default;
+        }
+        
+        .member-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .member-card.user-member {
+            background: #e6f7ff;
+            border-color: #1677ff;
+            cursor: default;
+        }
+        
+        .member-card.recorder {
+            background: #f6ffed;
+            border-color: #52c41a;
+            cursor: default;
+        }
+        
+        .member-card.selectable {
+            cursor: pointer;
+            border-color: #e8e8e8;
+        }
+        
+        .member-card.selectable:hover {
+            border-color: #1677ff;
+            background: #f0f7ff;
+        }
+        
+        .member-card.selectable.selected {
+            border-color: #1677ff;
+            background: #e6f7ff;
+            box-shadow: 0 0 0 4px rgba(22, 119, 255, 0.15);
+        }
+        
+        .member-avatar {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        
+        .member-name {
+            font-size: 15px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .member-role {
+            font-size: 12px;
+            color: #888;
+        }
+        
+        /* 讨论消息区域 */
+        .discussion-messages {
+            background: #fafafa;
+            border-radius: 12px;
+            padding: 20px;
+            min-height: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        
+        .welcome-message {
+            text-align: center;
+            color: #888;
+            padding: 30px;
+        }
+        
+        /* 用户提示消息 */
+        .discussion-prompt {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #fff7e6 0%, #fff1cc 100%);
+            border: 2px solid #ffa940;
+            border-radius: 20px;
+            margin: 15px 0;
+            animation: promptPulse 2s infinite;
+        }
+        
+        @keyframes promptPulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(255, 169, 64, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 6px rgba(255, 169, 64, 0);
+            }
+        }
+        
+        .prompt-icon {
+            font-size: 20px;
+        }
+        
+        .prompt-text {
+            font-size: 14px;
+            color: #d46b08;
+            font-weight: 500;
+        }
+        
+        .prompt-skip-btn {
+            margin-left: 15px;
+            padding: 6px 14px;
+            background: #fff;
+            border: 1px solid #ffc53d;
+            border-radius: 14px;
+            color: #d46b08;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .prompt-skip-btn:hover {
+            background: #fff7e6;
+            border-color: #ffa940;
+            transform: scale(1.05);
+        }
+        
+        /* 讨论消息样式 */
+        .discussion-message {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 12px;
+        }
+        
+        .discussion-message.user {
+            flex-direction: row-reverse;
+        }
+        
+        .message-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+        
+        .discussion-message.user .message-avatar {
+            background: linear-gradient(135deg, #1677ff, #40a9ff);
+        }
+        
+        .discussion-message .message-avatar {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        
+        .message-content {
+            max-width: 75%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+        
+        .discussion-message.user .message-content {
+            background: linear-gradient(135deg, #1677ff, #40a9ff);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .discussion-message:not(.user) .message-content {
+            background: white;
+            color: #333;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        
+        .message-name {
+            font-weight: bold;
+            font-size: 13px;
+        }
+        
+        .message-role {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: rgba(0,0,0,0.1);
+        }
+        
+        .discussion-message.user .message-name,
+        .discussion-message.user .message-role {
+            color: rgba(255,255,255,0.8);
+        }
+        
+        /* 用户输入区域 */
+        .discussion-input {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .discussion-input input {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 20px;
+            border: 2px solid #e8e8e8;
+            border-radius: 25px;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .discussion-input input:focus {
+            border-color: #1677ff;
+        }
+        
+        .discussion-input input:disabled {
+            background: #f5f5f5;
+            color: #999;
+            cursor: not-allowed;
+        }
+        
+        .discussion-input button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        #summarizeBtn {
+            background: linear-gradient(135deg, #52c41a 0%, #389e0d 100%);
+            color: white;
+            margin-left: 10px;
+        }
+        
+        #summarizeBtn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #73d13d 0%, #52c41a 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(82, 196, 26, 0.3);
+        }
+        
+        #summarizeBtn:active:not(:disabled) {
+            transform: translateY(0);
+            box-shadow: 0 2px 6px rgba(82, 196, 26, 0.3);
+        }
+        
+        #summarizeBtn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        #sendDiscussionBtn {
+            background: #1677ff;
+            color: white;
+        }
+        
+        #sendDiscussionBtn:hover:not(:disabled) {
+            background: #096dd9;
+            transform: translateY(-2px);
+        }
+        
+        #sendDiscussionBtn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        /* 讨论总结区域 */
+        .discussion-summary {
+            background: #f6ffed;
+            border: 2px solid #b7eb8f;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .discussion-summary h3 {
+            color: #389e0d;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .summary-content {
+            line-height: 1.7;
+            color: #333;
+            font-size: 15px;
+        }
+        
+        .summary-content h4 {
+            color: #389e0d;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .summary-content ul {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .summary-content li {
+            margin-bottom: 5px;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        /* 选择提示 */
+        .selection-tip {
+            text-align: center;
+            padding: 15px;
+            background: #fffbe6;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #faad14;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .selection-tip span:first-child {
+            font-size: 18px;
+        }
+        
+        /* 右侧区域 */
+        .discussion-right {
+            flex-shrink: 0;
+        }
+        
+        /* 回答模式配置面板 */
+        .response-config {
+            background: #f6ffed;
+            border-radius: 12px;
+            padding: 18px 22px;
+            border: 1px solid #b7eb8f;
+            min-width: 260px;
+            width: 280px;
+        }
+        
+        .response-config h3 {
+            font-size: 16px;
+            color: #389e0d;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .config-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+        
+        .config-group:last-child {
+            margin-bottom: 0;
+        }
+        
+        .config-group label {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .config-group select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            font-size: 13px;
+            background: white;
+            cursor: pointer;
+        }
+        
+        .config-group select:hover {
+            border-color: #389e0d;
+        }
+        
+        .config-group select:focus {
+            outline: none;
+            border-color: #389e0d;
+            box-shadow: 0 0 0 2px rgba(56, 158, 13, 0.2);
+        }
     
 
         /* ========== 个性化学习测评新样式 ========== */
@@ -1481,8 +1947,6 @@
         </div>
     </div>
     
-    <!-- 删除独立的分视频区域 -->
-    
     <!-- 科考剧情推理学习模块 -->
     <div class="sub-videos-section">
         <div class="sub-videos-container">
@@ -1507,6 +1971,127 @@
                         <img src="picture/s3.png" onerror="this.src='picture/default.jpg'" alt="剧本三：暗河迷踪 - 喀斯特水文失踪案">
                     </div>
                     <div class="scenario-script-shape">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 课程探究模块 - 小组讨论 -->
+    <div class="sub-videos-section">
+        <div class="sub-videos-container">
+            <h2 class="sub-videos-title">👥 课程探究 - 小组讨论</h2>
+            <div class="group-discussion">
+                
+                <!-- 主体内容区域（左侧课题+成员，右侧配置面板） -->
+                <div class="discussion-main-row">
+                    <!-- 左侧区域：讨论课题 + 成员卡片 -->
+                    <div class="discussion-left">
+                        <!-- 讨论课题区域 -->
+                        <div class="discussion-topic">
+                            <div class="topic-header">
+                                <span class="teacher-icon">👨‍🏫</span>
+                                <span class="topic-label">老师布置的讨论课题</span>
+                            </div>
+                            <div class="topic-content" id="discussionTopic">
+                                <p class="topic-prompt">点击下方按钮开始小组讨论</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 讨论成员展示（点击选择） -->
+                        <div class="discussion-members">
+                        <div class="member-card user-member" title="你" data-member-id="user">
+                            <div class="member-avatar">👤</div>
+                            <div class="member-name">你</div>
+                            <div class="member-role">参与者</div>
+                        </div>
+                        <div class="member-card selectable" title="辩驳型 - 喜欢提出不同意见" data-member-id="contrarian" data-member-name="张同学" data-member-role="辩驳型">
+                            <div class="member-avatar">💬</div>
+                            <div class="member-name">张同学</div>
+                            <div class="member-role">辩驳型</div>
+                        </div>
+                        <div class="member-card selectable" title="优化型 - 善于提出改进建议" data-member-id="optimizing" data-member-name="李同学" data-member-role="优化型">
+                            <div class="member-avatar">✨</div>
+                            <div class="member-name">李同学</div>
+                            <div class="member-role">优化型</div>
+                        </div>
+                        <div class="member-card selectable" title="认同型 - 支持并补充观点" data-member-id="agreeing" data-member-name="王同学" data-member-role="认同型">
+                            <div class="member-avatar">👍</div>
+                            <div class="member-name">王同学</div>
+                            <div class="member-role">认同型</div>
+                        </div>
+                        <div class="member-card recorder" title="记录员 - 整理讨论内容" data-member-id="recorder">
+                            <div class="member-avatar">📝</div>
+                            <div class="member-name">陈同学</div>
+                            <div class="member-role">记录员</div>
+                        </div>
+                    </div>
+                    </div>
+                    
+                    <!-- 右侧区域：回答模式配置面板 -->
+                    <div class="discussion-right">
+                    <div class="response-config">
+                        <h3>⚙️ 回答模式</h3>
+                        <div class="config-group">
+                            <label>回应人数：</label>
+                            <select id="responseCountSelect">
+                                <option value="random">随机(1-2人)</option>
+                                <option value="all">全部成员</option>
+                                <option value="1">固定1人</option>
+                                <option value="2">固定2人</option>
+                                <option value="3">固定3人</option>
+                            </select>
+                        </div>
+                        <div class="config-group">
+                            <label>回应延迟：</label>
+                            <select id="responseDelaySelect">
+                                <option value="500">快速(0.5秒)</option>
+                                <option value="1000" selected>正常(1秒)</option>
+                                <option value="1500">稍慢(1.5秒)</option>
+                                <option value="2000">较慢(2秒)</option>
+                                <option value="3000">慢(3秒)</option>
+                            </select>
+                        </div>
+                        <div class="config-group">
+                            <label>成员间隔：</label>
+                            <select id="memberIntervalSelect">
+                                <option value="500">快速(0.5秒)</option>
+                                <option value="1000">正常(1秒)</option>
+                                <option value="1500" selected>稍慢(1.5秒)</option>
+                                <option value="2000">较慢(2秒)</option>
+                            </select>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="selection-tip" id="selectionTip">
+                    <span>💡</span>
+                    <span>点击成员卡片选择参与讨论的成员（可多选）</span>
+                </div>
+                
+                <!-- 讨论消息区域 -->
+                <div class="discussion-messages" id="discussionMessages">
+                    <div class="welcome-message">
+                        <p>👋 欢迎来到小组讨论！老师将为大家布置讨论课题。</p>
+                    </div>
+                </div>
+                
+                <!-- 用户输入区域 -->
+                <div class="discussion-input">
+                    <input type="text" id="discussionInput" placeholder="输入你的观点..." disabled>
+                    <button id="sendDiscussionBtn" disabled>发送</button>
+                    <button id="startDiscussionBtn" class="primary-btn">开始讨论</button>
+                    <button id="summarizeBtn" class="hidden">生成讨论总结</button>
+                </div>
+                
+                <!-- 讨论总结区域 -->
+                <div class="discussion-summary hidden" id="discussionSummary">
+                    <h3>📋 讨论总结</h3>
+                    <div class="summary-content" id="summaryContent">
+                        <div class="loading-ai">
+                            <i class="fa fa-spinner fa-spin"></i>
+                            <p>记录员正在整理讨论内容...</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2338,7 +2923,10 @@ qDiv.innerHTML = '<div class="question-text"><span class="question-number">' + (
 
 
         });
-// 导航标签切换交互
+
+        /* ========== 课程探究模块 - 小组讨论功能 ========== */
+
+        // 导航标签切换交互
         const tabs = document.querySelectorAll('.nav-tab');
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
@@ -2399,5 +2987,7 @@ qDiv.innerHTML = '<div class="question-text"><span class="question-number">' + (
     </script>
     <!-- 智能地理助手 -->
     <script src="chat.js"></script>
+    <!-- 小组讨论模块 -->
+    <script src="discussion.js"></script>
 </body>
 </html>
